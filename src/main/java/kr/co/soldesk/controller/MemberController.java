@@ -128,10 +128,6 @@ public class MemberController {
 	    System.out.println("삭제 요청된 ID (요청 값): " + id);
 	    System.out.println("삭제 요청된 PW: " + pw);
 
-	    if (id == null || id.trim().isEmpty()) {
-	        id = loginUser.getId();  // ID가 null이면 로그인한 사용자의 ID를 사용
-	    }
-
 	    System.out.println("최종 삭제할 ID: " + id);
 
 	    // 삭제 요청 객체 생성
