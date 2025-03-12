@@ -7,8 +7,8 @@ import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,8 +32,6 @@ public class CartController {
 	private MemberBean loginUser;
 	@Autowired
 	private CartService cartService;
-	
-	private int cart_quantity = 0;
 
 	
 	@GetMapping("/my_cart")
@@ -54,7 +52,8 @@ public class CartController {
 	         List<CartItemDTO> existingCart =  cartService.getMemberCart(loginUser.getId());
 	         boolean itemExists = existingCart.stream().anyMatch(cartItem -> cartItem.getItem_index() == item_index);
 	         if (itemExists) {
-	             return ResponseEntity.status(HttpStatus.CONFLICT).body("이미 장바구니에 상품이 있습니다");
+	        	 //추후 메시치 출력 수정 필요
+	             return ResponseEntity.status(HttpStatus.CONFLICT).contentType(MediaType.TEXT_PLAIN).body("이미 장바구니에 상품이 있습니다");
 	         }
 
 	         CartBean cartBean = new CartBean();
@@ -62,6 +61,7 @@ public class CartController {
 	         cartBean.setItem_index(item_index);
 	         cartBean.setCart_id(cartService.getItemName(item_index));
 	         cartBean.setCart_quantity(1);
+	         cartBean.setCart_totalAmount(cartService.getItemPrice(item_index));
 	         cartService.addToCart(cartBean);
 	         
 	         
@@ -91,4 +91,19 @@ public class CartController {
     public void removeItem(@RequestParam("itemIndex") int itemIndex) {
         cartService.removeItem(itemIndex); // 아이템 삭제
     }
+    
+    @PostMapping("/cart/updateTotal")
+    @ResponseBody
+    public ResponseEntity<String> updateCartTotal(@RequestParam("totalAmount") int totalAmount) {
+        try {
+        	String id = loginUser.getId();
+            // DB에 합계를 업데이트하는 서비스 호출
+            cartService.updateCartTotal(totalAmount, id);
+            return ResponseEntity.ok("합계가 저장되었습니다.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("합계 저장 실패");
+        }
+    }
+
 }

@@ -67,6 +67,11 @@
                 grandTotal += parseInt(totalElement.innerText);
             });
             document.getElementById(`grand-total`).innerText = grandTotal;
+            
+         // 합계를 서버로 전송
+            sendAjaxRequest("${root}/cart/updateTotal", { totalAmount: grandTotal }, () => {
+                console.log("합계금액이 DB에 저장되었습니다.");
+            });
         }
      // 개별 상품 합계 업데이트
         function updateItemTotal(item_index, cart_quantity) {
@@ -104,7 +109,7 @@
             /* const quantityElement = document.getElementById(`quantity-${item_index}`); */
             const quantityElement = document.getElementById('quantity-' + index);
             if (quantityElement) {
-                sendAjaxRequest("/Project_hoon/cart/increase", { itemIndex: item_index }, () => {
+                sendAjaxRequest("${root}/cart/increase", { itemIndex: item_index }, () => {
                     let currentQuantity = parseInt(quantityElement.innerText);
                     currentQuantity++;
                     quantityElement.innerText = currentQuantity;
@@ -120,7 +125,7 @@
             if (quantityElement) {
                 let currentQuantity = parseInt(quantityElement.innerText);
                 if (currentQuantity > 1) {
-                    sendAjaxRequest("/Project_hoon/cart/decrease", { itemIndex: index }, () => {
+                    sendAjaxRequest("${root}/cart/decrease", { itemIndex: index }, () => {
                         currentQuantity--;
                         quantityElement.innerText = currentQuantity;
                         updateItemTotal(index, currentQuantity);
@@ -133,7 +138,7 @@
         	let index = item_index;
             const row = document.getElementById('row-' + index);
             if (row) {
-                sendAjaxRequest("/Project_hoon/cart/remove", { itemIndex: index }, () => {
+                sendAjaxRequest("${root}/cart/remove", { itemIndex: index }, () => {
                     row.parentNode.removeChild(row);
                     updateGrandTotal();
                 });

@@ -8,6 +8,7 @@ public class CartBean {
     private int item_index;
     private String cart_id;
     private int cart_quantity;
+    private int cart_totalAmount;
     
     public CartBean() {
 		cart_id = " ";
@@ -42,6 +43,12 @@ public class CartBean {
 	}
 	public void setCart_quantity(int cart_quantity) {
 		this.cart_quantity = cart_quantity;
+	}
+	public int getCart_totalAmount() {
+		return cart_totalAmount;
+	}
+	public void setCart_totalAmount(int cart_totalAmount) {
+		this.cart_totalAmount = cart_totalAmount;
 	}
     
     

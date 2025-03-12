@@ -1,6 +1,5 @@
 package kr.co.soldesk.beans;
 
-import java.util.Date;
 
 public class ReportBean {
 

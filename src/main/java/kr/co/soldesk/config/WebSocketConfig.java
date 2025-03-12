@@ -6,8 +6,8 @@ import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBr
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
 
-@Configuration
-@EnableWebSocketMessageBroker
+@Configuration // 스프링 컨테이너가 관리해야 웹소켓 기능이 동작
+@EnableWebSocketMessageBroker // STOMP 기반 웹소켓 메시징을 활성화
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 	//WebSocketMessageBrokerConfigurer: WebSocket과 STOMP를 이용한 메시징을 설정할 때 사용되는 인터페이스
 	//웹소켓을 통해 메시지를 주고받는 환경을 구성할 수 있도록 도와주는 역할
@@ -16,9 +16,10 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 		public void registerStompEndpoints(StompEndpointRegistry registry) {
 		//STOMP: 웹소켓 목적지 등록
 		//클라이언트가 웹소켓 서버에 연결할 때 사용하는 URL을 지정
-			registry.addEndpoint("/chat").setAllowedOriginPatterns("*") // 모든 도메인의 요청을 허용
-					.withSockJS();//웹소켓이 지원되지 않는 환경에서는 SockJS(대체 기술) 사용
-		}
+		
+		  registry.addEndpoint("/chat").setAllowedOriginPatterns("*") // 모든 도메인의 요청을 허용
+		  		.withSockJS();//웹소켓이 지원되지 않는 환경에서는 SockJS(대체 기술) 사용
+		 	}
 
 		@Override
 		public void configureMessageBroker(MessageBrokerRegistry registry) {

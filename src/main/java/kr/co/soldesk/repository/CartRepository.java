@@ -21,6 +21,9 @@ public class CartRepository {
 	public String getItemName(int item_index) {
 		return cartMapper.getItemName(item_index);
 	}
+	public int getItemPrice(int item_index) {
+		return cartMapper.getItemPrice(item_index);
+	}
 	public List<CartItemDTO> getMemberCart(String id){
 		return cartMapper.getMemberCart(id);
 	}
@@ -30,5 +33,8 @@ public class CartRepository {
 
     public void deleteItem(int itemIndex) {
         cartMapper.deleteItem(itemIndex);
+    }
+    public void updateCartTotal(int totalAmount, String id) {
+    	cartMapper.updateCartTotal(totalAmount, id);
     }
 }
