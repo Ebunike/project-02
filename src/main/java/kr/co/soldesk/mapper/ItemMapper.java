@@ -14,14 +14,15 @@ import kr.co.soldesk.beans.ThemeBean;
 @Mapper
 public interface ItemMapper {
 
-	@Insert("INSERT INTO Item (item_index, theme_index, seller_index, item_name, item_price, item_quantity, item_picture)\r\n"
+	@Insert("INSERT INTO Item (item_index, theme_index, seller_index, item_name, item_price, item_quantity, item_picture, item_info)\r\n"
 			+ "VALUES (Item_seq.NEXTVAL, \r\n"
 			+ "        #{itemBean.theme_index}, \r\n"
 			+ "        (select seller_index from seller where id = #{id}), \r\n"
 			+ "        #{itemBean.item_name}, \r\n"
 			+ "        #{itemBean.item_price}, \r\n"
 			+ "        #{itemBean.item_quantity}, \r\n"
-			+ "        #{itemBean.item_picture, jdbcType=VARCHAR})")
+			+ "        #{itemBean.item_picture, jdbcType=VARCHAR}, \r\n"
+			+ "        #{itemBean.item_info})")
 	void insert_kitItem(@Param("itemBean")ItemBean itemBean,@Param("id") String id);
 	
 	@Insert("insert into Kit (kit_index, item_index, kit_name)\r\n"

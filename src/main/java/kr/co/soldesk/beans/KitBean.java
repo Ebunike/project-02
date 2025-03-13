@@ -1,12 +1,10 @@
 package kr.co.soldesk.beans;
 
-import javax.validation.constraints.NotNull;
 
 public class KitBean {
 
 	private int kit_index;
 	private int item_index;
-	@NotNull
 	private String kit_name;
 	
 	public int getKit_index() {

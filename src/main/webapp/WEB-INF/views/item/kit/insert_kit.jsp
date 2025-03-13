@@ -90,8 +90,8 @@
 				<input type="file" id="kitPicture" name="kitPicture" accept="image/*"/>
 			</div>
 			<div class="item-box">
-				<label for="kitConent">제품 상세설명</label>
-				<input type="tex">
+				<label for="kitContent">제품 상세설명</label>
+				<input type="text" name="kitContent" id="kitContent">
 			</div>
 			<button class="insert_kit" type="submit">등록</button>
 		</form>

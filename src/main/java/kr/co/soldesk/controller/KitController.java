@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.soldesk.beans.ItemBean;
+import kr.co.soldesk.beans.ItemDTO;
 import kr.co.soldesk.beans.KitBean;
 import kr.co.soldesk.beans.MemberBean;
 import kr.co.soldesk.beans.ThemeBean;
@@ -46,27 +47,34 @@ public class KitController {
 	public String insert_kit() {
 
 		if(loginUser.getLogin().equals("x") || loginUser.getLogin().equals("b")) {
-			return "item/kit/insert_kit_faiure";
+			return "item/kit/insert_kit_failure";
 		}
 		return "item/kit/insert_kit";
 	}
 	@PostMapping("/insert_kit_pro")
-	public String insert_kit_pro(@Valid ItemBean itemBean,@Valid KitBean kitBean,@Valid ThemeBean themeBean,@RequestParam("kitPicture") MultipartFile upload_file, HttpServletRequest request, BindingResult result) {
+	public String insert_kit_pro(@Valid ItemDTO itemDTO, BindingResult result,@RequestParam("kitPicture") MultipartFile upload_file, HttpServletRequest request) {
+		
+		
+		ThemeBean themeBean = new ThemeBean();
+		ItemBean itemBean = new ItemBean();
+		KitBean kitBean = new KitBean();
+		
+		
 		if(result.hasErrors()) {
 			return "item/kit/insert_kit";
 		}
 		try {
 			themeBean.setTheme_name(request.getParameter("kitTheme"));
-	        itemBean.setItem_name(request.getParameter("kitName"));
+			String name = request.getParameter("kitName");
+			System.out.println("테스트: " + name);
+	        itemBean.setItem_name(name);
 	        itemBean.setItem_price(Integer.parseInt(request.getParameter("kitPrice")));
 	        itemBean.setItem_quantity(Integer.parseInt(request.getParameter("kitQuantity")));
-	        if(upload_file == null) {
-	        	System.out.println("뭔가 잘못됨");
-	        }
+	        itemBean.setItem_info(request.getParameter("kitContent"));
 	        itemBean.setUpload_file(upload_file);
 	        int theme_index = itemService.getTheme_index(themeBean);
 	        itemBean.setTheme_index(theme_index);
-	        kitBean.setKit_name(request.getParameter("kitName"));
+	        kitBean.setKit_name(name);
 	        
 	    } catch (NumberFormatException e) {
 	        e.printStackTrace();

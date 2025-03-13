@@ -1,25 +1,30 @@
 package kr.co.soldesk.beans;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 import org.springframework.web.multipart.MultipartFile;
 
 public class ItemBean {
 
    private int item_index;
+   
    private int theme_index;
+   
    private int seller_index;
-   @Size(min = 3)
+   
    private String item_name;
-   @NotNull
+   
    private int item_price;
-   @NotNull
+   
    private int item_quantity;
+   
    private int item_like;
+   
    private float item_avgRating;
+   
    private String item_picture;
+   
    private String item_info;
+   
    private MultipartFile upload_file;
    
    public int getItem_index() {
