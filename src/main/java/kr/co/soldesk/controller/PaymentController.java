@@ -22,9 +22,9 @@ public class PaymentController {
 	@Autowired
 	private PaymentService paymentService;
 
-	// ì„ì‹œ ë©”ì„œë“œ. ê²°ì œí•  ì •ë³´ ë³´ë‚´ì£¼ëŠ”ê±°.
-	// ì´í›„ ê²°ì œí•˜ê¸° ëˆ„ë¥´ë©´ Orderê±°ì³ì„œ @ModelAttributeì— PaymentReqDTO paymetReqë¡œí•˜ê²Œ ë°”ê¿”ì•¼í•¨.
-	// *ì¥ë°”êµ¬ë‹ˆì—ì„œ ê²°ì œí•˜ê¸°ëˆ„ë¥´ë©´ POSTí•´ì£¼ê¸°
+	// ÀÓ½Ã ¸Ş¼­µå. °áÁ¦ÇÒ Á¤º¸ º¸³»ÁÖ´Â°Å.
+	// ÀÌÈÄ °áÁ¦ÇÏ±â ´©¸£¸é Order°ÅÃÄ¼­ @ModelAttribute¿¡ PaymentReqDTO paymetReq·ÎÇÏ°Ô ¹Ù²ã¾ßÇÔ.
+	// *Àå¹Ù±¸´Ï¿¡¼­ °áÁ¦ÇÏ±â´©¸£¸é POSTÇØÁÖ±â
 	@GetMapping("/forpayment")
 	public String forpayment(@ModelAttribute("paymentReq") PaymentReqDTO paymentReq, Model model) {
 		
@@ -47,7 +47,7 @@ public class PaymentController {
 	 * 
 	 * return "payment/forpayment"; }
 	 * 
-	 * // ê²°ì œ ìš”ì²­ì„ ìœ„í•œ ë©”ì„œë“œ
+	 * // °áÁ¦ ¿äÃ»À» À§ÇÑ ¸Ş¼­µå
 	 * 
 	 * @PostMapping("/payment") public String payment_pro(@Valid PaymentReqDTO
 	 * paymentReq, BindingResult result, Model model) throws Exception {
@@ -64,7 +64,7 @@ public class PaymentController {
 	 * 
 	 * e.printStackTrace();
 	 * 
-	 * }throw new Exception("í† ìŠ¤ê°€ ìš”ì²­ì„ ì•ˆë°›ì•„ì¤Œ");
+	 * }throw new Exception("Åä½º°¡ ¿äÃ»À» ¾È¹Ş¾ÆÁÜ");
 	 * 
 	 * 
 	 * }
@@ -91,7 +91,7 @@ public class PaymentController {
 		return "payment/fail";
 	}
 	
-	//ê²°ì œ í™˜ë¶ˆë©”ì„œë“œ ì§„í–‰ì¤‘
+	//°áÁ¦ È¯ºÒ¸Ş¼­µå ÁøÇàÁß
 	
 	/*
 	 * 
