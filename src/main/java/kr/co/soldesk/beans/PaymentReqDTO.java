@@ -4,17 +4,17 @@ public class PaymentReqDTO {
 
 
     private String orderId;
-    private int amount;  // 결제 금액임
+    private int amount;  // ���� �ݾ���
     private String successUrl; 
     private String failUrl; 
     private String paymentKey;  
     private String pay_Method;  
 
-	private String orderName;//주문이름 어케하지...
+	private String orderName;//�ֹ��̸� ��������...
 	private String customerEmail;
 	private String customerName;
 	
-	private String customerMobilePhone;//나중에 추가한거라 오류터질수도
+	private String customerMobilePhone;//���߿� �߰��ѰŶ� ������������
 	
 	
 	

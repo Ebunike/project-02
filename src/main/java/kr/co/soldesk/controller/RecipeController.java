@@ -15,9 +15,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import kr.co.soldesk.beans.MemberBean;
 import kr.co.soldesk.beans.OpenRecipeBean;
+import kr.co.soldesk.beans.StepBean;
 import kr.co.soldesk.service.OpenRecipeService;
+
+
+
+
+
+
 
 @Controller
 @RequestMapping("/recipe")
@@ -37,11 +47,15 @@ public class RecipeController {
 		List<OpenRecipeBean> openRecipeList =
 				openRecipeService.getLikeRecipe(theme_index);
 		
+		
 		model.addAttribute("openRecipeList", openRecipeList);
 		model.addAttribute("theme_index",theme_index);
 		
 		return "recipe/recipe_main";
 	}
+	
+	
+	
 	
 	@GetMapping("/recipe_write")
 	public String recipe_write(@ModelAttribute("writeRecipe") OpenRecipeBean writeRecipe,
@@ -50,13 +64,12 @@ public class RecipeController {
 		
 		return "recipe/recipe_write";
 	}
+	
 
 	@PostMapping("/recipe_write_pro")
 	public String recipe_write_pro(@ModelAttribute("writeRecipe") OpenRecipeBean writeRecipe, 
-			
-			BindingResult result) {
+			BindingResult result, Model model, @RequestParam("steps") String stepsJson) {
 		
-		System.out.println("컨트롤러: " + writeRecipe.getOpenRecipe_content());
 		
 		  if (writeRecipe.getTheme_index() == 0) {
 			  System.out.println("카테고리 선택 오류");
@@ -73,7 +86,26 @@ public class RecipeController {
 			    return "recipe/recipe_write";
 			}
 		
+		  
+		  //write_pro로 steps라는 JSON데이터 던져놓은상태임. stepsJson으로 받음
+		  
+		    // JSON 문자열을 List<StepBean>으로 변환
+		    try {
+		        ObjectMapper objectMapper = new ObjectMapper();
+		        List<StepBean> steps = objectMapper.readValue(stepsJson, 
+		                objectMapper.getTypeFactory().constructCollectionType(List.class, StepBean.class));
+		        writeRecipe.setOpenRecipe_content(steps);
+		    } catch (JsonProcessingException e) {
+		        e.printStackTrace();
+		    }  
+		  
+		  
+		  
+		  
 		openRecipeService.addOpenRecipe(writeRecipe);
+	
+		model.addAttribute("theme_index", writeRecipe.getTheme_index());
+		
 		return "recipe/recipe_write_success";
 		
 	}
@@ -105,6 +137,7 @@ public class RecipeController {
 		if(result.hasErrors()) {
 			return "recipe/recipe_modify";
 		}
+		
 		openRecipeService.modifyRecipe(modifyRecipe);
 		
 		return "recipe/recipe_modify_success";
@@ -118,19 +151,6 @@ public class RecipeController {
 		openRecipeService.deleteRecipe(openRecipe_index);
 		
 		return "recipe/recipe_delete_success";
-	}
-	@GetMapping("/recipe_kit_main")
-	public String main(@RequestParam("theme_index") int theme_index, Model model) {
-		
-	
-	List<OpenRecipeBean> openRecipeList =
-			openRecipeService.getLikeRecipe(theme_index);
-	
-	
-	model.addAttribute("openRecipeList", openRecipeList);
-	model.addAttribute("theme_index",theme_index);
-	
-		return "recipe/recipe_kit_main";
 	}
 	
 

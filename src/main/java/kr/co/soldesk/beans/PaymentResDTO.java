@@ -4,7 +4,7 @@ public class PaymentResDTO {
 
 
     private String orderId;
-    private int amount;  // 결제 금액임
+    private int amount;  // ���� �ݾ���
     private String successUrl; 
     private String failUrl; 
     private String paymentKey;  
@@ -12,7 +12,7 @@ public class PaymentResDTO {
 
     
     
-	private String orderName;//주문이름 어케하지...
+	private String orderName;//�ֹ��̸� ��������...
 	private String customerEmail;
 	private String customerName;
 	private String customerMobilePhone;

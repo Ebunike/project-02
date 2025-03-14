@@ -13,7 +13,7 @@
     <h2>결제 정보</h2>
     
     <!-- Spring Form 태그를 사용하여 PaymentReqDTO 객체를 자동으로 바인딩 -->
-    <form:form modelAttribute="paymentReq" action="${root }/payment/payment" method="post">
+    <form:form modelAttribute="paymentReq" action="${root }/payment/forpayment_pro" method="post">
       <label for="orderId">주문 ID:</label>
       <form:input path="orderId" id="orderId" /><br><br>
       
@@ -32,11 +32,13 @@
       <label for="customerName">고객 이름:</label>
       <form:input path="customerName" id="customerName"  /><br><br>
 
-
+	<form:hidden path="successUrl" value="/Project_hoon/payment/success" />
+	
+	
       <label for="customerName">고객 전번:</label>
       <form:input path="customerMobilePhone" id="customerMobilePhone"  /><br><br>
       
-      <button type="submit">결제하기</button>
+      <button type="submit" >결제하기</button>
     </form:form>
   </body>
 </html>

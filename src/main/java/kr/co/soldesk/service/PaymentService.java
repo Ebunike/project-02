@@ -5,11 +5,12 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.Date;
 
 import javax.annotation.Resource;
 
-import org.apache.ibatis.annotations.ConstructorArgs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,7 @@ import kr.co.soldesk.beans.MemberBean;
 import kr.co.soldesk.beans.PaymentBean;
 import kr.co.soldesk.beans.PaymentReqDTO;
 import kr.co.soldesk.beans.PaymentResDTO;
+import kr.co.soldesk.beans.RefundBean;
 import kr.co.soldesk.repository.PaymentRepository;
 
 @Service
@@ -24,8 +26,6 @@ public class PaymentService {
 	
 	@Autowired
 	private PaymentRepository paymentRepository;
-
-
 
 	@Resource(name = "loginMemberBean")
 	private MemberBean loginMemberBean;
@@ -70,8 +70,7 @@ public class PaymentService {
 		paymentRes.setCustomerEmail(customerEmail);
 		paymentRes.setCustomerName(paymentReq.getCustomerName());
 		paymentRes.setFailUrl("");
-		////잊지말고 토스에서 받아다 오기
-		paymentRes.setSuccessUrl("");
+		paymentRes.setSuccessUrl(paymentReq.getSuccessUrl());
 		paymentRes.setOrderId(paymentReq.getOrderId());
 		paymentRes.setOrderName(orderName);
 		paymentRes.setPay_Method(pay_method);
@@ -131,6 +130,8 @@ public class PaymentService {
 	        throw new NullPointerException("paymentRepository가 null입니다!");
 	    }
 	    
+	    System.out.println("테스트: " + payment.getOrder_id());
+	    
 	    paymentRepository.addPayment(payment);
 	    return payment;
 		
@@ -155,28 +156,87 @@ public class PaymentService {
 		
 	}
 	
-    public String requestFinalPayment(String paymentKey, String orderId, int amount) {
+	//토스에 최종 승인 요청
+	public String requestFinalPayment(String paymentKey, String orderId, int amount) {
+	    try {
+	        // 토스 결제 승인 API URL
+	        URI uri = URI.create("https://api.tosspayments.com/v1/payments/confirm");
+
+	        // 인증 정보 (테스트 시크릿 키를 Base64 인코딩)
+	        String secretKey = "test_sk_vZnjEJeQVxNEgMnZk2m98PmOoBN0:";
+	        
+	        // Base64 인코딩
+	        String encodedAuth = Base64.getEncoder().encodeToString((secretKey + ":").getBytes(StandardCharsets.UTF_8));
+
+	        // JSON 요청 바디 생성
+	        String jsonPayload = String.format("{\"paymentKey\":\"%s\",\"orderId\":\"%s\",\"amount\":%d}", 
+	                                           paymentKey, orderId, amount);
+
+	        // HTTP 요청 생성
+	        HttpRequest request = HttpRequest.newBuilder()
+	            .uri(uri)
+	            .header("Authorization", "Basic " + encodedAuth)
+	            .header("Content-Type", "application/json")
+	            .POST(HttpRequest.BodyPublishers.ofString(jsonPayload))
+	            .build();
+
+	        // HTTP 요청 전송 및 응답 받기
+	        HttpClient client = HttpClient.newHttpClient();
+	        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+	        // 응답 출력
+	        return response.body();
+
+	    } catch (Exception e) {
+	        throw new RuntimeException("토스 결제 승인 요청 중 오류 발생", e);
+	    }
+	}
+    
+    //DB에 paymentKey도 저장
+    public void savepaymentKey(String paymentKey,String orderId) {
+    	paymentRepository.savepaymentKey(paymentKey,orderId);
+    	
+    }
+    
+    
+    
+    //환불요청
+    public boolean requestPaymentCancel(String paymentKey, String cancelReason, int cancelAmount) {
         try {
-            // 요청 본문에 전달된 paymentKey, orderId, amount 값 삽입
-            String requestBody = String.format("{\"paymentKey\":\"%s\",\"amount\":%d,\"orderId\":\"%s\"}",
-                                                paymentKey, amount, orderId);
-
-            // HttpRequest 생성
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create("https://api.tosspayments.com/v1/payments/confirm"))
-                    .header("Authorization", "Basic dGVzdF9za196WExrS0V5cE5BcldtbzUwblgzbG1lYXhZRzVSOg==")
-                    .header("Content-Type", "application/json")
-                    .method("POST", HttpRequest.BodyPublishers.ofString(requestBody))
-                    .build();
-
-            // HTTP 요청 보내기
+                .uri(URI.create("https://api.tosspayments.com/v1/payments/" + paymentKey + "/cancel")) // paymentKey 삽입
+                .header("Authorization", "Basic dGVzdF9za192Wm5qRUplUVZ4TkVnTW5aazJtOThQbU9vQk4wOg==")
+                .header("Content-Type", "application/json")
+                .method("POST", HttpRequest.BodyPublishers.ofString(
+                        "{\"cancelReason\":\"" + cancelReason + "\",\"cancelAmount\":" + cancelAmount + "}"
+                    ))
+                .build();
+            
             HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-
-            // 응답 결과 반환
-            return response.body();
+            System.out.println(response.body());
+            
+            
+            return true;
+            
         } catch (Exception e) {
             e.printStackTrace();
-            return "Error: " + e.getMessage();
+            return false;
         }
     }
+    
+	/*
+	 * //어떤물품 환불할지 알수있게 order_detail_index꺼내오기 
+	 * public String getOrderDetail() {
+	 * paymentRepository.getOrderDetail() }
+	 */
+    
+    
+    
+    
+    //환불 정보 저장
+    public void addRefund(RefundBean refund) {
+    	paymentRepository.addRefund(refund);
+    	
+    }
+    
 }
