@@ -76,16 +76,17 @@ public class PaymentController {
 		return "payment/fail";
 	}
 
+	
+	
 	// 결제 환불메서드 진행중
 
-	
 	//@PostMapping("/cancel") 
 	@GetMapping("/cancel") 
 	public String paymentcancel(@RequestParam(name="paymentKey", required = true) String paymentKey,
 				@RequestParam(name="cancelReason", required = true) String cancelReason,
 				@RequestParam(name="cancelAmount") int cancelAmount) {
 		
-		System.out.println("��Ʈ�ѷ�: " + paymentKey);
+		System.out.println("서비스쪽 " + paymentKey);
 		
 			
 		//환불요청
