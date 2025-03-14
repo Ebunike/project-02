@@ -68,7 +68,8 @@ public class ReportController {
         }
 
         ReportBean report_detail = reportService.getReportById(report_id);
-        model.addAttribute("report_detail", report_detail);
+        model.addAttribute("report", report_detail);
+        model.addAttribute("loginUser", loginUser);
         return "report/report_detail";
     }
 

@@ -88,20 +88,20 @@
         <!-- 전화번호 (사용자가 수정할 수 없게 readonly 설정) -->
         <div class="form-group">
             <label for="tel">전화번호</label>
-            <form:input id="tel" path="tel" readonly="true" required="true" />
+            <form:input id="tel" path="tel" type="text" required="true" />
         </div>
 
         <!-- 성별 (사용자가 수정할 수 없게 disabled 설정) -->
         <div class="form-group">
     		<label for="gender">성별</label>
-    		<div>
+   		 <div>
        		 <label>
             <input type="radio" id="male" name="gender" value="남자" required="true"/> 남자
-       		 </label>
-       		 <label>
+        </label>
+        	<label>
             <input type="radio" id="female" name="gender" value="여자" required="true"/> 여자
         </label>
-    </div>
+    	</div>
 </div>
 		<div class="form-group">
             <label for="id">아이디</label>

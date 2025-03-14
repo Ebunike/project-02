@@ -56,10 +56,13 @@ public class KitController {
 			return "item/kit/insert_kit";
 		}
 		try {
+			System.out.println("ddddddd");
 			themeBean.setTheme_name(request.getParameter("kitTheme"));
 	        itemBean.setItem_name(request.getParameter("kitName"));
+	        System.out.println(itemBean.getItem_name());
 	        itemBean.setItem_price(Integer.parseInt(request.getParameter("kitPrice")));
 	        itemBean.setItem_quantity(Integer.parseInt(request.getParameter("kitQuantity")));
+	        System.out.println(itemBean.getItem_name());
 	        if(upload_file == null) {
 	        	System.out.println("뭔가 잘못됨");
 	        }

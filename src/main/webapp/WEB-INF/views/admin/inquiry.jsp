@@ -10,18 +10,18 @@
     
     <h2>읽지 않은 고객 문의</h2>
     <ul>
-        <c:forEach var="suggestion" items="${report}">
-            <c:if test="${suggestion.report_read == '안읽음'}">
-                <li><a href="${root }/admin/viewinquiry?id=${suggestion.report_id}">${suggestion.report_title}</a></li>
+        <c:forEach var="suggestion" items="${inquiry}">
+            <c:if test="${suggestion.inquiry_read == '안읽음'}">
+                <li><a href="${root }/admin/viewinquiry?idx=${suggestion.inquiry_idx}">${suggestion.inquiry_title}</a></li>
             </c:if>
         </c:forEach>
     </ul>
 
     <h2>읽은 고객 문의</h2>
     <ul>
-        <c:forEach var="suggestion" items="${report}">
-            <c:if test="${suggestion.report_read == '읽음'}">
-                <li><a href="${root }/admin/viewinquiry?id=${suggestion.report_id}">${suggestion.report_title}</a></li>
+        <c:forEach var="suggestion" items="${inquiry}">
+            <c:if test="${suggestion.inquiry_read == '읽음'}">
+                <li><a href="${root }/admin/viewinquiry?idx=${suggestion.inquiry_idx}">${suggestion.inquiry_title}</a></li>
             </c:if>
         </c:forEach>
     </ul>

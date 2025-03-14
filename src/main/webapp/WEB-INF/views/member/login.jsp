@@ -77,6 +77,12 @@
 	                  	<a href="https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=_7r1lFqIcHDabyPs6PkX&redirect_uri=http://localhost:9091/Project_hoon/login/naver&state=<%=state%>">
 	                  		<img src="${root}/logo/naver_login.png">
 	                  	</a>
+	                  	
+	                  </div>
+                  	  <div class="naver-login">
+	                  	<a href="https://accounts.google.com/o/oauth2/v2/auth?scope=openid%20email%20profile&response_type=code&client_id=698222345372-4bdaro205t56cs6r3lfvq1ia8u0lsvr8.apps.googleusercontent.com&redirect_uri=http://localhost:9091/Project_hoon/login/google&state=<%=state%>">구글 로그인
+	                  	</a>
+	                  	
 	                  </div>
                   </div>
                   <div class="form-group text-right">

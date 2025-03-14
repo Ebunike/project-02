@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.co.soldesk.beans.MemberBean;
 import kr.co.soldesk.beans.ReportBean;
+import kr.co.soldesk.beans.InquiryBean;
 import kr.co.soldesk.service.AdminService;
 import kr.co.soldesk.service.MemberService;
 
@@ -30,33 +31,33 @@ public class AdminController {
 		return "admin/adminmain";
 	}
 	
-	@GetMapping("/report")
+	@GetMapping("/inquiry")
 	public String suggestion(Model model) {
-		List<ReportBean> report = adminService.getReport();
-		model.addAttribute("report", report);
-		return "admin/report";
+		List<InquiryBean> inquiry = adminService.getInquiry();
+		model.addAttribute("inquiry", inquiry);
+		return "admin/inquiry";
 	}
 	@GetMapping("/viewinquiry")
-	public String viewinquiry(@Param("id") int id, Model model) {
-		ReportBean oneReport = adminService.oneReport(id);
+	public String viewinquiry(@Param("idx") int idx, Model model) {
+		InquiryBean oneInquiry = adminService.oneInquiry(idx);
 		
-		model.addAttribute("oneReport",oneReport);
+		model.addAttribute("oneInquiry",oneInquiry);
 		return "admin/viewinquiry";
 	}
 	@PostMapping("/viewinquiry_pro")
-	public String viewinquiry_pro(@RequestParam("reply_content") String reply, @Param("id") int id, Model model) {
+	public String viewinquiry_pro(@RequestParam("reply_content") String reply, @Param("idx") int idx, Model model) {
 			
-		System.out.println("id: " + id);
+		System.out.println("id: " + idx);
 		System.out.println("reply: " + reply);
-		adminService.addreply(reply, id);
-		model.addAttribute("id",id);
+		adminService.addreply(reply, idx);
+		model.addAttribute("idx",idx);
 
-		return "redirect:/admin/viewinquiry?id="+id;
+		return "redirect:/admin/viewinquiry?idx="+idx;
 	}
 	@PostMapping("deleteReply")
-	public String deleteReply(@Param("id") int id) {
-		adminService.deleteReply(id);
-		return "redirect:/admin/viewinquiry?id="+id;
+	public String deleteReply(@Param("idx") int idx) {
+		adminService.deleteReply(idx);
+		return "redirect:/admin/viewinquiry?idx="+idx;
 	}
 	@GetMapping("/management")
 	public String management(Model model) {

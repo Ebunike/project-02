@@ -66,9 +66,10 @@
 		<form action="${root }/item/kit/insert_kit_pro" method="post" enctype="multipart/form-data">
 			<div class="item-box">
 				<label for="kitName" >제품 이름</label>
-				<input type="text" name="kitName" id="kitName"/>
-				<input type="hidden" name="kit" value="${kit }"/>
+				<input type="text" name="kitName" id="kitName" required/>
+				
 			</div>
+			<input type="hidden" name="kit" value="${kit}"/>
 			<div class="item-box">
 				<label for="kitPrice">제품 가격</label>
 				<input type="text" name="kitPrice" id="kitPrice"/>
@@ -90,8 +91,8 @@
 				<input type="file" id="kitPicture" name="kitPicture" accept="image/*"/>
 			</div>
 			<div class="item-box">
-				<label for="kitConent">제품 상세설명</label>
-				<input type="tex">
+				<label for="kitContent">제품 상세설명</label>
+				<input type="text" name="kitContent" id="kitContent"/>
 			</div>
 			<button class="insert_kit" type="submit">등록</button>
 		</form>

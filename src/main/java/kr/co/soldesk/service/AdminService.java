@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.soldesk.beans.MemberBean;
 import kr.co.soldesk.beans.ReportBean;
+import kr.co.soldesk.beans.InquiryBean;
 import kr.co.soldesk.repository.AdminRepository;
 
 @Service
@@ -28,13 +29,13 @@ public class AdminService {
 	      return keyword;
 	   }
 	   @Transactional
-	   public List<ReportBean> getReport(){
-	      return adminRepository.getReport();
+	   public List<InquiryBean> getInquiry(){
+	      return adminRepository.getInquiry();
 	   }
 	   @Transactional
-	   public ReportBean oneReport(int id) {
+	   public InquiryBean oneInquiry(int id) {
 		   adminRepository.read(id);
-	      return adminRepository.oneReport(id);
+	      return adminRepository.oneInquiry(id);
 	   }
 	   @Transactional
 	   public void addreply(String reply, int id) {

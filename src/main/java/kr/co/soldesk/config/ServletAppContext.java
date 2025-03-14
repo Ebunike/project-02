@@ -56,7 +56,7 @@ public class ServletAppContext implements WebMvcConfigurer{
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 
 		registry.addResourceHandler("/upload/**")
-		.addResourceLocations("file:/D:/soldesk/workspace/Project_hoon/src/main/webapp/upload/");
+		.addResourceLocations("file:/C:/Users/illum/git/project-02/src/main/webapp/upload/");
 		
 		registry.addResourceHandler("/**")
 		.addResourceLocations("/resources/");

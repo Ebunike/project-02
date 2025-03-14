@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import kr.co.soldesk.beans.InquiryBean;
 import kr.co.soldesk.beans.MemberBean;
 import kr.co.soldesk.beans.ReportBean;
 import kr.co.soldesk.mapper.AdminMapper;
@@ -23,20 +24,20 @@ public class AdminRepository {
 	   public String getkeyword(String id) {
 	      return adminMapper.getkeyword(id);
 	   }
-	   public List<ReportBean> getReport(){
-	      return adminMapper.getReport();
+	   public List<InquiryBean> getInquiry(){
+	      return adminMapper.getInquiry();
 	   }
-	   public ReportBean oneReport(int id) {
-	      return adminMapper.oneReport(id);
+	   public InquiryBean oneInquiry(int idx) {
+	      return adminMapper.oneInquiry(idx);
 	   }
-	   public void read(int id) {
-		   adminMapper.read(id);
+	   public void read(int idx) {
+		   adminMapper.read(idx);
 	   }
-	   public void addreply(String reply, int id) {
-		   adminMapper.addreply(reply,id);
+	   public void addreply(String reply, int idx) {
+		   adminMapper.addreply(reply,idx);
 	   }
-	   public void deleteReply(int id) {
-		   adminMapper.deleteReply(id);
+	   public void deleteReply(int idx) {
+		   adminMapper.deleteReply(idx);
 	   }
 	   public void sellerdelete(MemberBean memberBean) {
 		   adminMapper.sellerdelete(memberBean);

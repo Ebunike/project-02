@@ -17,7 +17,7 @@
 
     <h2>관리자 메뉴</h2>
     <ul>
-        <li><a href="${root }/admin/report">고객문의 관리</a></li>
+        <li><a href="${root }/admin/inquiry">고객문의 관리</a></li>
         <li><a href="${root }/admin/management">멤버 관리</a></li>
         <li><a href="${root }/admin/notice">공지사항</a></li>
     </ul>

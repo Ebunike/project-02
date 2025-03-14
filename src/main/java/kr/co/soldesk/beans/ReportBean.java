@@ -9,15 +9,21 @@ public class ReportBean {
     private String report_title;    
     private String report_content;  
     private String report_reply;     
-    private String report_read;       
+    private String report_views;      
     //private Date report_date;     
     private String report_date;     
     
-    public ReportBean() {
-    	report_read = "안읽음";
-	}
     
-    public int getReport_id() {
+    
+    public String getReport_views() {
+		return report_views;
+	}
+
+	public void setReport_views(String report_views) {
+		this.report_views = report_views;
+	}
+
+	public int getReport_id() {
         return report_id;
     }
 
@@ -65,13 +71,7 @@ public class ReportBean {
         this.report_reply = report_reply;
     }
 
-    public String getReport_read() {
-        return report_read;
-    }
-
-    public void setReport_read(String report_read) {
-        this.report_read = report_read;
-    }
+    
     /*
     public Date getReport_date() {
         return report_date;
