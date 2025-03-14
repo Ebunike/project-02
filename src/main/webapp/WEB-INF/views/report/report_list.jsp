@@ -38,7 +38,8 @@
         padding: 10px;
     }
     th {
-        background-color: #e0d7b8;
+        background-color: white;
+    	color: black;
     }
     tr:nth-child(even) {
         background-color: #faf9f6;
