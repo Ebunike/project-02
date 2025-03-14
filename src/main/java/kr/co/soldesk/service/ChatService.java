@@ -1,6 +1,7 @@
 package kr.co.soldesk.service;
 
 import java.io.File;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -26,6 +27,35 @@ public class ChatService {
 		chatRepository.insertChatRoom(room);
 		return room;
 	}
+	public ChatRoomBean createRoom(String buyer, String seller, String name) {
+		
+		if (buyer == null || buyer.isEmpty()) {
+		    throw new IllegalArgumentException("Buyer name cannot be null or empty");
+		}
+		if (seller == null || seller.isEmpty()) {
+		    throw new IllegalArgumentException("Seller name cannot be null or empty");
+		}
+		if (name == null || name.isEmpty()) {
+		    throw new IllegalArgumentException("Chat room name cannot be null or empty");
+		}
+		ChatRoomBean chatRoom = new ChatRoomBean();
+	    chatRoom.setBuyer(buyer);
+	    chatRoom.setSeller(seller);
+	    chatRoom.setName(name); // 제목 설정
+	    chatRoom.setCreated_at(LocalDateTime.now().toString());
+	    
+	    //# 테스트
+	    chatRoom.setId(0);
+	    System.out.println("서비스: " + chatRoom.getId());
+	    System.out.println("서비스: " + chatRoom.getBuyer());
+	    System.out.println("서비스: " + chatRoom.getSeller());
+	    
+	    
+	    chatRepository.createRoom(chatRoom);
+	    return chatRoom;
+	}
+
+
 
 	public List<ChatRoomBean> getAllChatRooms() {
 		return chatRepository.getAllChatRooms();

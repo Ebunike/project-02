@@ -26,7 +26,13 @@ public class ItemRepository {
 	public int getTheme_index(ThemeBean themeBean) {
 		return itemMapper.getTheme_index(themeBean);
 	}
-	public List<ItemBean> getItem() {
-		return itemMapper.getItem();
+	public List<ItemBean> getAllKit() {
+		return itemMapper.getAllKit();
+	}
+	public ItemBean getItem(int item_index){
+		return itemMapper.getItem(item_index);
+	}
+	public String getSellerName(int seller_index) {
+		return itemMapper.getSellerName(seller_index);
 	}
 }

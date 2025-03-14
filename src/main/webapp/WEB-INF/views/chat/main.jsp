@@ -21,6 +21,16 @@
 					</li>
 				</c:forEach>
 			</ul>
+			<h3>개인채팅</h3>
+			<ul>
+				<c:forEach var="privateChat" items="${rooms }">
+					<c:if test="${privateChat.buyer == loginUser.name }">
+						<li>${room.name}
+						<button onclick="openChatRoom('${room.id}')">입장</button>
+					</li>
+					</c:if>
+				</c:forEach>
+			</ul>
 		</c:when>
 		<c:otherwise>
 			<p>채팅방이 없습니다. 새 채팅방을 만들어 주세요!</p>

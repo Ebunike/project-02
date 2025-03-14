@@ -63,7 +63,13 @@ public class ItemService {
 	public int getTheme_index(ThemeBean themeBean) {
 		return itemRepository.getTheme_index(themeBean);
 	}
-	public List<ItemBean> getItem() {
-		return itemRepository.getItem();
+	public List<ItemBean> getAllKit() {
+		return itemRepository.getAllKit();
+	}
+	public ItemBean getItem(int item_index){
+		return itemRepository.getItem(item_index);
+	}
+	public String getSellerName(int seller_index) {
+		return itemRepository.getSellerName(seller_index);
 	}
 }

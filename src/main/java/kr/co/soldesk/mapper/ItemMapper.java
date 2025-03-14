@@ -37,5 +37,11 @@ public interface ItemMapper {
 	@Select("SELECT * \r\n"
 			+ "FROM item i\r\n"
 			+ "JOIN kit k ON i.item_name = k.kit_name")
-	List<ItemBean> getItem();
+	List<ItemBean> getAllKit();
+	
+	@Select("select * from Item where item_index = ${item_index}")
+	ItemBean getItem(int item_index);
+	
+	@Select("select m.name from seller s, member m where ${seller_index} = s.seller_index and s.id = m.id")
+	String getSellerName(int seller_index);
 }

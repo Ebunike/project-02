@@ -2,7 +2,6 @@ package kr.co.soldesk.repository;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Select;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -16,12 +15,21 @@ public class ChatRepository {
 	private ChatMapper chatMapper;
 
     public void insertChatRoom(ChatRoomBean chatRoom) {
-    	chatMapper.insertChatRoom(chatRoom);
+    	try {
+    	    chatMapper.insertChatRoom(chatRoom);
+    	} catch (Exception e) {
+    	    throw new RuntimeException("Failed to insert chat room", e);
+    	}
+
     }
     public List<ChatRoomBean> getAllChatRooms(){
     	return chatMapper.getAllChatRooms();
     }
     public int countByName(String name) {
     	return chatMapper.countByName(name);
+    }
+    public void createRoom(ChatRoomBean chatRoom) {
+    	
+    	chatMapper.createRoom(chatRoom);
     }
 }

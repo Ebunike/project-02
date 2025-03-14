@@ -32,11 +32,13 @@ public class ChatController {
     public String chatRoomList(Model model) {
         List<ChatRoomBean> rooms = chatService.getAllChatRooms();
 
-        model.addAttribute("rooms", rooms); // DB의 채팅방 가져오기
+        model.addAttribute("rooms", rooms);// DB의 채팅방 가져오기
+        model.addAttribute("loginUser", loginUser);
         return "chat/main"; 
     }
-    @GetMapping("/chating/room")
+    @GetMapping("/chat/room")
     public String enterChatRoom(@RequestParam("roomId") String roomId, Model model) {
+    	System.out.println("테스트");
     	model.addAttribute("sender", loginUser.getId());
         model.addAttribute("roomId", roomId);
         return "chat/chatRoom"; // chatRoom.jsp 렌더링

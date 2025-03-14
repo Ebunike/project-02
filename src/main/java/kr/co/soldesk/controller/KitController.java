@@ -38,7 +38,7 @@ public class KitController {
 
 	@GetMapping("/kitMain")
 	public String kitMain(Model model) {
-		List<ItemBean> itemList = itemService.getItem();
+		List<ItemBean> itemList = itemService.getAllKit();
 		model.addAttribute("itemList", itemList);
 		
 		return "item/kit/kitMain";
@@ -83,5 +83,15 @@ public class KitController {
 		itemService.insert_kitItem(itemBean);
         itemService.insert_kit(itemBean, kitBean);
 		return "item/kit/insert_kit_success";
+	}
+	
+	@GetMapping("/kit_detail")
+	public String kit_datail(@RequestParam("item_index") int item_index, Model model) {
+		ItemBean itemBean = itemService.getItem(item_index);
+		String sellerName = itemService.getSellerName(itemBean.getSeller_index());
+		model.addAttribute("item", itemBean);
+		model.addAttribute("sellerName", sellerName);
+		model.addAttribute("loginUser", loginUser);
+		return "item/kit/kit_detail";
 	}
 }
