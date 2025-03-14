@@ -5,11 +5,12 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.Date;
 
 import javax.annotation.Resource;
 
-import org.apache.ibatis.annotations.ConstructorArgs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,7 @@ import kr.co.soldesk.beans.MemberBean;
 import kr.co.soldesk.beans.PaymentBean;
 import kr.co.soldesk.beans.PaymentReqDTO;
 import kr.co.soldesk.beans.PaymentResDTO;
+import kr.co.soldesk.beans.RefundBean;
 import kr.co.soldesk.repository.PaymentRepository;
 
 @Service
@@ -25,45 +27,43 @@ public class PaymentService {
 	@Autowired
 	private PaymentRepository paymentRepository;
 
-
-
 	@Resource(name = "loginMemberBean")
 	private MemberBean loginMemberBean;
 	
-	//Åä½º¿¡ °áÁ¦¿äÃ»º¸³»±â Àü¿¡ ÇÑ¹ø È®ÀÎÇÏ´Â°Å
+	//í† ìŠ¤ì— ê²°ì œìš”ì²­ë³´ë‚´ê¸° ì „ì— í•œë²ˆ í™•ì¸í•˜ëŠ”ê±°
 	public PaymentResDTO requestPayments(PaymentReqDTO paymentReq) throws Exception {
 		int amount = paymentReq.getAmount();
 		String pay_method = paymentReq.getPay_Method();
 		String customerEmail = paymentReq.getCustomerEmail();
-		String orderName = paymentReq.getOrderName();//orderName¾îÄÉÁ¤ÇÏÁö...
-		//¿Ö orderNameÀ» °ËÁõÇÏÁö..? orderId¸¦ °ËÁõÇØ¾ßÇÏ´Â°Å ¾Æ´Ñ°¡..??
+		String orderName = paymentReq.getOrderName();//orderNameì–´ì¼€ì •í•˜ì§€...
+		//ì™œ orderNameì„ ê²€ì¦í•˜ì§€..? orderIdë¥¼ ê²€ì¦í•´ì•¼í•˜ëŠ”ê±° ì•„ë‹Œê°€..??
 		
-		if(amount != 3000) /*3000´ë½Å¿¡ orderµç ¾îµğµç getÇØ¼­ ¹ŞÀ» amount°ª*/  
+		if(amount != 3000) /*3000ëŒ€ì‹ ì— orderë“  ì–´ë””ë“  getí•´ì„œ ë°›ì„ amountê°’*/  
 		{
-			throw new Exception("amount°¡ ¾È¸ÂÀ½");
+			throw new Exception("amountê°€ ì•ˆë§ìŒ");
 		}
-		if(!pay_method.equals("CARD") && !pay_method.equals("Ä«µå"))
+		if(!pay_method.equals("CARD") && !pay_method.equals("ì¹´ë“œ"))
 		{
-			throw new Exception("pay_method°¡ ¾È¸ÂÀ½");
+			throw new Exception("pay_methodê°€ ì•ˆë§ìŒ");
 		}
-		//orderNameÀÌµç orderIdµç ¾êµµ °ËÁõÇÒÁö °í¹ÎÇØº¸±â
+		//orderNameì´ë“  orderIdë“  ì–˜ë„ ê²€ì¦í• ì§€ ê³ ë¯¼í•´ë³´ê¸°
 
 		
-		//PaymentBeanÀ¸·Î ¸¸µé°í ÀúÀå
+		//PaymentBeanìœ¼ë¡œ ë§Œë“¤ê³  ì €ì¥
 		try {
 			//PaymentService payService = new PaymentService();
 			PaymentBean payment = new PaymentBean();
 			//payment = payService.toPaymentBean(paymentReq);
 			payment = toPaymentBean(paymentReq);
-			System.out.println(payment.getPay_index() + "ÀúÀåµÊ");
+			System.out.println(payment.getPay_index() + "ì €ì¥ë¨");
 			
 		}
 		catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("PaymentBeanÀ¸·Î ÀúÀåÇÏ±â ½ÇÆĞ");
+			System.out.println("PaymentBeanìœ¼ë¡œ ì €ì¥í•˜ê¸° ì‹¤íŒ¨");
 		}
 
-		//Åä½º¿¡ ¿äÃ»º¸³¾ ResDTO°´Ã¼ »ı¼º
+		//í† ìŠ¤ì— ìš”ì²­ë³´ë‚¼ ResDTOê°ì²´ ìƒì„±
 		PaymentResDTO paymentRes = new PaymentResDTO();
 		
 		paymentRes.setAmount(amount);
@@ -87,7 +87,7 @@ public class PaymentService {
 	}
 	
 	
-	//PaymentReqDTO¸¦ PaymentBeanÀ¸·Î ¹Ù²Ù´Â°Å. DBÀúÀå±îÁö.
+	//PaymentReqDTOë¥¼ PaymentBeanìœ¼ë¡œ ë°”ê¾¸ëŠ”ê±°. DBì €ì¥ê¹Œì§€.
 	public PaymentBean toPaymentBean(PaymentReqDTO paymentReq) {
 		
 		/*
@@ -106,14 +106,14 @@ public class PaymentService {
 		 */
 		
 		
-		  // 1. paymentReq°¡ nullÀÎÁö È®ÀÎ
+		  // 1. paymentReqê°€ nullì¸ì§€ í™•ì¸
 	    if (paymentReq == null) {
-	        throw new NullPointerException("PaymentReqDTO°¡ nullÀÔ´Ï´Ù!");
+	        throw new NullPointerException("PaymentReqDTOê°€ nullì…ë‹ˆë‹¤!");
 	    }
 	    
-	    System.out.println("PaymentReqDTO È®ÀÎ: " + paymentReq);
+	    System.out.println("PaymentReqDTO í™•ì¸: " + paymentReq);
 	    
-	    // 2. ÇÊµå °ªÀÌ nullÀÎÁö È®ÀÎ
+	    // 2. í•„ë“œ ê°’ì´ nullì¸ì§€ í™•ì¸
 	    System.out.println("Amount: " + paymentReq.getAmount());
 	    System.out.println("Pay Method: " + paymentReq.getPay_Method());
 	    System.out.println("Order ID: " + paymentReq.getOrderId());
@@ -125,72 +125,118 @@ public class PaymentService {
 	    payment.setOrder_id(paymentReq.getOrderId());
 	    payment.setPay_date(new Date());
 	    
-	    // 3. paymentRepository°¡ nullÀÎÁö È®ÀÎ
+	    // 3. paymentRepositoryê°€ nullì¸ì§€ í™•ì¸
 	    if (paymentRepository == null) {
-	        throw new NullPointerException("paymentRepository°¡ nullÀÔ´Ï´Ù!");
+	        throw new NullPointerException("paymentRepositoryê°€ nullì…ë‹ˆë‹¤!");
 	    }
 	    
-	    System.out.println("Å×½ºÆ®: " + payment.getOrder_id());
+	    System.out.println("í…ŒìŠ¤íŠ¸: " + payment.getOrder_id());
 	    
 	    paymentRepository.addPayment(payment);
 	    return payment;
 		
 	}
 	
-	//PaymentRes¹Ş°í Åä½º ÃÖÁ¾ ½ÂÀÎ Àü¿¡ °ËÁõÇÏ´Â ¸Ş¼­µå. ÀÌ°Å´Â cart¿¡¼­ Á¦´ë·Î ²ø°í¿Í¼­ ÇÏ´ø°¡ ÇØ¾ßÇÒµí. 
+	//PaymentResë°›ê³  í† ìŠ¤ ìµœì¢… ìŠ¹ì¸ ì „ì— ê²€ì¦í•˜ëŠ” ë©”ì„œë“œ. ì´ê±°ëŠ” cartì—ì„œ ì œëŒ€ë¡œ ëŒê³ ì™€ì„œ í•˜ë˜ê°€ í•´ì•¼í• ë“¯. 
 	public void verifyRequest(String paymentKey, String orderId, int amount) throws Exception {
-	/*    // paymentRepository.findByOrderId(orderId)´Â Optional ´ë½Å nullÀ» ¹İÈ¯ÇÏ´Â ¹æ½ÄÀ¸·Î ¼öÁ¤
+	/*    // paymentRepository.findByOrderId(orderId)ëŠ” Optional ëŒ€ì‹  nullì„ ë°˜í™˜í•˜ëŠ” ë°©ì‹ìœ¼ë¡œ ìˆ˜ì •
 	    PaymentBean payment = paymentRepository.findByOrderId(orderId);
 
-	    if (payment != null) { // ÁÖ¹®ÀÌ Á¸ÀçÇÏ¸é
-	        // °¡°İ ºñ±³
+	    if (payment != null) { // ì£¼ë¬¸ì´ ì¡´ì¬í•˜ë©´
+	        // ê°€ê²© ë¹„êµ
 	        if (payment.getAmount() == amount) {
-	            payment.setPaymentKey(paymentKey); // °¡°İÀÌ ÀÏÄ¡ÇÏ¸é paymentKey ¼³Á¤
+	            payment.setPaymentKey(paymentKey); // ê°€ê²©ì´ ì¼ì¹˜í•˜ë©´ paymentKey ì„¤ì •
 	        } else {
-	            throw new IllegalArgumentException("°¡°İ°ËÁõ °á°ú ¾È¸ÂÀ½"); // °¡°İÀÌ ¸ÂÁö ¾ÊÀ¸¸é ¿¹¿Ü ´øÁü
+	            throw new IllegalArgumentException("ê°€ê²©ê²€ì¦ ê²°ê³¼ ì•ˆë§ìŒ"); // ê°€ê²©ì´ ë§ì§€ ì•Šìœ¼ë©´ ì˜ˆì™¸ ë˜ì§
 	        }
 	    } else {
-	        throw new NoSuchElementException("¸ğ¸£°Ú´Â ¿¡·¯"); // ÁÖ¹®À» Ã£À» ¼ö ¾øÀ¸¸é ¿¹¿Ü ´øÁü
+	        throw new NoSuchElementException("ëª¨ë¥´ê² ëŠ” ì—ëŸ¬"); // ì£¼ë¬¸ì„ ì°¾ì„ ìˆ˜ ì—†ìœ¼ë©´ ì˜ˆì™¸ ë˜ì§
 	}*/
 	
 		
 	}
 	
-    public String requestFinalPayment(String paymentKey, String orderId, int amount) {
+	//í† ìŠ¤ì— ìµœì¢… ìŠ¹ì¸ ìš”ì²­
+	public String requestFinalPayment(String paymentKey, String orderId, int amount) {
+	    try {
+	        // í† ìŠ¤ ê²°ì œ ìŠ¹ì¸ API URL
+	        URI uri = URI.create("https://api.tosspayments.com/v1/payments/confirm");
+
+	        // ì¸ì¦ ì •ë³´ (í…ŒìŠ¤íŠ¸ ì‹œí¬ë¦¿ í‚¤ë¥¼ Base64 ì¸ì½”ë”©)
+	        String secretKey = "test_sk_vZnjEJeQVxNEgMnZk2m98PmOoBN0:";
+	        
+	        // Base64 ì¸ì½”ë”©
+	        String encodedAuth = Base64.getEncoder().encodeToString((secretKey + ":").getBytes(StandardCharsets.UTF_8));
+
+	        // JSON ìš”ì²­ ë°”ë”” ìƒì„±
+	        String jsonPayload = String.format("{\"paymentKey\":\"%s\",\"orderId\":\"%s\",\"amount\":%d}", 
+	                                           paymentKey, orderId, amount);
+
+	        // HTTP ìš”ì²­ ìƒì„±
+	        HttpRequest request = HttpRequest.newBuilder()
+	            .uri(uri)
+	            .header("Authorization", "Basic " + encodedAuth)
+	            .header("Content-Type", "application/json")
+	            .POST(HttpRequest.BodyPublishers.ofString(jsonPayload))
+	            .build();
+
+	        // HTTP ìš”ì²­ ì „ì†¡ ë° ì‘ë‹µ ë°›ê¸°
+	        HttpClient client = HttpClient.newHttpClient();
+	        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+	        // ì‘ë‹µ ì¶œë ¥
+	        return response.body();
+
+	    } catch (Exception e) {
+	        throw new RuntimeException("í† ìŠ¤ ê²°ì œ ìŠ¹ì¸ ìš”ì²­ ì¤‘ ì˜¤ë¥˜ ë°œìƒ", e);
+	    }
+	}
+    
+    //DBì— paymentKeyë„ ì €ì¥
+    public void savepaymentKey(String paymentKey,String orderId) {
+    	paymentRepository.savepaymentKey(paymentKey,orderId);
+    	
+    }
+    
+    
+    
+    //í™˜ë¶ˆìš”ì²­
+    public boolean requestPaymentCancel(String paymentKey, String cancelReason, int cancelAmount) {
         try {
-            // ¿äÃ» º»¹®¿¡ Àü´ŞµÈ paymentKey, orderId, amount °ª »ğÀÔ
-            String requestBody = String.format("{\"paymentKey\":\"%s\",\"amount\":%d,\"orderId\":\"%s\"}",
-                                                paymentKey, amount, orderId);
-
-            // HttpRequest »ı¼º
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create("https://api.tosspayments.com/v1/payments/confirm"))
-                    .header("Authorization", "Basic dGVzdF9za196WExrS0V5cE5BcldtbzUwblgzbG1lYXhZRzVSOg==")
-                    .header("Content-Type", "application/json")
-                    .method("POST", HttpRequest.BodyPublishers.ofString(requestBody))
-                    .build();
-
-            // HTTP ¿äÃ» º¸³»±â
+                .uri(URI.create("https://api.tosspayments.com/v1/payments/" + paymentKey + "/cancel")) // paymentKey ì‚½ì…
+                .header("Authorization", "Basic dGVzdF9za192Wm5qRUplUVZ4TkVnTW5aazJtOThQbU9vQk4wOg==")
+                .header("Content-Type", "application/json")
+                .method("POST", HttpRequest.BodyPublishers.ofString(
+                        "{\"cancelReason\":\"" + cancelReason + "\",\"cancelAmount\":" + cancelAmount + "}"
+                    ))
+                .build();
+            
             HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-
-            // ÀÀ´ä °á°ú ¹İÈ¯
-            return response.body();
+            System.out.println(response.body());
+            
+            
+            return true;
+            
         } catch (Exception e) {
             e.printStackTrace();
-            return "Error: " + e.getMessage();
+            return false;
         }
     }
-	//È¯ºÒ ¸Ş¼­µå ÁøÇàÁß
-    /*
-	 * public String requestPaymentCancel(String paymentKey, String cancelReason) {
-	 * HttpRequest request = HttpRequest.newBuilder() .uri(URI.create(
-	 * "https://api.tosspayments.com/v1/payments/5EnNZRJGvaBX7zk2yd8ydw26XvwXkLrx9POLqKQjmAw4b0e1/cancel"
-	 * )) .header("Authorization",
-	 * "Basic dGVzdF9za192Wm5qRUplUVZ4TkVnTW5aazJtOThQbU9vQk4wOg==")
-	 * .header("Content-Type", "application/json") .method("POST",
-	 * HttpRequest.BodyPublishers.ofString("{\"cancelReason\":\"±¸¸ÅÀÚ º¯½É\"}"))
-	 * .build(); HttpResponse<String> response =
-	 * HttpClient.newHttpClient().send(request,
-	 * HttpResponse.BodyHandlers.ofString()); System.out.println(response.body()); }
+    
+	/*
+	 * //ì–´ë–¤ë¬¼í’ˆ í™˜ë¶ˆí• ì§€ ì•Œìˆ˜ìˆê²Œ order_detail_indexêº¼ë‚´ì˜¤ê¸° 
+	 * public String getOrderDetail() {
+	 * paymentRepository.getOrderDetail() }
 	 */
+    
+    
+    
+    
+    //í™˜ë¶ˆ ì •ë³´ ì €ì¥
+    public void addRefund(RefundBean refund) {
+    	paymentRepository.addRefund(refund);
+    	
+    }
+    
 }

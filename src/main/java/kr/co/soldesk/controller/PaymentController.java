@@ -1,6 +1,5 @@
 package kr.co.soldesk.controller;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.co.soldesk.beans.PaymentReqDTO;
 import kr.co.soldesk.beans.PaymentResDTO;
+import kr.co.soldesk.beans.RefundBean;
 import kr.co.soldesk.service.PaymentService;
 
 @Controller
@@ -22,65 +22,50 @@ public class PaymentController {
 	@Autowired
 	private PaymentService paymentService;
 
-	// ÀÓ½Ã ¸Ş¼­µå. °áÁ¦ÇÒ Á¤º¸ º¸³»ÁÖ´Â°Å.
-	// ÀÌÈÄ °áÁ¦ÇÏ±â ´©¸£¸é Order°ÅÃÄ¼­ @ModelAttribute¿¡ PaymentReqDTO paymetReq·ÎÇÏ°Ô ¹Ù²ã¾ßÇÔ.
-	// *Àå¹Ù±¸´Ï¿¡¼­ °áÁ¦ÇÏ±â´©¸£¸é POSTÇØÁÖ±â
+	// ì„ì‹œ ë©”ì„œë“œ. ê²°ì œí•  ì •ë³´ ë³´ë‚´ì£¼ëŠ”ê±°.
+	// ì´í›„ ê²°ì œí•˜ê¸° ëˆ„ë¥´ë©´ Orderê±°ì³ì„œ @ModelAttributeì— PaymentReqDTO paymetReqë¡œí•˜ê²Œ ë°”ê¿”ì•¼í•¨.
+	// *ì¥ë°”êµ¬ë‹ˆì—ì„œ ê²°ì œí•˜ê¸°ëˆ„ë¥´ë©´ POSTí•´ì£¼ê¸°
 	@GetMapping("/forpayment")
 	public String forpayment(@ModelAttribute("paymentReq") PaymentReqDTO paymentReq, Model model) {
-		
 		return "payment/forpayment";
 	}
-
 	
 	@PostMapping("/forpayment_pro")
-	public String forpayment_pro(@ModelAttribute("paymentReq") PaymentReqDTO paymentReq,Model model) throws Exception {
-		PaymentResDTO paymentRes = paymentService.requestPayments(paymentReq);
-		model.addAttribute("paymentRes",paymentRes);
+	public String forpayment_pro(@ModelAttribute("paymentReq") PaymentReqDTO paymentReq, Model model) throws Exception {
 		
+		System.out.println("ï¿½ï¿½Æ®ï¿½Ñ·ï¿½");
+		
+		PaymentResDTO paymentRes = paymentService.requestPayments(paymentReq);
+		model.addAttribute("paymentRes", paymentRes);
+
 		return "payment/payments";
 	}
-	
 
-	/*
-	 * @GetMapping("/forpayment") public String
-	 * forpayment(@ModelAttribute("paymentReq") PaymentReqDTO paymentReq) {
-	 * 
-	 * return "payment/forpayment"; }
-	 * 
-	 * // °áÁ¦ ¿äÃ»À» À§ÇÑ ¸Ş¼­µå
-	 * 
-	 * @PostMapping("/payment") public String payment_pro(@Valid PaymentReqDTO
-	 * paymentReq, BindingResult result, Model model) throws Exception {
-	 * 
-	 * 
-	 * if(result.hasErrors()) { return "payment/forpayment"; } try { PaymentResDTO
-	 * paymentRes = paymentService.requestPayments(paymentReq);
-	 * model.addAttribute("paymentRes", paymentRes);
-	 * 
-	 * return "payment/payment";
-	 * 
-	 * 
-	 * } catch(Exception e) {
-	 * 
-	 * e.printStackTrace();
-	 * 
-	 * }throw new Exception("Åä½º°¡ ¿äÃ»À» ¾È¹Ş¾ÆÁÜ");
-	 * 
-	 * 
-	 * }
-	 */
+	//í† ìŠ¤ê°€ ê²°ì œìš”ì²­ ë°›ìœ¼ë©´ ë³´ë‚´ì£¼ëŠ” URL + ê²°ì œ ìŠ¹ì¸ê¹Œì§€í•œ í›„ successë¡œ
 	@GetMapping("/success")
 	public String paymentSuccess(@RequestParam(name = "orderId", required = true) String orderId,
 			@RequestParam(name = "paymentKey", required = true) String paymentKey,
-			@RequestParam(name = "amount", required = true) int amount) {
+			@RequestParam(name = "amount", required = true) int amount, Model model) {
 
+		
+		System.out.println("success: " + paymentKey);
+		
 		try {
-			paymentService.verifyRequest(paymentKey, orderId, amount);
+			//ìµœì¢… ìŠ¹ì¸ ìš”ì²­ ë³´ë‚´ê¸°ì „ ê²€ì¦->ì§„í–‰ì¤‘
+			//paymentService.verifyRequest(paymentKey, orderId, amount);
+			//ìµœì¢…ìŠ¹ì¸ ìš”ì²­
 			paymentService.requestFinalPayment(paymentKey, orderId, amount);
+			System.out.println(paymentKey);
+			//paymentKeyë„ DBì— ì €ì¥
+	       //paymentService.savepaymentKey(paymentKey,orderId);
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	        model.addAttribute("paymentKey", paymentKey);
+	        
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return "payment/forpayment";
+	    }
+
 
 		return "payment/success";
 	}
@@ -90,21 +75,36 @@ public class PaymentController {
 
 		return "payment/fail";
 	}
+
+	// ê²°ì œ í™˜ë¶ˆë©”ì„œë“œ ì§„í–‰ì¤‘
+
 	
-	//°áÁ¦ È¯ºÒ¸Ş¼­µå ÁøÇàÁß
+	//@PostMapping("/cancel") 
+	@GetMapping("/cancel") 
+	public String paymentcancel(@RequestParam(name="paymentKey", required = true) String paymentKey,
+				@RequestParam(name="cancelReason", required = true) String cancelReason,
+				@RequestParam(name="cancelAmount") int cancelAmount) {
+		
+		System.out.println("ï¿½ï¿½Æ®ï¿½Ñ·ï¿½: " + paymentKey);
+		
+			
+		//í™˜ë¶ˆìš”ì²­
+		boolean cancelReq_result = paymentService.requestPaymentCancel(paymentKey, cancelReason, cancelAmount);
+		
+		//í™˜ë¶ˆ ì •ë³´ ì €ì¥
+		if(cancelReq_result) {
+
+			RefundBean refund = new RefundBean();
+			refund.setRefund_reason(cancelReason);
+			
+			//order_detail_indexëŠ” êµ¬ë§¤ëª©ë¡ì—ì„œ ë²„íŠ¼ëˆ„ë¥´ë©´ ë³´ë‚´ì£¼ë„ë¡í•´ì•¼í•¨. ì„ì‹œ
+			refund.setOrder_detail_index(1);
+			
+			paymentService.addRefund(refund);
+		}
+		
+		 return "payment/cancel_success"; 
+		 }
 	
-	/*
-	 * 
-	 * 
-	 * @PostMapping("/cancel") public String
-	 * paymentcancel(@RequestParam(name="paramentKey", required = true) String
-	 * paymentkey,
-	 * 
-	 * @RequestParam(name="cancelReason", required = true) String cancelReason) {
-	 * 
-	 * paymentService.requestPaymentCancel(paymentKey, cancelReason)
-	 * 
-	 * return "payment/cancel_success"; }
-	 */
-	
+
 }

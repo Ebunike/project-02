@@ -4,17 +4,17 @@ public class PaymentReqDTO {
 
 
     private String orderId;
-    private int amount;  // ê²°ì œ ê¸ˆì•¡ì„
+    private int amount;  // °áÁ¦ ±İ¾×ÀÓ
     private String successUrl; 
     private String failUrl; 
     private String paymentKey;  
     private String pay_Method;  
 
-	private String orderName;//ì£¼ë¬¸ì´ë¦„ ì–´ì¼€í•˜ì§€...
+	private String orderName;//ÁÖ¹®ÀÌ¸§ ¾îÄÉÇÏÁö...
 	private String customerEmail;
 	private String customerName;
 	
-	private String customerMobilePhone;//ë‚˜ì¤‘ì— ì¶”ê°€í•œê±°ë¼ ì˜¤ë¥˜í„°ì§ˆìˆ˜ë„
+	private String customerMobilePhone;//³ªÁß¿¡ Ãß°¡ÇÑ°Å¶ó ¿À·ùÅÍÁú¼öµµ
 	
 	
 	
