@@ -15,9 +15,10 @@
         margin-top: 30px;
     }
     .listboard-container {
-        background-color: #f5f5dc;
-        padding: 20px;
-        border-radius: 10px;
+        background-color: white;
+        padding: 50px;
+        padding-left: 250px;
+        padding-right: 250px;
         box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
     }
     .board-title {
@@ -30,13 +31,15 @@
         background-color: white;
         border-radius: 8px;
         overflow: hidden;
+        border-collapse: collapse; /* 추가 */
     }
     th, td {
         text-align: center;
         padding: 10px;
     }
     th {
-        background-color: #e0d7b8;
+        background-color: white;
+    	color: black;
     }
     tr:nth-child(even) {
         background-color: #faf9f6;
@@ -45,8 +48,11 @@
         display: flex;
         justify-content: space-between;
         margin-top: 20px;
+        float: right;
     }
-
+    table, th, td{
+    	border-bottom: 1px solid black;
+    }
 </style>
 <!-- Bootstrap CDN -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
@@ -68,9 +74,11 @@
         <div class="btn-container">
             <a href="${root}/report/report_write" class="btn btn-primary">글쓰기</a>
         </div>
-        <table class="table table-bordered">
+        <!-- <table class="table table-bordered"> -->
+       
+        <table class="test_table">
             <thead>
-                <tr>
+                <tr class="title_box">
                     <th>번호</th>
                     <th>제목</th>
                     <th>작성자</th>
@@ -78,14 +86,14 @@
                 </tr>
             </thead>
             <tbody>
-                <c:forEach var="report" items="${report_list}">
-                    <tr>
-                        <td>${report.report_id}</td>
-                        <td><a href="${root }/report/report_detail?report_id=${report.report_id}">${report.report_title}</a></td>
-                        <td>${report.id}</td>
-                        <td>${report.report_date}</td>
-                    </tr>
-                </c:forEach>
+	                <c:forEach var="report" items="${report_list}">
+	                    <tr>
+	                        <td>${report.report_id}</td>
+	                        <td><a href="${root }/report/report_detail?report_id=${report.report_id}">${report.report_title}</a></td>
+	                        <td>${report.id}</td>
+	                        <td>${report.report_date}</td>
+	                    </tr>
+	                </c:forEach>
             </tbody>
         </table>
     </div>

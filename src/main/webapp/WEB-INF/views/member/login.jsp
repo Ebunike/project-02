@@ -28,6 +28,9 @@
         max-width: 400px;
         margin: 10px 0;
     }
+    .card-body {
+    	border: 1px solid black;
+    }
 
 </style>
 <!-- Bootstrap CDN -->

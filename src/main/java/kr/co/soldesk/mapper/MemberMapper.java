@@ -24,7 +24,7 @@ public interface MemberMapper {
    MemberBean login(MemberBean memberBean);
    
    @Select("select * from member m ,seller s where m.id=s.id and m.id=#{id}")
-      SellerBean getSeller(String id);
+   SellerBean getSeller(String id);	
    
    @Select("select id,pw from member where email=#{email}")
    MemberBean naverLogin(String email);
