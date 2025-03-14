@@ -107,6 +107,7 @@
 			        <a></a>
 			        <a href="${root }/member/my_info">내 정보</a>
 			        <a href="${root }/cart/my_cart">장바구니</a>
+			        <a href="${root }/chating/main">채팅</a>
 			        <a href="${root }/member/logout">로그아웃</a>
 			    </div>
 		    </c:when>
@@ -121,6 +122,7 @@
 			        <a></a>
 			        <a href="${root }/member/my_info">내 정보</a>
 			        <a href="${root }/cart/my_cart">장바구니</a>
+			        <a href="${root }/chating/main">채팅</a>
 			        <a href="${root }/member/logout">로그아웃</a>
 			    </div>
 		    </c:when>

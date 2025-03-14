@@ -7,8 +7,6 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
 import javax.annotation.Resource;
-import javax.annotation.processing.SupportedSourceVersion;
-import javax.servlet.http.HttpSession;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +14,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.context.annotation.SessionScope;
 
 import kr.co.soldesk.beans.MemberBean;
-import kr.co.soldesk.beans.NaverBean;
 import kr.co.soldesk.beans.SellerBean;
 import kr.co.soldesk.service.MemberService;
 

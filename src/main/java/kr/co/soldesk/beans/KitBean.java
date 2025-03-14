@@ -1,6 +1,5 @@
 package kr.co.soldesk.beans;
 
-import javax.validation.constraints.NotNull;
 
 public class KitBean {
 

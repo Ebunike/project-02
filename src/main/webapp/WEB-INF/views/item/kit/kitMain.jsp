@@ -124,7 +124,8 @@
 	
 	            <!-- 상품 이름 & 가격 -->
 	            <div class="kit-info">
-	                <a href="">
+	                <%-- <a href="${root }/item/kit/kit_detail?item_index=${item.item_index}"> --%>
+	                <a href="#">
 	                    <span>상품명: ${item.item_name}</span>
 	                    <span>가격: ${item.item_price} 원</span>
 	                </a>

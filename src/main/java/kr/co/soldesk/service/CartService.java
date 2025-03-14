@@ -21,6 +21,9 @@ public class CartService {
 	public String getItemName(int item_index) {
 		return cartRepository.getItemName(item_index);
 	}
+	public int getItemPrice(int item_index) {
+		return cartRepository.getItemPrice(item_index);
+	}
 	public List<CartItemDTO> getMemberCart(String id){
 		return cartRepository.getMemberCart(id);
 	}
@@ -34,5 +37,9 @@ public class CartService {
 
     public void removeItem(int itemIndex) {
         cartRepository.deleteItem(itemIndex); // 아이템 삭제
+    }
+    public void updateCartTotal(int totalAmount, String id) {
+        // 현재 사용자의 장바구니 합계 금액을 업데이트
+        cartRepository.updateCartTotal(totalAmount, id);
     }
 }

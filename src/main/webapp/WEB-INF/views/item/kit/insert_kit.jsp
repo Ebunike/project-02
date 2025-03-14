@@ -92,7 +92,7 @@
 			</div>
 			<div class="item-box">
 				<label for="kitContent">제품 상세설명</label>
-				<input type="text" name="kitContent" id="kitContent"/>
+				<input type="text" name="kitContent" id="kitContent">
 			</div>
 			<button class="insert_kit" type="submit">등록</button>
 		</form>
