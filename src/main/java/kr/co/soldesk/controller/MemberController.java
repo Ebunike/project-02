@@ -44,6 +44,7 @@ public class MemberController {
 	public String memberJoin(@Param("eamil") String email, @Param("name") String name,@ModelAttribute("memberBean") MemberBean memberBean) {
 		memberBean.setName(name);
 		memberBean.setEmail(email);
+		
 		return "member/memberjoin";
 	}
 	@GetMapping("/sellerjoin")
@@ -55,12 +56,14 @@ public class MemberController {
 	@PostMapping("/sellerjoin_pro")
 	public String sellerjoin_pro(@Valid @ModelAttribute("sellerBean") SellerBean sellerBean,BindingResult result) {
 		
-		System.out.println(sellerBean.getAddress());
+		System.out.println(sellerBean.getId());
 		
 			if (result.hasErrors()) {
+				System.out.println(sellerBean.getId());
 		         return "member/sellerjoin";
 		      }
-		memberService.memberJoin(sellerBean);
+			
+		memberService.sellerJoin(sellerBean);
 		return "member/join_success";
 	}
 	@PostMapping("/memberjoin_pro")

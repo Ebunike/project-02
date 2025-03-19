@@ -23,7 +23,7 @@ public class MemberRepository {
    public MemberBean login(MemberBean memberBean) {
       return memberMapper.login(memberBean);
    }
-   public SellerBean getSeller(String id) {
+   public String getSeller(String id) {
          return memberMapper.getSeller(id);
       }
    public MemberBean naverLogin(String email) {

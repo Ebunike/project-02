@@ -90,7 +90,7 @@
                   </div>
                   <div class="form-group text-right">
                      <form:button class='btn btn-primary'>로그인</form:button>
-                     <a href="${root }/member/join" class="btn btn-danger">회원가입</a>
+                     <a href="${root }/member/joinmain" class="btn btn-danger">회원가입</a>
                   </div>
                </form:form>
 				</div>

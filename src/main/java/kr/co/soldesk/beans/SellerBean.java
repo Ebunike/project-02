@@ -7,7 +7,6 @@ import javax.validation.constraints.Size;
 public class SellerBean extends MemberBean{
 
 	private int seller_index;
-    private String id;
     @NotEmpty(message = "상호명은 필수 입력 사항입니다.")
     private String company_name;
     @Size(min = 10, max = 10, message = "사업자 등록 번호는 10글자입니다.")
@@ -21,12 +20,7 @@ public class SellerBean extends MemberBean{
 	public void setSeller_index(int seller_index) {
 		this.seller_index = seller_index;
 	}
-	public String getId() {
-		return id;
-	}
-	public void setId(String id) {
-		this.id = id;
-	}
+	
 	public String getCompany_name() {
 		return company_name;
 	}

@@ -70,7 +70,8 @@ public class MemberService {
          loginUser.setKeyword(member.getKeyword());
          loginUser.setName(member.getName());
          loginUser.setTel(member.getTel());
-         if(memberRepository.getSeller(member.getId()) == null) {
+         String id = memberRepository.getSeller(member.getId());
+         if(id == null) {
                loginUser.setLogin("b");   
           }else {
                loginUser.setLogin("s");
