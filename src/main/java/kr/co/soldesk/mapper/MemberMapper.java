@@ -14,8 +14,8 @@ import kr.co.soldesk.beans.SellerBean;
 public interface MemberMapper {
 
    
-   @Insert("insert into member values(#{sellerBean.id},#{sellerBean.pw},#{sellerBean.name},#{sellerBean.address},#{sellerBean.email},#{sellerBean.tel},#{sellerBean.age},#{sellerBean.gender},#{utae})")
-   void memberJoin(@Param("sellerBean") SellerBean sellerBean, @Param("utae") String utae);
+   @Insert("insert into member values(#{memberBean.id},#{memberBean.pw},#{memberBean.name},#{memberBean.address},#{memberBean.email},#{memberBean.tel},#{memberBean.age},#{memberBean.gender},#{utae})")
+   void memberJoin(@Param("memberBean") MemberBean memberBean, @Param("utae") String utae);
    
    @Insert("insert into seller values(seller_seq.nextval,#{sellerBean.id},#{sellerBean.company_name},#{sellerBean.company_num})")
    void sellerJoin(@Param("sellerBean") SellerBean sellerBean, @Param("utae") String utae);

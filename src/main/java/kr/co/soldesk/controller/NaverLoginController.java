@@ -23,7 +23,7 @@ import org.springframework.ui.Model;
 
 @Controller
 @RequestMapping("/login")
-public class LoginController {
+public class NaverLoginController {
 
    @Autowired
    private MemberService memberService;
@@ -60,25 +60,25 @@ public class LoginController {
             JSONObject response = userJson.getJSONObject("response");
             System.out.println(response);
             
-               String id = response.getString("id");
+               //String id = response.getString("id");
                 String name = response.getString("name");
                 String email = response.getString("email");
-                String mobile = response.getString("mobile");
-                String birthyear = response.optString("birthyear","출생년도x");
-                String birthday = response.optString("birthday","생일x");
-                String gender = response.getString("gender");
-                int age = response.optInt("age",0);
+				/*
+				 * String mobile = response.getString("mobile"); String birthyear =
+				 * response.optString("birthyear","출생년도x"); String birthday =
+				 * response.optString("birthday","생일x"); String gender =
+				 * response.getString("gender"); int age = response.optInt("age",0);
+				 */
                
-                System.out.println(email);
-                System.out.println(birthday);
-                sellerBean1.setAge(age);
-                sellerBean1.setBirthday(birthday);
-                sellerBean1.setBirthyear(birthyear);
+               
+               // sellerBean1.setAge(age);
+                //sellerBean1.setBirthday(birthday);
+               // sellerBean1.setBirthyear(birthyear);
                 sellerBean1.setEmail(email);
-                sellerBean1.setGender(gender);
-                sellerBean1.setId(id);
+                //sellerBean1.setGender(gender);
+                //sellerBean1.setId(id);
                 sellerBean1.setName(name);
-                sellerBean1.setTel(mobile);
+                //sellerBean1.setTel(mobile);
                 
                
                 
@@ -89,7 +89,15 @@ public class LoginController {
                 model.addAttribute("error", "사용자 정보 파싱 오류");
                 return "login/error";  
             }
-           return "redirect:/login/naver_join";
+        MemberBean member = memberService.naverLogin(sellerBean1.getEmail());
+		if(member == null) {
+			model.addAttribute("email", sellerBean1.getEmail());
+			model.addAttribute("name", sellerBean1.getName());
+			return "member/joinmain";
+		}else {
+			memberService.login(member);
+			return "member/login_success";
+		}
            
                
             
@@ -162,40 +170,7 @@ public class LoginController {
             return null;
         }
     }
-    @RequestMapping("naver_join")
-    public String naverjoin(@ModelAttribute("sellerBean") SellerBean sellerBean,@ModelAttribute("LoginUser") MemberBean memberBean) {
-       if(sellerBean1.getGender().equals("M")) {
-          sellerBean1.setGender("남성");
-       }else if(sellerBean1.getGender().equals("F")) {
-          sellerBean1.setGender("여성");
-       }
-       MemberBean member = memberService.naverLogin(sellerBean1.getEmail());
-       if(member==null) {
-          sellerBean.setName(sellerBean1.getName());
-           sellerBean.setAge(sellerBean1.getAge());
-           sellerBean.setBirthday(sellerBean1.getBirthday());
-           sellerBean.setBirthyear(sellerBean1.getBirthyear());
-           sellerBean.setEmail(sellerBean1.getEmail());
-           sellerBean.setGender(sellerBean1.getGender());
-           sellerBean.setTel(sellerBean1.getTel());
-           
-           System.out.println(sellerBean.getName());
-           return "login/naver_join";
-       }else {
-          memberBean.setName(sellerBean1.getName());
-          memberBean.setAge(sellerBean1.getAge());
-          memberBean.setBirthday(sellerBean1.getBirthday());
-          memberBean.setBirthyear(sellerBean1.getBirthyear());
-          memberBean.setEmail(sellerBean1.getEmail());
-          memberBean.setGender(sellerBean1.getGender());
-          memberBean.setTel(sellerBean1.getTel());
-          member = memberService.naverLogin(memberBean.getEmail());
-          memberService.login(member);
-          
-          return "member/login_success";
-       }
-       
-    }
+    
     
 
 }

@@ -67,7 +67,15 @@ public class GoogleLoginController {
             return "login/error";  
         }
 
-        return "redirect:/login/google_join";
+        MemberBean member = memberService.naverLogin(sellerBean1.getEmail());
+		if(member == null) {
+			model.addAttribute("email", sellerBean1.getEmail());
+			model.addAttribute("name", sellerBean1.getName());
+			return "member/joinmain";
+		}else {
+			memberService.login(member);
+			return "member/login_success";
+		}
     }
 
     // 액세스 토큰을 발급받는 메서드
@@ -137,26 +145,6 @@ public class GoogleLoginController {
             return null;
         }
     }
-    @RequestMapping("google_join")
-    public String naverjoin(@ModelAttribute("sellerBean") SellerBean sellerBean,@ModelAttribute("LoginUser") MemberBean memberBean) {
-       
-       MemberBean member = memberService.naverLogin(sellerBean1.getEmail());
-       if(member==null) {
-          sellerBean.setName(sellerBean1.getName());
-           sellerBean.setEmail(sellerBean1.getEmail());
-           
-           
-           System.out.println(sellerBean.getName());
-           return "login/google_join";
-       }else {
-          memberBean.setName(sellerBean1.getName());
-          memberBean.setEmail(sellerBean1.getEmail());
-          
-          member = memberService.naverLogin(memberBean.getEmail());
-          memberService.login(member);
-          
-          return "member/login_success";
-       }
+    
        
     }
-}

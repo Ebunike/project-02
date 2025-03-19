@@ -164,14 +164,9 @@
         <div class="info-box">
             <label>관심 키워드:</label>
             <span>
-                <c:choose>
-                    <c:when test="${not empty loginUser.keyword}">
-                        <c:forEach var="keyword" items="${loginUser.keyword}">
-                            ${loginUser.keyword} 
-                        </c:forEach>
-                    </c:when>
-                    <c:otherwise>선택 없음</c:otherwise>
-                </c:choose>
+                <c:forEach var="keyword" items="${loginUser.keyword}">
+            	${keyword}<br>
+       		 	</c:forEach>
             </span>
         </div>
         <%-- <c:choose>

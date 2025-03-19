@@ -1,12 +1,16 @@
 package kr.co.soldesk.controller;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.soldesk.beans.MemberBean;
 import kr.co.soldesk.beans.SellerBean;
+import kr.co.soldesk.service.AdminService;
 import kr.co.soldesk.service.MemberService;
 
 @Controller
@@ -22,20 +27,50 @@ public class MemberController {
 
 	@Autowired
 	private MemberService memberService;
+	@Autowired
+	private AdminService adminService;
 	
 	@Resource(name = "loginMemberBean")
 	private MemberBean loginUser;
 	
-	@GetMapping("/join")
-	public String join(@ModelAttribute("sellerBean") SellerBean sellerBean) {
-		return "member/join";
+	@GetMapping("/joinmain")
+	public String joinmain(@Param("eamil") String email, @Param("name") String name, Model model) {
+		model.addAttribute("email",email);
+		model.addAttribute("name",name);
+		return "member/joinmain";
 	}
-	@PostMapping("/join_pro")
-	public String join_pro(@ModelAttribute("sellerBean") SellerBean sellerBean) {
+	
+	@GetMapping("/memberjoin")
+	public String memberJoin(@Param("eamil") String email, @Param("name") String name,@ModelAttribute("memberBean") MemberBean memberBean) {
+		memberBean.setName(name);
+		memberBean.setEmail(email);
+		return "member/memberjoin";
+	}
+	@GetMapping("/sellerjoin")
+	public String sellerJoin(@Param("eamil") String email, @Param("name") String name,@ModelAttribute("sellerBean") SellerBean sellerBean) {
+		sellerBean.setName(name);
+		sellerBean.setEmail(email);
+		return "member/sellerjoin";
+	}
+	@PostMapping("/sellerjoin_pro")
+	public String sellerjoin_pro(@Valid @ModelAttribute("sellerBean") SellerBean sellerBean,BindingResult result) {
 		
-			memberService.memberJoin(sellerBean);
+		System.out.println(sellerBean.getAddress());
+		
+			if (result.hasErrors()) {
+		         return "member/sellerjoin";
+		      }
+		memberService.memberJoin(sellerBean);
+		return "member/join_success";
+	}
+	@PostMapping("/memberjoin_pro")
+	public String memberjoin_pro(@Valid @ModelAttribute("memberBean") MemberBean memberBean,BindingResult result) {
 		
 		
+		if (result.hasErrors()) {
+			return "member/memberjoin";
+		}
+		memberService.memberJoin(memberBean);
 		return "member/join_success";
 	}
 	@GetMapping("/login")
@@ -72,7 +107,8 @@ public class MemberController {
 	}
 	@GetMapping("/my_info")
 	public String my_info() {
-		
+		String[] keyword = adminService.getkeyword(loginUser.getId());
+		loginUser.setKeyword(keyword);
 		return "member/my_info";
 	}
 	@GetMapping("/modify_user")
@@ -145,5 +181,6 @@ public class MemberController {
 	        return "redirect:/member/my_info";
 	    }
 	}
+	
 	
 }

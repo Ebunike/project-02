@@ -71,7 +71,7 @@
                 </li>
                 <li class="logo-item">
                 	<!-- 회원가입 아이콘 -->
-                    <a href="${root }/member/join" >
+                    <a href="${root }/member/joinmain" >
                     	<img src="${root }/logo/join_logo.png">
                     </a>
                 </li>

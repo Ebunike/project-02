@@ -1,5 +1,6 @@
 package kr.co.soldesk.beans;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -7,9 +8,9 @@ public class SellerBean extends MemberBean{
 
 	private int seller_index;
     private String id;
-    @NotNull
+    @NotEmpty(message = "상호명은 필수 입력 사항입니다.")
     private String company_name;
-    @Size(min = 10, max = 10)
+    @Size(min = 10, max = 10, message = "사업자 등록 번호는 10글자입니다.")
     private String company_num;
     
     

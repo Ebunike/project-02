@@ -21,7 +21,7 @@ public class MemberService {
    @Resource(name = "loginMemberBean")
    private MemberBean loginUser;
    
-   public void memberJoin(SellerBean sellerBean) {
+   public void sellerJoin(SellerBean sellerBean) {
       sellerBean.getKeyword();
       String utae = "";
       int i =0;
@@ -33,14 +33,29 @@ public class MemberService {
             utae += ", "; 
          }  
       }
-      if(sellerBean.getCompany_name()==null || sellerBean.getCompany_name()=="") {
-         memberRepository.memberJoin(sellerBean,utae);
-         
-      }else {
+      
          memberRepository.memberJoin(sellerBean,utae);
          memberRepository.sellerJoin(sellerBean,utae);
          
-      }
+      
+   }
+   public void memberJoin(MemberBean memberBean) {
+	   memberBean.getKeyword();
+	   String utae = "";
+	   int i =0;
+	   for(String key : memberBean.getKeyword()) {
+		   
+		   utae += key;
+		   
+		   if(memberBean.getKeyword().length - 1 != i++ ) { 
+			   utae += ", "; 
+		   }  
+	   }
+	   
+	   memberRepository.memberJoin(memberBean,utae);
+	   
+	   
+	   
    }
    public void login(MemberBean memberBean) {
       
@@ -90,5 +105,6 @@ public class MemberService {
 	         return false;
 	      }
 	   }
+  
    
 }

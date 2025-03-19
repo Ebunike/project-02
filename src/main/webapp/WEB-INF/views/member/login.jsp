@@ -72,7 +72,7 @@
                   </div>
                   <div class="login-logo">
 	                  <div class="kakao-login">
-	                  	<a href="">
+	                  	<a href="https://kauth.kakao.com/oauth/authorize?client_id=9a17de118b1675247f3cd0e91ab90456&redirect_uri=http://localhost:9091/Project_hoon/login/kakao&response_type=code">
 	                  		<img src="${root}/logo/kakao_login.png">
 	                  	</a>
 	                  </div>

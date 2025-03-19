@@ -17,8 +17,8 @@ public class MemberRepository {
    public void sellerJoin(SellerBean sellerBean,String utae) {
       memberMapper.sellerJoin(sellerBean, utae);
    }
-   public void memberJoin(SellerBean sellerBean,String utae) {
-      memberMapper.memberJoin(sellerBean, utae);
+   public void memberJoin(MemberBean memberBean,String utae) {
+      memberMapper.memberJoin(memberBean, utae);
    }
    public MemberBean login(MemberBean memberBean) {
       return memberMapper.login(memberBean);
