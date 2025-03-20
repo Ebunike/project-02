@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.soldesk.beans.MemberBean;
 import kr.co.soldesk.beans.ReportBean;
+import kr.co.soldesk.beans.SellerBean;
 import kr.co.soldesk.beans.InquiryBean;
 import kr.co.soldesk.repository.AdminRepository;
 
@@ -53,5 +54,16 @@ public class AdminService {
 		   adminRepository.delete(memberBean);
 		      
 		   }
-	   
+	   public List<SellerBean> getSeller(){
+		   return adminRepository.getSeller();
+	   }
+	   public List<SellerBean> getSellerAwaiter(){
+		   return adminRepository.getSellerAwaiter();
+	   }
+	   public void approval(String id) {
+		   adminRepository.approval(id);
+	   }
+	   public void reject(String id) {
+		   adminRepository.reject(id);
+	   }
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import kr.co.soldesk.beans.InquiryBean;
 import kr.co.soldesk.beans.MemberBean;
 import kr.co.soldesk.beans.ReportBean;
+import kr.co.soldesk.beans.SellerBean;
 import kr.co.soldesk.mapper.AdminMapper;
 @Repository
 public class AdminRepository {
@@ -44,6 +45,18 @@ public class AdminRepository {
 	   }
 	   public void delete(MemberBean memberBean) {
 		   adminMapper.delete(memberBean);
+	   }
+	   public List<SellerBean> getSeller(){
+		   return adminMapper.getSeller();
+	   }
+	   public List<SellerBean> getSellerAwaiter(){
+		   return adminMapper.getSellerAwaiter();
+	   }
+	   public void approval(String id) {
+		   adminMapper.approval(id);
+	   }
+	   public void reject(String id) {
+		   adminMapper.reject(id);
 	   }
 
 }

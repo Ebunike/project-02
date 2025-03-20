@@ -44,6 +44,6 @@ public interface MemberMapper {
    @Select("select id from Member where id = #{id}")
    String checkId(@Param("id") String id);
    
-   @Select("select s.iscommit from member m, seller s where m.id=s.id and m.id=#{id}")
+   @Select("select s.is_commit from member m, seller s where m.id=s.id and m.id=#{id}")
    int isCommit(String id);
 }   

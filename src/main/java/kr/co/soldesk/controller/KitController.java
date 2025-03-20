@@ -44,11 +44,14 @@ public class KitController {
 		return "item/kit/kitMain";
 	}
 	@GetMapping("/insert_kit")
-	public String insert_kit() {
+	public String insert_kit(Model model) {
 
-		if(loginUser.getLogin().equals("x") || loginUser.getLogin().equals("b")) {
+		if(loginUser.getLogin().equals("x") || loginUser.getLogin().equals("buyer")) {
 			return "item/kit/insert_kit_failure";
-		}
+		}else if(loginUser.getLogin().equals("sellerawaiter")) {
+			model.addAttribute("memberType","sellerawaiter");
+			return "item/kit/insert_kit_failure";
+		}else
 		return "item/kit/insert_kit";
 	}
 	@PostMapping("/insert_kit_pro")

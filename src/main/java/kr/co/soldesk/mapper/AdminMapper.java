@@ -11,6 +11,7 @@ import org.apache.ibatis.annotations.Update;
 import kr.co.soldesk.beans.InquiryBean;
 import kr.co.soldesk.beans.MemberBean;
 import kr.co.soldesk.beans.ReportBean;
+import kr.co.soldesk.beans.SellerBean;
 
 @Mapper
 public interface AdminMapper {
@@ -45,5 +46,17 @@ public interface AdminMapper {
 	   
 	   @Delete("delete from member where id=#{id} and pw=#{pw}")
 	   public void delete(MemberBean memberBean);
+	   
+	   @Select("select * from seller where is_commit=1")
+	   public List<SellerBean> getSeller();
+
+	   @Select("select * from seller where is_commit=0")
+	   public List<SellerBean> getSellerAwaiter();
+	   
+	   @Update("update seller set is_commit = 1 where id=#{id}")
+	   public void approval(String id); 
+	   @Update("update seller set is_commit = 2 where id=#{id}")
+	   public void reject(String id); 
+		   
 
 }

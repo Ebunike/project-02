@@ -46,6 +46,7 @@
                 <li><a href="${root }/admin/management">멤버 관리</a></li>
                 <li><a href="${root }/admin/notice">공지사항</a></li>
                 <li><a href="${root }/member/logout">로그아웃</a></li>
+                <li><a href="${root }/admin/salesapproval">판매자 권한 관리</a></li>
             </ul>
         </div>
     </div>

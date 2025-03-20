@@ -79,6 +79,8 @@ public class MemberService {
         	  loginUser.setLogin("seller");
               }else if(commit == 0) {
             	  loginUser.setLogin("sellerawaiter");
+              }else if(commit == 2) {
+            	  loginUser.setLogin("sellerawaiter");
               }
           }
       }

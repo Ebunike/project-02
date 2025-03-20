@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.co.soldesk.beans.MemberBean;
 import kr.co.soldesk.beans.ReportBean;
+import kr.co.soldesk.beans.SellerBean;
 import kr.co.soldesk.beans.InquiryBean;
 import kr.co.soldesk.service.AdminService;
 
@@ -89,8 +90,25 @@ public class AdminController {
 			adminService.delete(memberInfo);
 		}
 		return "admin/adminmain";
+	}
+	@GetMapping("/salesapproval")
+	public String salesapproval(Model model) {
+		List<SellerBean> sellerBean = adminService.getSeller();
+		List<SellerBean> sellerAwaiterBean = adminService.getSellerAwaiter();
+		model.addAttribute("sellerAwaiterBean",sellerAwaiterBean);
+		model.addAttribute("sellerBean",sellerBean);		
+		return "admin/salesapproval";
+	}
+	@GetMapping("/salesapproval_pro")
+	public String salesapproval_pro(@Param("result") String result, @Param("sellerId") String sellerId) {
 		
-		
+		System.out.println("컨트롤러: " + sellerId + " / " + result);
+		if(result.equals("o")) {
+			adminService.approval(sellerId);
+		}else if(result.equals("x")) {
+			adminService.reject(sellerId);
+		}
+		return "redirect:/admin/salesapproval";
 	}
 	
 		
