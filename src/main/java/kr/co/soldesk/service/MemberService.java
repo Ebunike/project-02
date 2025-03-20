@@ -72,9 +72,14 @@ public class MemberService {
          loginUser.setTel(member.getTel());
          String id = memberRepository.getSeller(member.getId());
          if(id == null) {
-               loginUser.setLogin("b");   
+               loginUser.setLogin("buyer");   
           }else {
-               loginUser.setLogin("s");
+        	  int commit = memberRepository.isCommit(loginUser.getId());
+              if(commit == 1) { 
+        	  loginUser.setLogin("seller");
+              }else if(commit == 0) {
+            	  loginUser.setLogin("sellerawaiter");
+              }
           }
       }
    }

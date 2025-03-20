@@ -28,54 +28,76 @@
 <!-- Daum 우편번호 API 스크립트 -->
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
 <script type="text/javascript">
+window.onload = function() {
+    var nameField = document.getElementById('name');
+    var emailField = document.getElementById('email');
+    
+    // JSP에서 전달된 값이 있을 경우
+    var nameValue = nameField.value.trim();
+    var emailValue = emailField.value.trim();
+
+    // 값이 있으면 읽기 전용 설정
+    if (nameValue) {
+        nameField.setAttribute('readonly', 'true');
+    }
+    
+    if (emailValue) {
+        emailField.setAttribute('readonly', 'true');
+    }
+    
+    // 값을 직접 입력한 경우에는 읽기 전용 속성을 제거
+    nameField.addEventListener('input', function() {
+        if (nameField.value.trim() !== '') {
+            nameField.removeAttribute('readonly');
+        }
+    });
+    
+    emailField.addEventListener('input', function() {
+        if (emailField.value.trim() !== '') {
+            emailField.removeAttribute('readonly');
+        }
+    });
+}
+
+   // 아이디 중복 확인
    function checkUserId() {
       let id = $("#id").val();
-      console.log(id);
-      //변수선언: 사용자가 입력한 ID값 가져오기
       if (id.length == 0) {
-         //length==0 길이가0일때.(아무것도 적지 않았을때)
          alert("아이디를 입력해주세요");
          return;
       }
       $.ajax({
-         url: '${root}/member/checkId/' + id, //서버에 요청하기
+         url: '${root}/member/checkId/' + id,
          type: "get",
          dataType: 'text',
          success: function(result) {
-            //응답결과
             if (result == "true") {
-               // 응답 데이터가 true
                alert("사용할 수 있는 아이디입니다");
                $("#idExist").val("true");
+               $("#registerBtn").prop("disabled", false); // 아이디 중복 확인 후 회원가입 버튼 활성화
             } else {
-               // 응답 데이터가 false
                alert("사용할 수 없는 아이디입니다");
                $("#idExist").val("false");
+               $("#registerBtn").prop("disabled", true); // 중복 아이디일 경우 회원가입 버튼 비활성화
             }
          }
       });
    }
 
+   // Daum 우편번호 검색 함수
    function sample4_execDaumPostcode() {
-	   new daum.Postcode({
-		    oncomplete: function(data) {
-		        console.log(data); // data 객체가 제대로 받는지 확인
-		        var roadAddr = data.roadAddress; // 도로명 주소
-
-		        // 주소 값이 잘 들어오는지 확인
-		        console.log("도로명 주소:", roadAddr);
-		        
-		        if (roadAddr) {
-		            document.getElementById("address").value = roadAddr; // 도로명 주소 필드
-		        } else {
-		            console.log("도로명 주소가 없습니다.");
-		        }
-		    }
-		}).open();
+      new daum.Postcode({
+         oncomplete: function(data) {
+            var roadAddr = data.roadAddress; // 도로명 주소
+            if (roadAddr) {
+               document.getElementById("address").value = roadAddr; // 도로명 주소 필드
+            }
+         }
+      }).open();
    }
-
-  
 </script>
 
 </head>
@@ -96,6 +118,7 @@
                      <form:input type="text" id="name" path="name" class="form-control"/>
                      <form:errors path="name" cssStyle="color:red"/>
                   </div>
+
                   <div class="form-group">
                      <form:label path="id">아이디</form:label>
                      <div class="input-group">
@@ -150,7 +173,8 @@
                   
                   <div class="form-group">
                      <div class="text-right">
-                        <button type="submit" class="btn btn-primary">회원가입</button>
+                       
+                        <button type="submit" class="btn btn-primary" id="registerBtn" disabled>회원가입</button>
                      </div>
                   </div>
                </form:form>

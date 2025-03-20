@@ -54,7 +54,7 @@ public class MemberController {
 		return "member/sellerjoin";
 	}
 	@PostMapping("/sellerjoin_pro")
-	public String sellerjoin_pro(@Valid @ModelAttribute("sellerBean") SellerBean sellerBean,BindingResult result) {
+	public String sellerjoin_pro(@Valid @ModelAttribute("sellerBean") SellerBean sellerBean,BindingResult result,Model model) {
 		
 		System.out.println(sellerBean.getId());
 		
@@ -64,16 +64,18 @@ public class MemberController {
 		      }
 			
 		memberService.sellerJoin(sellerBean);
+		model.addAttribute("memberType","seller");
 		return "member/join_success";
 	}
 	@PostMapping("/memberjoin_pro")
-	public String memberjoin_pro(@Valid @ModelAttribute("memberBean") MemberBean memberBean,BindingResult result) {
+	public String memberjoin_pro(@Valid @ModelAttribute("memberBean") MemberBean memberBean,BindingResult result,Model model) {
 		
 		
 		if (result.hasErrors()) {
 			return "member/memberjoin";
 		}
 		memberService.memberJoin(memberBean);
+		model.addAttribute("memberType","buyer");
 		return "member/join_success";
 	}
 	@GetMapping("/login")
@@ -112,6 +114,7 @@ public class MemberController {
 	public String my_info() {
 		String[] keyword = adminService.getkeyword(loginUser.getId());
 		loginUser.setKeyword(keyword);
+		
 		return "member/my_info";
 	}
 	@GetMapping("/modify_user")

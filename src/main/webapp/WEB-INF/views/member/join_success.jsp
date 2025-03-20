@@ -3,6 +3,10 @@
 <c:set var ="root" value="${pageContext.request.contextPath }"/>
 
 <script>
+	var memberType = "${memberType}";
 	alert("회원가입이 되었습니다")
+	if(memberType === seller){
+		alert("판매 승인 대기중입니다.")	
+	}
 	location.href = "${root}/"
 </script>

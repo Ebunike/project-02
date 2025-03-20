@@ -29,6 +29,21 @@
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 <script type="text/javascript">
+window.onload = function() {
+    var nameField = document.getElementById('name');
+    var emailField = document.getElementById('email');
+
+    var nameValue = nameField.value;
+    var emailValue = emailField.value;
+
+    if (nameValue && nameValue.trim() !== '') {
+       nameField.setAttribute('readonly', 'true');
+    }
+    
+    if (emailValue && emailValue.trim() !== '') {
+       emailField.setAttribute('readonly', 'true');
+    }
+ }
    function checkUserId() {
       let id = $("#id").val();
       console.log(id);

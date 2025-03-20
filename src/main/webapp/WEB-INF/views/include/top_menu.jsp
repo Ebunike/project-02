@@ -36,7 +36,7 @@
     
     <ul class="navbar-nav ml-auto">
         <c:choose>
-            <c:when test="${loginUser.login.equals('s')||loginUser.login.equals('b')}">
+            <c:when test="${loginUser.login.equals('seller')||loginUser.login.equals('buyer')||loginUser.login.equals('sellerawaiter')}">
                 <li class="logo-item">
                 	<%--내 정보 아이콘 --%>
                     <a href="${root }/member/my_info">
@@ -97,7 +97,7 @@
 			    </div>
 		    </c:when>  --%>
 		    <%-- 판매자 전용  --%>
-		    <c:when test="${loginUser.login.equals('s')}">
+		    <c:when test="${loginUser.login.equals('seller')||${loginUser.login.equals(sellerawaiter)}">
 		    	<div class="menu-items">
 			        <h3>운영 모드</h3>
 			        <a href="">주문 내역 확인</a>
@@ -112,7 +112,7 @@
 			    </div>
 		    </c:when>
 		    <%-- 구매자 전용 --%>
-		    <c:when test="${loginUser.login.equals('b')}">
+		    <c:when test="${loginUser.login.equals('buyer')}">
 		    	<div class="menu-items">
 			        <h3>HOT한 HOT딜 상품!</h3>
 			        <a href="">스포츠/레저</a>

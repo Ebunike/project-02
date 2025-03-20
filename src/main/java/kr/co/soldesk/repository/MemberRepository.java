@@ -44,4 +44,7 @@ public class MemberRepository {
    public String checkId(String id) {
 	      return memberMapper.checkId(id);
 	   }
+   public int isCommit(String id) {
+	   return memberMapper.isCommit(id);
+   }
 }
