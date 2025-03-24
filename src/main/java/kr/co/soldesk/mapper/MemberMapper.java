@@ -14,10 +14,10 @@ import kr.co.soldesk.beans.SellerBean;
 public interface MemberMapper {
 
    
-   @Insert("insert into member values(#{memberBean.id},#{memberBean.pw},#{memberBean.name},#{memberBean.address},#{memberBean.email},#{memberBean.tel},#{memberBean.age},#{memberBean.gender},#{utae})")
+   @Insert("insert into member values(#{memberBean.id},#{memberBean.pw},#{memberBean.name},#{memberBean.address},#{memberBean.email},#{memberBean.tel},#{memberBean.age},#{memberBean.gender},#{utae},sysdate)")
    void memberJoin(@Param("memberBean") MemberBean memberBean, @Param("utae") String utae);
    
-   @Insert("insert into seller values(seller_seq.nextval,#{sellerBean.id},#{sellerBean.company_name},#{sellerBean.company_num})")
+   @Insert("insert into seller values(seller_seq.nextval,#{sellerBean.id},#{sellerBean.company_name},#{sellerBean.company_num},#{sellerBean.is_commit})")
    void sellerJoin(@Param("sellerBean") SellerBean sellerBean, @Param("utae") String utae);
    
    @Select("select * from member where id=#{id} and pw=#{pw}")

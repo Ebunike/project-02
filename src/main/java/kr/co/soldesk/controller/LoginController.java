@@ -31,7 +31,7 @@ public class LoginController {
 
     private final String CLIENT_ID = "_7r1lFqIcHDabyPs6PkX"; 
     private final String CLIENT_SECRET = "nMjyfsnSqk"; 
-    private final String REDIRECT_URI = "http://localhost:9091/pratice/login/naver"; 
+    private final String REDIRECT_URI = "http://localhost:9091/Project_hoon/login/naver"; 
 
     // 네이버 로그인
     @RequestMapping("/naver")

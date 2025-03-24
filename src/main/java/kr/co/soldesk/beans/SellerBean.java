@@ -11,9 +11,18 @@ public class SellerBean extends MemberBean{
     private String company_name;
     @Size(min = 10, max = 10, message = "사업자 등록 번호는 10글자입니다.")
     private String company_num;
+    private int is_commit;
     
+    public SellerBean() {
+		is_commit = 0;
+	}
     
-    
+	public int getIs_commit() {
+		return is_commit;
+	}
+	public void setIs_commit(int is_commit) {
+		this.is_commit = is_commit;
+	}
 	public int getSeller_index() {
 		return seller_index;
 	}

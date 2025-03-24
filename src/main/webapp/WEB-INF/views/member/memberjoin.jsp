@@ -103,7 +103,7 @@ window.onload = function() {
                   <div class="form-group">
                      <form:label path="id">아이디</form:label>
                      <div class="input-group">
-                        <form:input type="text" id="id" path="id" class="form-control" oninput="resetUserId()" />
+                        <form:input type="text" id="id" path="id" class="form-control" />
                         <div class="input-group-append">
                            <button type="button" class="btn btn-primary" onclick="checkUserId()">중복확인</button>
                         </div>

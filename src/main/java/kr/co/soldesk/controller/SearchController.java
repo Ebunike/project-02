@@ -19,13 +19,13 @@ import kr.co.soldesk.service.SearchService;
 public class SearchController {
 
 	@Autowired
-	private SearchService searchservice;
+	private SearchService searchService;
 	
 	@GetMapping("/result")
 	private String result(@Param("result") String result, Model model) {
-		//List<OnedayBean> = searchservice.OnedaySearch(result);
-		//List<KitBean> =searchservice.kitSearch(result);
-		//List<OpenRecipeBean> =searchservice.recipeSearch(result);
+		/*List<OnedayBean> oneday = searchService.OnedaySearch(result);
+		List<KitBean> kit = searchService.KitSearch(result);
+		List<OpenRecipeBean> openrecipe = searchService.OpenRecipeSearch(result);*/
 		
 		model.addAttribute(result);
 		return "/search/result";

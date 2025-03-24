@@ -15,6 +15,7 @@ public class RestApiController {
    
    @GetMapping("/member/checkId/{id}")
    public String checkId(@PathVariable String id) {
+	   //다른게 넘어왔어, false =? return false;
       return memberService.checkId(id) ? "true" : "false";
    }
 
