@@ -1,6 +1,11 @@
 @charset "UTF-8";
+	body {
+		font-family: 'NanumGaRamYeonGgoc';
+		font-weight: 700;
+	}
+
     .test-nav {
-        background-color: #f5f5dc; 
+        background-color: white; 
         position: relative; /* 검색창을 네비게이션 내부에서 정렬할 수 있도록 함 */
         z-index: 1000;
     }
@@ -13,7 +18,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        background-color: #f5f5dc;
+        background-color: white;
         border-radius: 15px;
         /* box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1); */
         padding: 10px;
@@ -21,7 +26,7 @@
     .search-box {
         display: flex;
         align-items: center;
-        background-color: #fffaf0;
+        background-color: white;
         border: 2px solid #c2a87d;
         border-radius: 25px;
         padding: 5px 10px;
@@ -76,7 +81,7 @@
 	    height: 60px;
 	}
 	.test-nav {
-        background-color: #f5f5dc;
+        background-color: white;
         position: relative;
         z-index: 1000;
     }
@@ -88,7 +93,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        background-color: #f5f5dc;
+        background-color:white;
         border-radius: 15px;
         /* box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1); */
         padding: 10px;
@@ -101,7 +106,7 @@
         right: 0;
         width: 400px;
         height: 100%;
-        background-color: #fffaf0;
+        background-color: white;
         /* box-shadow: -3px 0 6px rgba(0, 0, 0, 0.2); */
         transform: translateX(100%);
         transition: transform 0.3s ease;
