@@ -47,4 +47,15 @@ public interface CartMapper {
 	        "join member on cart.id = member.id " +
 	        "where cart.id = #{userId} AND cart.item_index IN (${itemIndexes})")
 	List<CartItemDTO> getSelectedCartItems(@Param("userId") String userId, @Param("itemIndexes") String itemIndexes);
+	
+	@Select("select cart_totalAmount from cart")
+	List<Integer> getAllTotalAmount();
+	
+	@Select("select * from cart")
+	List<CartBean> getCart();
+	
+	//검증용 금액 찾기
+	@Select("SELECT SUM(cart_totalAmount) FROM Cart WHERE id = #{id}")
+	int findAmount(@Param("id") String id);
+	
 }

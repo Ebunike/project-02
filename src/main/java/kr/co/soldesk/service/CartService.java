@@ -46,5 +46,19 @@ public class CartService {
     public List<CartItemDTO> getSelectedCartItems(String userId, String[] itemIndexes) {
         return cartRepository.getSelectedCartItems(userId, itemIndexes);
     }
-    
+      public int getAllTotalAmount(){
+    	List<Integer> list = cartRepository.getAllTotalAmount();
+    	int totalPrice=0;
+    	for(int price : list) {
+    		totalPrice += price;
+    	}
+    	return totalPrice;
+    }
+    public List<CartBean> getCart(){
+    	return cartRepository.getCart();
+    }
+    //검증용 금액 찾아오기
+    public int findAmount(String id) {
+    	return cartRepository.findAmount(id);
+    }
 }

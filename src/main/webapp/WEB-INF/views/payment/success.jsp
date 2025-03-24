@@ -13,7 +13,10 @@
 
 성공 
 
+<a href="${root}/payment/account_finished_page">입금확인</a>
  <a href="${root}/payment/cancel?paymentKey=${paymentKey}&cancelReason=테스트용구매자변심등&cancelAmount=1000">환불 요청</a>
+ 
+ ${result} }
  
 
 </body>

@@ -2,40 +2,49 @@ package kr.co.soldesk.beans;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class StepBean {
-    private int stepNumber;  // 단계 번호
-    private String description;// 단계 설명
-    private String imageUrl; // 관련 이미지
-
-    private MultipartFile upload_image;
+    private int StepNumber;  // Step 번호
+    private String stepText;  // Step 텍스트
+    @JsonIgnore  
+    private MultipartFile stepImage;  // Step 이미지 파일
+    private String stepImageUrl;
     
- // 기본 생성자
-    public StepBean() {}
+    
 
-    // 생성자
-    public StepBean(int stepNumber, String description, String imageUrl) {
-        this.stepNumber = stepNumber;
-        this.description = description;
-        this.imageUrl = imageUrl;
+    public String getStepText() {
+        return stepText != null ? stepText : "";  // stepText가 null일 때 기본값 설정
     }
 
-    // Getter & Setter
-    public int getStepNumber() { return stepNumber; }
-    public void setStepNumber(int stepNumber) { this.stepNumber = stepNumber; }
+    public void setStepText(String stepText) {
+        this.stepText = stepText;
+    }
 
-    public String getDescription() { return description; }
-    public void setDescription(String description) { this.description = description; }
+    public MultipartFile getStepImage() {
+        return stepImage;
+    }
 
-    public String getImageUrl() { return imageUrl; }
-    public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
+    public void setStepImage(MultipartFile stepImage) {
+        this.stepImage = stepImage;
+    }
 
-    
-    
-	public MultipartFile getUpload_image() {
-		return upload_image;
+	public String getStepImageUrl() {
+		//null값 안들어가게 조정?
+		 return stepImageUrl != null ? stepImageUrl : "";
 	}
 
-	public void setUpload_image(MultipartFile upload_image) {
-		this.upload_image = upload_image;
+	public void setStepImageUrl(String stepImageUrl) {
+		this.stepImageUrl = stepImageUrl;
+		
+		
+	}
+
+	public int getStepNumber() {
+		return StepNumber;
+	}
+
+	public void setStepNumber(int stepNumber) {
+		StepNumber = stepNumber;
 	}
 }

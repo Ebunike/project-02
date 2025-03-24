@@ -19,6 +19,8 @@ import kr.co.soldesk.beans.PaymentBean;
 import kr.co.soldesk.beans.PaymentReqDTO;
 import kr.co.soldesk.beans.PaymentResDTO;
 import kr.co.soldesk.beans.RefundBean;
+import kr.co.soldesk.repository.CartRepository;
+import kr.co.soldesk.repository.OpenRecipeRepository;
 import kr.co.soldesk.repository.PaymentRepository;
 
 @Service
@@ -30,24 +32,16 @@ public class PaymentService {
 	@Resource(name = "loginMemberBean")
 	private MemberBean loginMemberBean;
 	
+	@Autowired
+	private CartRepository cartRepository;
+	
 	//토스에 결제요청보내기 전에 한번 확인하는거
 	public PaymentResDTO requestPayments(PaymentReqDTO paymentReq) throws Exception {
 		int amount = paymentReq.getAmount();
 		String pay_method = paymentReq.getPay_Method();
 		String customerEmail = paymentReq.getCustomerEmail();
 		String orderName = paymentReq.getOrderName();//orderName어케정하지...
-		//왜 orderName을 검증하지..? orderId를 검증해야하는거 아닌가..??
 		
-		if(amount != 3000) /*3000대신에 order든 어디든 get해서 받을 amount값*/  
-		{
-			throw new Exception("amount가 안맞음");
-		}
-		if(!pay_method.equals("CARD") && !pay_method.equals("카드"))
-		{
-			throw new Exception("pay_method가 안맞음");
-		}
-		//orderName이든 orderId든 얘도 검증할지 고민해보기
-
 		
 		//PaymentBean으로 만들고 저장
 		try {
@@ -69,7 +63,7 @@ public class PaymentService {
 		paymentRes.setAmount(amount);
 		paymentRes.setCustomerEmail(customerEmail);
 		paymentRes.setCustomerName(paymentReq.getCustomerName());
-		paymentRes.setFailUrl("");
+		paymentRes.setFailUrl(paymentReq.getFailUrl());
 		paymentRes.setSuccessUrl(paymentReq.getSuccessUrl());
 		paymentRes.setOrderId(paymentReq.getOrderId());
 		paymentRes.setOrderName(orderName);
@@ -139,22 +133,16 @@ public class PaymentService {
 	
 	//PaymentRes받고 토스 최종 승인 전에 검증하는 메서드. 이거는 cart에서 제대로 끌고와서 하던가 해야할듯. 
 	public void verifyRequest(String paymentKey, String orderId, int amount) throws Exception {
-	/*    // paymentRepository.findByOrderId(orderId)는 Optional 대신 null을 반환하는 방식으로 수정
-	    PaymentBean payment = paymentRepository.findByOrderId(orderId);
-
-	    if (payment != null) { // 주문이 존재하면
-	        // 가격 비교
-	        if (payment.getAmount() == amount) {
-	            payment.setPaymentKey(paymentKey); // 가격이 일치하면 paymentKey 설정
-	        } else {
-	            throw new IllegalArgumentException("가격검증 결과 안맞음"); // 가격이 맞지 않으면 예외 던짐
-	        }
-	    } else {
-	        throw new NoSuchElementException("모르겠는 에러"); // 주문을 찾을 수 없으면 예외 던짐
-	}*/
-	
+	  
+		//amount 총 금액 검증
+		int cartAmount = cartRepository.findAmount(loginMemberBean.getId());
 		
+		if (amount != cartAmount) {
+		    throw new RuntimeException("금액이 일치하지 않습니다");
+		}
 	}
+		
+		
 	
 	//토스에 최종 승인 요청
 	public String requestFinalPayment(String paymentKey, String orderId, int amount) {
@@ -201,7 +189,7 @@ public class PaymentService {
     
     
     //환불요청
-    public boolean requestPaymentCancel(String paymentKey, String cancelReason, int cancelAmount) {
+    public String requestPaymentCancel(String paymentKey, String cancelReason, int cancelAmount) {
         try {
             HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("https://api.tosspayments.com/v1/payments/" + paymentKey + "/cancel")) // paymentKey 삽입
@@ -216,11 +204,11 @@ public class PaymentService {
             System.out.println(response.body());
             
             
-            return true;
+            return response.body();
             
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
+            return "ㅠㅠ";
         }
     }
     

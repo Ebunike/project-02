@@ -47,4 +47,16 @@ public class CartRepository {
         }
         return cartMapper.getSelectedCartItems(userId, sb.toString());
     }
+    
+    public List<Integer> getAllTotalAmount() {
+    	return cartMapper.getAllTotalAmount();
+    }
+    
+    public List<CartBean> getCart(){
+    	return cartMapper.getCart();
+    }
+    
+    public int findAmount(String id) {
+    	return cartMapper.findAmount(id);
+    }
 }

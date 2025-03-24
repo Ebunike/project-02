@@ -1,4 +1,5 @@
 package kr.co.soldesk.beans;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -9,12 +10,28 @@ public class OpenRecipeBean {
     private String id;
     private int theme_index;
     private String openRecipe_title;
-    private String openRecipe_intro;    // 추가된 한줄 소개 필드
+    private String openRecipe_intro;    //한줄 소개 필드 추가함
+    private String openRecipe_prepare;    //재료 필드 추가함
     private String openRecipe_content;  // JSON으로 저장
     private String openRecipe_picture;
     private String openRecipe_video;
     private int openRecipe_like;
     private MultipartFile upload_picture;
+    
+    
+    private List<StepBean> stepBeanList = new ArrayList<StepBean>();  // List<StepBean> 추가
+
+    // getter, setter
+    public List<StepBean> getStepBeanList() {
+        return stepBeanList;
+    }
+
+    public void setStepBeanList(List<StepBean> stepBeanList) {
+        this.stepBeanList = stepBeanList;
+    }
+    
+    
+    
     // ✅ StepBean 리스트를 JSON으로 변환하기 위한 ObjectMapper
     private static final ObjectMapper objectMapper = new ObjectMapper();
    
@@ -72,15 +89,24 @@ public class OpenRecipeBean {
     }
     // ✅ JSON 문자열을 다시 List<StepBean>으로 변환
     public List<StepBean> getStepList() {
+        // openRecipe_content가 null 또는 비어있다면 빈 리스트 반환
+        if (openRecipe_content == null || openRecipe_content.trim().isEmpty()) {
+            return new ArrayList<>();
+        }
+        
         try {
+            // JSON 문자열을 List<StepBean>으로 변환
             return objectMapper.readValue(openRecipe_content, objectMapper.getTypeFactory().constructCollectionType(List.class, StepBean.class));
         } catch (JsonMappingException e) {
+            System.err.println("JSON 매핑 예외 발생: " + e.getMessage());
             e.printStackTrace();
-            return null;
+            return new ArrayList<>();  // 오류 발생 시 빈 리스트 반환
         } catch (JsonProcessingException e) {
+            System.err.println("JSON 처리 예외 발생: " + e.getMessage());
             e.printStackTrace();
-            return null;
+            return new ArrayList<>();  // 오류 발생 시 빈 리스트 반환
         }
+		
     }
     public String getOpenRecipe_picture() {
         return openRecipe_picture;
@@ -100,4 +126,12 @@ public class OpenRecipeBean {
     public void setOpenRecipe_like(int openRecipe_like) {
         this.openRecipe_like = openRecipe_like;
     }
+
+	public String getOpenRecipe_prepare() {
+		return openRecipe_prepare;
+	}
+
+	public void setOpenRecipe_prepare(String openRecipe_prepare) {
+		this.openRecipe_prepare = openRecipe_prepare;
+	}
 }

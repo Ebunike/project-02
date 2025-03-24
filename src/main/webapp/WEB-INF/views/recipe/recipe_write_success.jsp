@@ -3,5 +3,5 @@
 <c:set var='root' value='${pageContext.request.contextPath }'/>
 <script>
 	alert('저장되었습니다')
-	location.href = "${root}/recipe/recipe_kit_main?theme_index=1"
+	location.href = "${root}/recipe/recipe_main?theme_index=1"
 </script>

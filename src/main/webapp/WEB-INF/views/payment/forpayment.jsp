@@ -15,22 +15,28 @@
     <!-- Spring Form 태그를 사용하여 PaymentReqDTO 객체를 자동으로 바인딩 -->
     <form:form modelAttribute="paymentReq" action="${root }/payment/forpayment_pro" method="post">
       <label for="orderId">주문 ID:</label>
-      <form:input path="orderId" id="orderId" /><br><br>
+      <form:input path="orderId" id="orderId" readonly="true"/><br><br>
       
       <label for="amount">결제 금액:</label>
-      <form:input path="amount" id="amount"/><br><br>
+      <form:input path="amount" id="amount" readonly="true"/><br><br>
       
       <label for="pay_Method">결제 방법:</label>
-      <form:input path="pay_Method" id="pay_Method"/><br><br>
+		<form:radiobutton path="pay_Method" id="pay_Method_CARD" value="CARD" />
+		<label for="pay_Method_CARD">CARD</label>
+		
+		<form:radiobutton path="pay_Method" id="pay_Method_VA" value="VirtualAccount" />
+		<label for="pay_Method_VA">Virtual Account</label>
+		<br><br>
+
       
       <label for="orderName">주문 이름:</label>
-      <form:input path="orderName" id="orderName"/><br><br>
+      <form:input path="orderName" id="orderName" readonly="true"/><br><br>
       
       <label for="customerEmail">고객 이메일:</label>
       <form:input path="customerEmail" id="customerEmail"/><br><br>
       
       <label for="customerName">고객 이름:</label>
-      <form:input path="customerName" id="customerName"  /><br><br>
+      <form:input path="customerName" id="customerName" readonly="true" /><br><br>
 
 	<form:hidden path="successUrl" value="/Project_hoon/payment/success" />
 	
@@ -38,7 +44,138 @@
       <label for="customerName">고객 전번:</label>
       <form:input path="customerMobilePhone" id="customerMobilePhone"  /><br><br>
       
-      <button type="submit" >결제하기</button>
+      <div>
+	      <button type="submit" >결제하기</button>
+	      <button type="button" onclick="cancelPayment()">결제취소</button>
+	  </div>
     </form:form>
+        <script type="text/javascript">
+        	//결제취소 후 장바구니로 되돌아감
+	        function cancelPayment() {
+	        	// order_id 가져오기
+	            const orderId = document.getElementById('orderId').value;
+	            const data = {
+	                    order_id: orderId // order_id 추가
+	                };
+	            //AJAX 요청
+	        	const xhr = new XMLHttpRequest();
+	            xhr.open("POST", "${root}/order/cancelPayment", true); // 결제 취소 엔드포인트
+	            xhr.setRequestHeader("Content-Type", "application/json");
+	            xhr.onload = function () {
+	                if (xhr.status === 200) {
+	                    alert("결제가 취소되었습니다.");
+	                    window.history.back(); // 이전 페이지로 돌아가기
+	                } else {
+	                    console.error("결제 취소 실패:", xhr.responseText);
+	                    alert("결제 취소에 실패했습니다.");
+	                }
+	            };
+	            xhr.send(JSON.stringify(data)); // 데이터를 JSON 형태로 전송   
+	        }
+		 // 주문 ID 랜덤 생성 함수
+		    function generateOrderId(length) {
+		        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+		        let orderId = '';
+		        const orderDate = new Date().toISOString().slice(0, 10); // 현재 날짜 (형식: YYYY-MM-DD)
+		        // 최소 6자 이상 64자 이하로 생성
+		        const idLength = Math.max(6, Math.min(length, 64));
+		        
+		        for (let i = 0; i < idLength; i++) {
+		            const randomIndex = Math.floor(Math.random() * characters.length);
+		            orderId += characters[randomIndex];
+		        }
+		        saveOrderToServer(orderId, orderDate);
+		        return orderId;
+		    }
+		    function saveOrderToServer(orderId, orderDate) {
+		        const data = {
+		            order_id: orderId,
+		            order_date: orderDate,
+		        };
+
+		        const xhr = new XMLHttpRequest();
+		        xhr.open("POST", "${root}/order/saveOrder", true);
+		        xhr.setRequestHeader("Content-Type", "application/json");
+		        xhr.onload = function () {
+		            if (xhr.status === 200) {
+		                console.log("주문이 성공적으로 저장되었습니다!");
+
+		            } else {
+		                console.error("주문 저장 실패:", xhr.responseText);
+		            }
+		        };
+		        xhr.send(JSON.stringify(data));
+		    }
+		    // 예제 사용
+		    const orderId = generateOrderId(10); // 원하는 길이를 파라미터로 전달 (예: 10자)
+		    console.log(orderId);
+		
+		    // HTML 폼 필드에 주문 ID를 자동으로 삽입
+		    document.getElementById('orderId').value = orderId;
+
+		 	// 값 설정 함수
+		    function setAmountValue(value) {
+		        const amountInput = document.getElementById('amount');
+		        if (amountInput) {
+		            amountInput.value = value;
+		        } else {
+		            console.error('amount 요소를 찾을 수 없습니다.');
+		        }
+		    }
+		    const cartTotalPrice = ${cartTotalPrice};
+		    setAmountValue(cartTotalPrice); // amount 필드에 장바구니 총 합계 금액을 설정
+
+		    //고객이름 설정하기
+		    function setCustomerName(value) {
+				const customerNameInput = document.getElementById('customerName');
+				if(customerNameInput){
+					customerNameInput.value = value;
+				} else {
+					console.error('customerNameInput를 찾을 수 없습니다')
+				}
+			}
+		    const customerName = "${loginUser.name}";
+		    console.log(customerName);
+		    setCustomerName(customerName); //customerName에 로그인된 유저 이름 설정
+		    
+		    //고객 이메일 설정하기
+		    // 서버에서 전달된 loginUser의 이메일을 스크립트 변수로 설정
+		    const loginUserEmail = "${loginUser.email}";
+		    console.log(loginUserEmail);
+		    // 이메일을 customerEmail 필드에 설정
+		    document.addEventListener("DOMContentLoaded", function () {
+		        const emailInput = document.getElementById('customerEmail');
+		        if (emailInput) {
+		            emailInput.value = loginUserEmail;
+		        }
+		    });
+		    //고객이름으로 주문서 이름 설정하기
+			document.addEventListener("DOMContentLoaded", function () {
+			    const customerNameInput = document.getElementById('customerName'); // 고객 이름 필드
+			    const orderNameInput = document.getElementById('orderName'); // 주문 이름 필드
+			
+			    if (customerNameInput && orderNameInput) {
+			        const customerName = customerNameInput.value; // 고객 이름 값 가져오기
+			
+			        if (customerName) {
+			            // 고객 이름에 "의 주문서"를 붙여 주문 이름 설정
+			            orderNameInput.value = customerName + "의 주문서";
+			        } else {
+			            console.error("고객 이름 값이 비어 있습니다.");
+			        }
+			    } else {
+			        console.error("customerName 또는 orderName 요소를 찾을 수 없습니다.");
+			    }
+			});
+		    //고객전화번호 설정하기
+		    const loginUserTel = "${loginUser.tel}";
+		    console.log(loginUserTel);
+		    document.addEventListener("DOMContentLoaded", function () {
+		        const telInput = document.getElementById('customerMobilePhone');
+		        if (telInput) {
+		        	telInput.value = loginUserTel;
+		        }
+		    });
+    </script>
   </body>
 </html>

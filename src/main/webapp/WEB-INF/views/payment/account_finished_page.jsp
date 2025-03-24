@@ -7,10 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-
-환불 끝
-
-${a } 
-
+결제 끝?
+${secret }
 </body>
 </html>
