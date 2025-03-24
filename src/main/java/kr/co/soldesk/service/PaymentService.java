@@ -8,6 +8,7 @@ import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -186,8 +187,7 @@ public class PaymentService {
     	
     }
     
-    
-    
+  
     //환불요청
     public String requestPaymentCancel(String paymentKey, String cancelReason, int cancelAmount) {
         try {

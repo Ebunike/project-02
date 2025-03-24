@@ -32,7 +32,7 @@
 <!-- 게시판 미리보기 부분 -->
 <div class="category-menu">
     <ul>
-        <li><a href="recipe/recipe_kit_main?theme_index=1">레시피</a></li>
+        <li><a href="recipe/recipe_main?theme_index=1">레시피</a></li>
         <li><a href="item/onedayclass/onedayMain">원데이클라스</a></li>
         <li><a href="item/kit/kitMain">키트 메인</a></li>
         <li><a href="report/report_list">자유게시판</a></li>
