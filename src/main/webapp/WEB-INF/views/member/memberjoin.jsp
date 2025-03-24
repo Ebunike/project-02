@@ -8,17 +8,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>미니 프로젝트</title>
-<style type="text/css">
-  body {
-    background-color: #f5f5dc;
-  }
-  .card shadow {
-    display: flex;
-    width: 100%;
-    height: 100%;
-    margin: 0;
-  }
-</style>
+
 <!-- Bootstrap CDN -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -31,35 +21,16 @@
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 <script type="text/javascript">
+var api = "${api}";
+
 window.onload = function() {
     var nameField = document.getElementById('name');
     var emailField = document.getElementById('email');
     
-    // JSP에서 전달된 값이 있을 경우
-    var nameValue = nameField.value.trim();
-    var emailValue = emailField.value.trim();
-
-    // 값이 있으면 읽기 전용 설정
-    if (nameValue) {
+    if (api && api.trim() !== "") {
         nameField.setAttribute('readonly', 'true');
-    }
-    
-    if (emailValue) {
         emailField.setAttribute('readonly', 'true');
     }
-    
-    // 값을 직접 입력한 경우에는 읽기 전용 속성을 제거
-    nameField.addEventListener('input', function() {
-        if (nameField.value.trim() !== '') {
-            nameField.removeAttribute('readonly');
-        }
-    });
-    
-    emailField.addEventListener('input', function() {
-        if (emailField.value.trim() !== '') {
-            emailField.removeAttribute('readonly');
-        }
-    });
 }
 
    // 아이디 중복 확인
@@ -99,7 +70,17 @@ window.onload = function() {
       }).open();
    }
 </script>
-
+	<style type="text/css">
+	  .card shadow {
+	    display: flex;
+	    width: 100%;
+	    height: 100%;
+	    margin: 0;
+	  }
+	  .form-control {
+	    border: 3px solid black;
+	}
+	</style>
 </head>
 <body>
 
@@ -111,7 +92,7 @@ window.onload = function() {
       <div class="col-sm-3"></div>
       <div class="col-sm-6">
          <div class="card shadow">
-            <div class="card-body">
+            <div class="card-body" style="border: 2px solid; border-radius: 20px">
                <form:form action="${root}/member/memberjoin_pro" method="post" modelAttribute="memberBean">
                   <div class="form-group">
                      <form:label path="name">이름</form:label>
@@ -163,11 +144,11 @@ window.onload = function() {
                   </div>
                   <div class="form-group">
                      <form:label path="keyword">관심 키워드를 선택하세요</form:label><br>
-                     <form:checkbox path="keyword" value="program"/> 프로그래밍 <br>
-                     <form:checkbox path="keyword" value="design"/> 디자인 <br>
-                     <form:checkbox path="keyword" value="marketing"/> 마케팅 <br>
-                     <form:checkbox path="keyword" value="crafts"/> 공예 <br>
-                     <form:checkbox path="keyword" value="cook"/> 요리 <br>
+                     <form:checkbox path="keyword" value="프로그래밍"/> 프로그래밍 <br>
+                     <form:checkbox path="keyword" value="디자인"/> 디자인 <br>
+                     <form:checkbox path="keyword" value="마케팅"/> 마케팅 <br>
+                     <form:checkbox path="keyword" value="공예"/> 공예 <br>
+                     <form:checkbox path="keyword" value="요리"/> 요리 <br>
                      <form:errors path="keyword" cssStyle="color:red"/>
                   </div>
                   

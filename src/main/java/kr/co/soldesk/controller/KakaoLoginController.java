@@ -68,6 +68,8 @@ public class KakaoLoginController {
 		if(member == null) {
 			model.addAttribute("email", sellerBean1.getEmail());
 			model.addAttribute("name", sellerBean1.getName());
+			model.addAttribute("api", "api");
+		
 			return "member/joinmain";
 		}else {
 			memberService.login(member);

@@ -164,12 +164,17 @@
         <div class="info-box">
             <label>관심 키워드:</label>
             <span>
-                <c:forEach var="keyword" items="${loginUser.keyword}">
-            	${keyword}<br>
-       		 	</c:forEach>
+                <c:choose>
+                    <c:when test="${not empty loginUser.keyword}">
+                         <c:forEach var="keyword" items="${loginUser.keyword}">
+		               		${keyword}<br>
+		                 </c:forEach>
+                    </c:when>
+                    <c:otherwise>선택 없음</c:otherwise>
+                </c:choose>
             </span>
         </div>
-        <%-- <c:choose>
+         <%-- <c:choose>
         	<c:when test="${loginUser.login.equals('s')}">
         		<div class="info-box">
 			        <label>사업자명:</label> 
@@ -180,11 +185,11 @@
 			        <span>${loginUser.company_num}</span>
 	   	 		</div>
         	</c:when>
-        </c:choose> --%>
+        </c:choose>  --%>
      </div>
 	        
         <div class="btn-container">
-            <a href="${root}/member/modify_user" class="btn-edit">정보 수정</a>
+            <a href="${root}/member/modify_user" class="btn-edit">정보 수정</a> 
             <form:form id="delete-form" action="${root}/member/member_delete_pro" method="post">
 			    <input type="hidden" id="password" name="pw" />  <!-- 비밀번호 전달 -->
 			    <input type="hidden" id="user-id" name="id" value="${loginUser.id}" />  <!-- 로그인한 사용자의 ID 전달 -->

@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
 <title>search</title>
 <link rel="stylesheet" href="${root }/css/top.css" />
+<link href="https://hangeul.pstatic.net/hangeul_static/css/NanumGaRamYeonGgoc.css" rel="stylesheet">
 </head>
 <body>
 <nav class="navbar navbar-expand-md fixed-top shadow-lg test-nav">
@@ -100,11 +101,12 @@
 		    <c:when test="${loginUser.login=='seller'||loginUser.login=='sellerawaiter'}">
 		    	<div class="menu-items">
 			        <h3>운영 모드</h3>
-			        <a href="">주문 내역 확인</a>
-			        <a href="">매출 관리</a>
-			        <a href="">메뉴 관리</a>
-			        <a href="">가게 설정</a>
-			        <a></a>
+			        <a href="${root }/manager/manager_order">주문 내역 확인</a>
+			        <a href="${root }/manager/manager_sales">매출 관리</a>
+			        <a href="${root }/manager/manager_product">상품 관리</a>
+			        <a href="${root }/manager/manager_ask">문의 관리</a>
+			        <a href="${root }/manager/manager_review">리뷰 관리</a> <br> <br>
+			        <h3></h3>
 			        <a href="${root }/member/my_info">내 정보</a>
 			        <a href="${root }/cart/my_cart">장바구니</a>
 			        <a href="${root }/chating/main">채팅</a>
@@ -119,7 +121,7 @@
 			        <a href="">뷰티</a>
 			        <a href="">완구/취미</a>
 			        <a href="">식품</a>
-			        <a></a>
+			        <h3></h3>
 			        <a href="${root }/member/my_info">내 정보</a>
 			        <a href="${root }/cart/my_cart">장바구니</a>
 			        <a href="${root }/chating/main">채팅</a>

@@ -5,15 +5,15 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
-import kr.co.soldesk.beans.BoardTopBean;
-
+/*import kr.co.soldesk.beans.BoardTopBean;
+*/
 @Mapper
 public interface TopMenuMapper {
 
-	@Select("select board_top_idx, board_top_name "
-			+ "from board_top_table")
-	List<BoardTopBean> getMenuList();
-	
+	/*
+	 * @Select("select board_top_idx, board_top_name " + "from board_top_table")
+	 * List<BoardTopBean> getMenuList();
+	 */
 	// 키트 제목 검색
     @Select("SELECT kit_name from cart ")
     String getKitName();

@@ -56,6 +56,7 @@ public class GoogleLoginController {
 
             String name = userJson.getString("name");
             String email = userJson.getString("email");
+            
 
            
             sellerBean1.setName(name);
@@ -71,6 +72,7 @@ public class GoogleLoginController {
 		if(member == null) {
 			model.addAttribute("email", sellerBean1.getEmail());
 			model.addAttribute("name", sellerBean1.getName());
+			model.addAttribute("api", "api");
 			return "member/joinmain";
 		}else {
 			memberService.login(member);

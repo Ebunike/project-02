@@ -9,17 +9,19 @@ public class ReportBean {
     private String report_title;    
     private String report_content;  
     private String report_reply;     
-    private String report_views;      
+    private int report_views;      
     //private Date report_date;     
     private String report_date;     
     
+    public ReportBean() {
+    	report_views = 0;
+    }
     
-    
-    public String getReport_views() {
+	public int getReport_views() {
 		return report_views;
 	}
 
-	public void setReport_views(String report_views) {
+	public void setReport_views(int report_views) {
 		this.report_views = report_views;
 	}
 

@@ -8,17 +8,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>미니 프로젝트</title>
-<style type="text/css">
-  body {
-    background-color: #f5f5dc;
-  }
-  .card shadow {
-    display: flex;
-    width: 100%;
-    height: 100%;
-    margin: 0;
-  }
-</style>
 <!-- Bootstrap CDN -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -29,21 +18,17 @@
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 <script type="text/javascript">
+var api = "${api}";
+
 window.onload = function() {
     var nameField = document.getElementById('name');
     var emailField = document.getElementById('email');
-
-    var nameValue = nameField.value;
-    var emailValue = emailField.value;
-
-    if (nameValue && nameValue.trim() !== '') {
-       nameField.setAttribute('readonly', 'true');
-    }
     
-    if (emailValue && emailValue.trim() !== '') {
-       emailField.setAttribute('readonly', 'true');
+    if (api && api.trim() !== "") {
+        nameField.setAttribute('readonly', 'true');
+        emailField.setAttribute('readonly', 'true');
     }
- }
+}
    function checkUserId() {
       let id = $("#id").val();
       console.log(id);
@@ -73,25 +58,35 @@ window.onload = function() {
    }
 
    function sample4_execDaumPostcode() {
-	   new daum.Postcode({
-		    oncomplete: function(data) {
-		        console.log(data);
-		        var roadAddr = data.roadAddress;
+      new daum.Postcode({
+          oncomplete: function(data) {
+              console.log(data);
+              var roadAddr = data.roadAddress;
 
-		        console.log("도로명 주소:", roadAddr);
-		        
-		        if (roadAddr) {
-		            document.getElementById("address").value = roadAddr;
-		        } else {
-		            console.log("도로명 주소가 없습니다.");
-		        }
-		    }
-		}).open();
+              console.log("도로명 주소:", roadAddr);
+              
+              if (roadAddr) {
+                  document.getElementById("address").value = roadAddr;
+              } else {
+                  console.log("도로명 주소가 없습니다.");
+              }
+          }
+      }).open();
    }
 
   
 </script>
-
+<style type="text/css">
+  .card shadow {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+  }
+  .form-control {
+    border: 2px solid black;
+}
+</style>
 </head>
 <body>
 
@@ -103,7 +98,7 @@ window.onload = function() {
       <div class="col-sm-3"></div>
       <div class="col-sm-6">
          <div class="card shadow">
-            <div class="card-body">
+            <div class="card-body" style="border: 2px solid; border-radius: 20px">
                <form:form action="${root}/member/sellerjoin_pro" method="post" modelAttribute="sellerBean">
                   <div class="form-group">
                      <form:label path="name">이름</form:label>
@@ -154,11 +149,11 @@ window.onload = function() {
                   </div>
                   <div class="form-group">
                      <form:label path="keyword">관심 키워드를 선택하세요</form:label><br>
-                     <form:checkbox path="keyword" value="program"/> 프로그래밍 <br>
-                     <form:checkbox path="keyword" value="design"/> 디자인 <br>
-                     <form:checkbox path="keyword" value="marketing"/> 마케팅 <br>
-                     <form:checkbox path="keyword" value="crafts"/> 공예 <br>
-                     <form:checkbox path="keyword" value="cook"/> 요리 <br>
+                     <form:checkbox path="keyword" value="프로그래밍"/> 프로그래밍 <br>
+                     <form:checkbox path="keyword" value="디자인"/> 디자인 <br>
+                     <form:checkbox path="keyword" value="마케팅"/> 마케팅 <br>
+                     <form:checkbox path="keyword" value="공예"/> 공예 <br>
+                     <form:checkbox path="keyword" value="요리"/> 요리 <br>
                      <form:errors path="keyword" cssStyle="color:red"/>
                   </div>
                   
@@ -171,7 +166,7 @@ window.onload = function() {
                      <form:label path="company_num">사업자 등록번호:</form:label>
                      <form:input path="company_num"/>
                   </div>
-                  	<form:errors path="company_num" cssStyle="color:red"/>
+                     <form:errors path="company_num" cssStyle="color:red"/>
                   <div class="form-group">
                      <div class="text-right">
                         <button type="submit" class="btn btn-primary">회원가입</button>

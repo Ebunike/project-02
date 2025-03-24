@@ -34,23 +34,26 @@ public class MemberController {
 	private MemberBean loginUser;
 	
 	@GetMapping("/joinmain")
-	public String joinmain(@Param("eamil") String email, @Param("name") String name, Model model) {
+	public String joinmain(@Param("eamil") String email, @Param("name") String name,@Param("api") String api, Model model) {
 		model.addAttribute("email",email);
 		model.addAttribute("name",name);
+		model.addAttribute("api",api);
 		return "member/joinmain";
 	}
 	
 	@GetMapping("/memberjoin")
-	public String memberJoin(@Param("eamil") String email, @Param("name") String name,@ModelAttribute("memberBean") MemberBean memberBean) {
+	public String memberJoin(@Param("eamil") String email, @Param("name") String name,@Param("api") String api,@ModelAttribute("memberBean") MemberBean memberBean, Model model) {
 		memberBean.setName(name);
 		memberBean.setEmail(email);
-		
+		model.addAttribute("api", api);
 		return "member/memberjoin";
 	}
 	@GetMapping("/sellerjoin")
-	public String sellerJoin(@Param("eamil") String email, @Param("name") String name,@ModelAttribute("sellerBean") SellerBean sellerBean) {
+	public String sellerJoin(@Param("eamil") String email, @Param("name") String name,@Param("api") String api,@ModelAttribute("sellerBean") SellerBean sellerBean, Model model) {
 		sellerBean.setName(name);
 		sellerBean.setEmail(email);
+		model.addAttribute("api", api);
+		System.out.println(api);
 		return "member/sellerjoin";
 	}
 	@PostMapping("/sellerjoin_pro")
@@ -114,7 +117,6 @@ public class MemberController {
 	public String my_info() {
 		String[] keyword = adminService.getkeyword(loginUser.getId());
 		loginUser.setKeyword(keyword);
-		
 		return "member/my_info";
 	}
 	@GetMapping("/modify_user")

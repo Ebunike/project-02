@@ -19,7 +19,7 @@
 		/* 상품 리스트 전체 컨테이너 */
 	.kit-container {
 	    border: 2px solid #c2a87d; /* 테두리 색상 */
-	    display: flex;
+	    /* display: flex; */
 	    flex-direction: column;
 	    align-items: flex-start;  /* 왼쪽 정렬 */
 	    width: 80%;
@@ -28,21 +28,12 @@
 	    position: relative; /* 상대 위치 지정 */
 	}
 	
-	/* "키트 상품 등록" 버튼 (오른쪽 정렬) */
-	.kit-header {
-	    width: 100%;
-	    display: flex;
-	    justify-content: flex-end; /* 오른쪽 정렬 */
-	    margin-bottom: 10px;
-	}
-	
 	/* 개별 상품 카드 */
 	.kit-item {
 	    display: flex;
 	    align-items: center;
 	    justify-content: space-between;
 	    width: 100%;
-	    max-width: 800px;
 	    background-color: #f9f9f9;
 	    padding: 15px;
 	    border: 2px solid #c2a87d; /* 테두리 색상 */
@@ -105,12 +96,8 @@
 	<c:import url="/WEB-INF/views/include/top_menu.jsp" />
 	
 	<div class="kit-container">
-	    <!-- "키트 상품 등록" 버튼을 오른쪽에 배치 -->
-	    <div class="kit-header">
-	        <a href="${root }/item/kit/insert_kit?kit=1" class="btn btn-primary">키트 상품 등록</a>
-	    </div>
-	
-	    <h4>키트 상품 리스트</h4>
+
+	    <h4 style="text-align: center; border: 2px solid; border-radius: 5px; ">키트 상품 리스트</h4>
 	
 	    <!-- 상품 리스트 반복문 -->
 	    <c:forEach var="item" items="${itemList}">
@@ -124,8 +111,7 @@
 	
 	            <!-- 상품 이름 & 가격 -->
 	            <div class="kit-info">
-	                <%-- <a href="${root }/item/kit/kit_detail?item_index=${item.item_index}"> --%>
-	                <a href="#">
+	                <a href="${root }/item/kit/kit_detail?item_index=${item.item_index}">
 	                    <span>상품명: ${item.item_name}</span>
 	                    <span>가격: ${item.item_price} 원</span>
 	                </a>
@@ -170,6 +156,5 @@ function addToCart(item_index) {
     });
 }
 </script>
-
 </body>
 </html>

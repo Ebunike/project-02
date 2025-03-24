@@ -8,7 +8,15 @@ public class CartItemDTO {
 	private String cart_id;
 	private String item_name;
 	private int item_price;
+	private String item_picture;
 	
+	
+	public String getItem_picture() {
+		return item_picture;
+	}
+	public void setItem_picture(String item_picture) {
+		this.item_picture = item_picture;
+	}
 	public String getCart_id() {
 		return cart_id;
 	}

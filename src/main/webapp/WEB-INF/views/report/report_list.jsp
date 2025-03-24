@@ -76,7 +76,7 @@
         </div>
         <!-- <table class="table table-bordered"> -->
        
-        <table class="test_table">
+        <table class="test_table" style="text-align: center;">
             <thead>
                 <tr class="title_box">
                     <th>번호</th>

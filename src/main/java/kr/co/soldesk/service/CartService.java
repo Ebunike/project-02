@@ -27,6 +27,7 @@ public class CartService {
 	public List<CartItemDTO> getMemberCart(String id){
 		return cartRepository.getMemberCart(id);
 	}
+
 	public void increaseQuantity(int itemIndex) {
         cartRepository.updateQuantity(itemIndex, 1); // 수량 증가
     }
@@ -42,4 +43,8 @@ public class CartService {
         // 현재 사용자의 장바구니 합계 금액을 업데이트
         cartRepository.updateCartTotal(totalAmount, id);
     }
+    public List<CartItemDTO> getSelectedCartItems(String userId, String[] itemIndexes) {
+        return cartRepository.getSelectedCartItems(userId, itemIndexes);
+    }
+    
 }

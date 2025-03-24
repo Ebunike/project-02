@@ -15,7 +15,7 @@ public interface ChatMapper {
     void insertChatRoom(ChatRoomBean chatRoom);
     
     @Insert("INSERT INTO chat_rooms (id, name, buyer, seller, created_at) " +
-            "VALUES (ChatRooms_seq.nextval, #{chatRoom.name}, #{chatRoom.buyer}, #{chatRoom.seller}, sysdate)")
+            "VALUES (ChatRooms_seq.nextval, #{name}, #{buyer}, #{seller}, sysdate)")
     void createRoom(ChatRoomBean chatRoom);
     
     @Select("SELECT * FROM chat_rooms ORDER BY created_at DESC")

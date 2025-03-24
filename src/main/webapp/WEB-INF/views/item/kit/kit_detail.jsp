@@ -15,7 +15,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 <script>
     $(document).ready(function () {
-    	let root = "${root}";
+       let root = "${root}";
         // 모달 내부의 폼 제출 시 채팅방 생성
         $('#chatRoomForm').on('submit', function (event) {
             event.preventDefault(); // 기본 폼 제출 동작 방지
@@ -28,8 +28,10 @@
             }
 
             // 사용자 정보 (JSP에서 데이터 렌더링됨)
-			const buyerName = encodeURIComponent(`${loginUser.name}`);
-			const sellerName = encodeURIComponent(`${sellerName}`);
+         const buyerName = encodeURIComponent(`${loginUser.name}`);
+         const sellerName = encodeURIComponent(`${sellerName}`);
+         
+         console.log(buyerName);
 
             // AJAX 요청
             $.ajax({
@@ -42,7 +44,7 @@
                 },
                 success: function (response) {
                     // 요청 성공 시 생성된 채팅방으로 리다이렉션
-                    window.location.href = `/chat/room/${response.id}`;
+                    window.location.href = root+'/chating/main';
                 },
                 error: function (xhr, status, error) {
                     // 에러 발생 시 처리
@@ -64,52 +66,39 @@
 	<div class="product-detail">
         <h1>${item.item_name}</h1>
         <p>판매자: 
-		    <a href="#" data-toggle="modal" data-target="#sellerModal">${sellerName}</a>
-		</p>
-			<!-- 모달 창 -->
-			<div class="modal fade" id="sellerModal" tabindex="-1" role="dialog" aria-labelledby="sellerModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="sellerModalLabel">판매자 문의</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <!-- 모달 창 -->
-	            <div class="modal fade" id="chatRoomModal" tabindex="-1" role="dialog" aria-labelledby="chatRoomModalLabel" aria-hidden="true">
-	    <div class="modal-dialog" role="document">
-	        <div class="modal-content">
-	            <div class="modal-header">
-	                <h5 class="modal-title" id="chatRoomModalLabel">채팅방 제목 설정</h5>
-	                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-	                    <span aria-hidden="true">&times;</span>
-	                </button>
-	            </div>
-	            <div class="modal-body">
-	                <form id="chatRoomForm">
-	                    <div class="form-group">
-	                        <label for="chatRoomTitle">채팅방 제목</label>
-	                        <input type="text" class="form-control" id="chatRoomTitle" placeholder="채팅방 제목을 입력하세요" required>
-	                    </div>
-	                    <button type="submit" class="btn btn-primary">확인</button>
-	                </form>
-	            </div>
-	        </div>
-	    </div>
-	</div>
-            
-            <div class="modal-body">
-                <p>판매자: ${sellerName}</p>
-                <!-- 버튼을 눌러 채팅방 제목 모달 열기 -->
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#chatRoomModal">
-                    채팅하기
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-
+           <c:choose>
+              <c:when test="${loginUser.login.equals('buyer')}">
+                 <a href="#" data-toggle="modal" data-target="#unifiedModal">${sellerName}</a>
+              </c:when>
+             <c:otherwise>
+                <span>${sellerName}</span>
+             </c:otherwise>
+          </c:choose>
+      </p>
+         <div class="modal fade" id="unifiedModal" tabindex="-1" role="dialog" aria-labelledby="unifiedModalLabel" aria-hidden="true">
+             <div class="modal-dialog" role="document">
+                 <div class="modal-content">
+                     <div class="modal-header">
+                         <h5 class="modal-title" id="unifiedModalLabel">판매자 정보 및 채팅</h5>
+                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                             <span aria-hidden="true">&times;</span>
+                         </button>
+                     </div>
+                     <div class="modal-body">
+                         <h6>판매자: ${sellerName}</h6>
+                         <p>판매자에게 문의하시려면 아래 버튼을 눌러주세요.</p>
+                         <!-- 채팅방 제목 설정 -->
+                         <form id="chatRoomForm" method="post">
+                             <div class="form-group">
+                                 <label for="chatRoomTitle">채팅방 제목</label>
+                                 <input type="text" class="form-control" id="chatRoomTitle" placeholder="채팅방 제목을 입력하세요" required>
+                             </div>
+                             <button type="submit" class="btn btn-primary">확인</button>
+                         </form>
+                     </div>
+                 </div>
+             </div>
+         </div>
         <p>가격: ${item.item_price}원</p>
         <p>재고 수량: ${item.item_quantity}개</p>
         <p>상세 설명:</p>

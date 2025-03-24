@@ -37,4 +37,14 @@ public class CartRepository {
     public void updateCartTotal(int totalAmount, String id) {
     	cartMapper.updateCartTotal(totalAmount, id);
     }
+    public List<CartItemDTO> getSelectedCartItems(String userId, String[] itemIndexes) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < itemIndexes.length; i++) {
+            sb.append(itemIndexes[i]);
+            if (i < itemIndexes.length - 1) {
+                sb.append(",");
+            }
+        }
+        return cartMapper.getSelectedCartItems(userId, sb.toString());
+    }
 }

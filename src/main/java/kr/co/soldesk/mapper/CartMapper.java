@@ -22,7 +22,7 @@ public interface CartMapper {
 	@Select("select item_name from item where item_index = #{item_index}")
 	String getItemName(int item_index);
 	
-	@Select("select item_price from item where tiem_index = #{item_index}")
+	@Select("select item_price from item where item_index = #{item_index}")
 	int getItemPrice(int item_index);
 	
 	@Select("select cart.id, cart.item_index, cart.cart_quantity, item.item_name, item.item_price "
@@ -41,4 +41,10 @@ public interface CartMapper {
 	@Update("UPDATE Cart c SET c.cart_totalAmount = :totalAmount WHERE c.id = :id")
 	void updateCartTotal(@Param("totalAmount") int totalAmount, @Param("id") String id);
 	
+	@Select("select cart.id, cart.item_index, cart.cart_quantity, item.item_name, item.item_price, item.item_picture " +
+	        "from cart " +
+	        "join item on cart.item_index = item.item_index " +
+	        "join member on cart.id = member.id " +
+	        "where cart.id = #{userId} AND cart.item_index IN (${itemIndexes})")
+	List<CartItemDTO> getSelectedCartItems(@Param("userId") String userId, @Param("itemIndexes") String itemIndexes);
 }

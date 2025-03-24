@@ -56,7 +56,7 @@ public class ServletAppContext implements WebMvcConfigurer{
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 
 		registry.addResourceHandler("/upload/**")
-		.addResourceLocations("file:/C:/Users/illum/git/project-02/src/main/webapp/upload/");
+		.addResourceLocations("file:/C:/Users/soldesk/git/project-02/src/main/webapp/upload/");
 		
 		registry.addResourceHandler("/**")
 		.addResourceLocations("/resources/");
@@ -78,6 +78,10 @@ public class ServletAppContext implements WebMvcConfigurer{
 		res.setBasename("/WEB-INF/properties/error_message");
 		//res.setDefaultEncoding("UTF-8");
 		return res;
+	}
+	@Bean
+	public String uploadPath() {
+	    return "C:/Users/soldesk/git/project-02/src/main/webapp/upload/";
 	}
 	
 	
