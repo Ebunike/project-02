@@ -149,7 +149,7 @@
 					
 					<div class="form-group">
 						<div class="text-right">
-							<a href="${root }/recipe_kit/recipe_kit_main?theme_index=${readRecipeBean.theme_index}" class="btn btn-primary">목록보기</a>
+							<a href="${root }/recipe_kit/recipe_main?theme_index=${readRecipeBean.theme_index}" class="btn btn-primary">목록보기</a>
 							<c:if test="${loginMember.id == readRecipeBean.id }">
 							<a href="${root }/recipe/recipe_modify?openRecipe_index=${readRecipeBean.openRecipe_index}" class="btn btn-info">수정하기</a>
 							<a href="${root }/recipe/recipe_delete?openRecipe_index=${readRecipeBean.openRecipe_index}" class="btn btn-danger">삭제하기</a>
