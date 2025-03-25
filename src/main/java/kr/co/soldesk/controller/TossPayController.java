@@ -28,7 +28,7 @@ import kr.co.soldesk.service.PaymentService;
 
 @Controller
 @RequestMapping("/payment")
-public class PaymentController {
+public class TossPayController {
 
 	private String secretKey = "";
 	

@@ -200,7 +200,7 @@
                                     <tr>
                                         <td>${product.product_order}</td>
                                         <td>
-                                            <img src="${root}/pic/${product.product_img}" alt="${product.product_name}" class="image-preview">
+                                            <img src="${root}/upload/${product.product_img}" alt="${product.product_name}" class="image-preview">
                                         </td>
                                         <td>${product.product_name}</td>
                                         <td>${product.product_desc}</td>

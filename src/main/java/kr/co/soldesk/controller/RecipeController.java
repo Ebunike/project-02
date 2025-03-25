@@ -125,16 +125,11 @@ public class RecipeController {
         //List<StepBean>을 JSON으로 변환해서 content에 저장
         writeRecipe.setOpenRecipe_content(writeRecipe.getStepBeanList());
         
-        
-        
-        
-        
         //글쓰기 카테고리 선택 안했을 경우
 		  if (writeRecipe.getTheme_index() == 0) {
 			  System.out.println("카테고리 선택 오류");
 			  return "recipe/recipe_write";  // 폼으로 돌아가서 오류 메시지를 표시
 		   }
-		  
 		  
 		 //writeRecipe.setUpload_picture(upload_file);
 		  
@@ -145,21 +140,13 @@ public class RecipeController {
 			    });
 			    return "recipe/recipe_write";
 			}
-		
-	       
-	        
 		  
 		openRecipeService.addOpenRecipe(writeRecipe);
 	
 		model.addAttribute("theme_index", writeRecipe.getTheme_index());
 		
 		return "recipe/recipe_write_success";
-		
 	}
-	
-	
-	
-	
 	
 	//읽기
 	@GetMapping("/recipe_read")
@@ -173,8 +160,6 @@ public class RecipeController {
 		//contents JSON 변환
 		List<StepBean> readstepBeanList = openRecipe.getStepList();
 		openRecipe.setStepBeanList(readstepBeanList);
-		
-		
 		
 		//contents쪽 오류 확인용 코드
 		System.out.println("DB에서 읽어온 openRecipe_content: " + openRecipe);
@@ -190,11 +175,6 @@ public class RecipeController {
 		
 		return "recipe/recipe_read";
 	}
-	
-	
-	
-	
-	
 	
 	//수정
 	@GetMapping("/recipe_modify")

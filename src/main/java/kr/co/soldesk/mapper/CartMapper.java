@@ -48,6 +48,7 @@ public interface CartMapper {
 	        "where cart.id = #{userId} AND cart.item_index IN (${itemIndexes})")
 	List<CartItemDTO> getSelectedCartItems(@Param("userId") String userId, @Param("itemIndexes") String itemIndexes);
 	
+	
 	@Select("select cart_totalAmount from cart")
 	List<Integer> getAllTotalAmount();
 	

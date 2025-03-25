@@ -48,7 +48,7 @@ img {
     position: sticky; /* 스크롤 시 상단에 고정 */
     top: 0px;
     z-index: 9999; /* 다른 요소보다 위에 표시 */
-    box-shadow: var(--shadow);
+   /*  box-shadow: var(--shadow); */
 }
 
 /* ===== 카테고리 메뉴 - 가시성 개선 ===== */
@@ -56,7 +56,7 @@ img {
     background-color: #fff; /* 확실한 흰색 배경으로 가시성 향상 */
     padding: 15px 0;
     text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 그림자 효과 강화 */
+    /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 그림자 효과 강화 */
     margin-bottom: 20px;
     position: relative;
     z-index: 10;

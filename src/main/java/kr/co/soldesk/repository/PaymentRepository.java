@@ -22,18 +22,9 @@ public class PaymentRepository {
 			public void savepaymentKey(String paymentKey,String orderId) {
 				System.out.println("Mapper"+paymentKey);
 				paymentMapper.savePaymentKey(paymentKey,orderId);
-				
 			}
-			
-
-			
 		//환불 등록
 		public void addRefund(RefundBean refund) {
 			paymentMapper.addRefund(refund);
 		}
-	
-	
-	
-
-
 }

@@ -392,6 +392,10 @@
                     <i class="fas fa-wallet"></i>
                     <div>토스</div>
                 </div>
+                <div class="payment-method" onclick="selectPayment(this, 'cash')"> <!-- 현금 결제 방법 -->
+                    <i class="fas fa-wallet"></i>
+                    <div>현금거래</div>
+                </div>
             </div>
         </div>
         
@@ -555,10 +559,17 @@ function processPayment() {
     if (paymentMethod === 'toss') {
         // 토스 결제 페이지로 이동
         window.location.href = '${root}/payment/payments?totalPrice=${totalPrice}';
+        
     } else if (paymentMethod === 'kakaopay') {
         // 카카오페이 결제 페이지로 이동
         window.location.href = '${root}/payment/kakao/kakaopay?totalPrice=${totalPrice}';
-    } else {
+        
+    } else if (paymentMethod === 'cash'){
+    	// 현금 결제 페이지로 이동
+    	window.location.href = '${root}/payment/cash/cash?totalPrice=${totalPrice}';
+    	
+    } 
+    else {
         alert('결제 수단을 선택해주세요.');
         return;
     }
