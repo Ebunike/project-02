@@ -45,7 +45,7 @@
     <div class="category-menu">
         <ul>
             <li><a href="recipe/recipe_main?theme_index=1"><i class="fas fa-utensils fa-fw"></i> 레시피</a></li>
-            <li><a href="onedayclass/onedayMain"><i class="fas fa-chalkboard-teacher fa-fw"></i> 원데이클라스</a></li>
+            <li><a href="oneday/list"><i class="fas fa-chalkboard-teacher fa-fw"></i> 원데이클라스</a></li>
             <li><a href="item/kit/kitMain"><i class="fas fa-box-open fa-fw"></i> 키트 메인</a></li>
             <li><a href="report/report_list"><i class="fas fa-comments fa-fw"></i> 자유게시판</a></li>
             <li><a href="inquiry/inquiry_main">고객문의</a></li>

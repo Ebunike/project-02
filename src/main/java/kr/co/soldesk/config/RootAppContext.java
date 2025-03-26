@@ -20,7 +20,8 @@ import kr.co.soldesk.beans.SellerBean;
 
 @Configuration
 @ComponentScan(basePackages = { "kr.co.soldesk.repository",
-								"kr.co.soldesk.service" })
+								"kr.co.soldesk.service",
+								"kr.co.soldesk.beans"})
 @PropertySource("/WEB-INF/properties/db.properties")
 @MapperScan("kr.co.soldesk.mapper")
 public class RootAppContext {
