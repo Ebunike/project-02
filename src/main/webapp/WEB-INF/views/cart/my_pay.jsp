@@ -279,6 +279,11 @@
     font-weight: 500;
     text-align: center;
 	}
+	.address_detail {
+		
+	}
+	
+	
 /* 	th {
 		border-bottom: 2px solid black;
 	} */
@@ -316,8 +321,9 @@
                     </div>
                     <div class="form-group"> <!-- 기본 주소 입력 필드 -->
                         <label class="form-label">주소</label>
-                        <div class="d-flex">
+                        <div>
                             <input type="text" class="form-control" id="address" value="${loginUser.address}" readonly>
+                            <input type="text" id="address_detail">
                             <button class="address-btn" onclick="changeAddress()">주소변경</button> <!-- 주소 변경 버튼 -->
                             <button class="address-btn" onclick="findAddress()">주소검색</button> <!-- 주소 변경 버튼 -->
                         </div>

@@ -16,14 +16,12 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
-
 <style>
     body {
         font-family: 'Noto Sans KR', sans-serif;
         color: #333;
         background-color: #f5f5f5;
     }
-    
     .container-recipe {
         background-color: white;
         padding: 0;
@@ -32,19 +30,16 @@
         box-shadow: 0 0 10px rgba(0,0,0,0.1);
         border-radius: 4px;
     }
-    
     .recipe-header {
         padding: 30px 20px;
         border-bottom: 1px solid #ddd;
     }
-    
     .recipe-title {
         font-size: 28px;
         font-weight: 700;
         color: #333;
         margin-bottom: 10px;
     }
-    
     .recipe-user-info {
         display: flex;
         align-items: center;
@@ -52,47 +47,39 @@
         color: #666;
         font-size: 14px;
     }
-    
     .recipe-user-info img {
         width: 40px;
         height: 40px;
         border-radius: 50%;
         margin-right: 10px;
     }
-    
     .recipe-intro {
         font-size: 16px;
         line-height: 1.6;
         color: #666;
         margin-bottom: 15px;
     }
-    
     .recipe-stats {
         display: flex;
         color: #74b243;
         font-size: 14px;
         margin-top: 15px;
     }
-    
     .recipe-stats span {
         margin-right: 20px;
         display: flex;
         align-items: center;
     }
-    
     .recipe-stats i {
         margin-right: 5px;
     }
-    
     .recipe-sections {
         padding: 0 20px;
     }
-    
     .recipe-section {
         padding: 30px 0;
         border-bottom: 1px solid #eee;
     }
-    
     .section-title {
         font-size: 20px;
         font-weight: 700;
@@ -101,7 +88,6 @@
         display: flex;
         align-items: center;
     }
-    
     .section-title::before {
         content: '';
         width: 4px;
@@ -110,13 +96,11 @@
         margin-right: 10px;
         display: inline-block;
     }
-    
     .recipe-ingredients {
         background-color: #f9f9f9;
         padding: 20px;
         border-radius: 4px;
     }
-    
     .ingredient-item {
         display: flex;
         justify-content: space-between;
@@ -124,30 +108,24 @@
         padding-bottom: 10px;
         border-bottom: 1px dashed #ddd;
     }
-    
     .ingredient-item:last-child {
         border-bottom: none;
     }
-    
     .ingredient-name {
         font-weight: 500;
     }
-    
     .ingredient-amount {
         color: #666;
     }
-    
     .recipe-thumbnail {
         width: 100%;
         max-height: 400px;
         object-fit: cover;
         margin-bottom: 30px;
     }
-    
     .cooking-steps {
         counter-reset: step-counter;
     }
-    
     .step-box {
         margin-bottom: 40px;
         padding-bottom: 40px;
@@ -156,11 +134,9 @@
         display: flex;
         flex-direction: column;
     }
-    
     .step-box:last-child {
         border-bottom: none;
     }
-    
     .step-number {
         position: absolute;
         left: -40px;
@@ -175,26 +151,22 @@
         justify-content: center;
         font-weight: 700;
     }
-    
     .step-text {
         font-size: 16px;
         line-height: 1.7;
         color: #333;
         margin-bottom: 15px;
     }
-    
     .step-image {
         width: 100%;
         border-radius: 4px;
     }
-    
     .action-buttons {
         padding: 20px;
         display: flex;
         justify-content: space-between;
         border-top: 1px solid #eee;
     }
-    
     .btn-like {
         background-color: #ff6b6b;
         color: white;
@@ -205,15 +177,12 @@
         display: flex;
         align-items: center;
     }
-    
     .btn-like.disabled {
         background-color: #ccc;
     }
-    
     .btn-like i {
         margin-right: 8px;
     }
-    
     .btn-action {
         background-color: #f8f9fa;
         color: #333;
@@ -223,23 +192,19 @@
         border-radius: 4px;
         font-size: 14px;
     }
-    
     .btn-primary {
         background-color: #74b243;
         border-color: #74b243;
     }
-    
     .btn-info {
         background-color: #4dabf7;
         border-color: #4dabf7;
         color: white;
     }
-    
     .btn-danger {
         background-color: #ff6b6b;
         border-color: #ff6b6b;
     }
-    
     .buy-button {
         background-color: #ff922b;
         color: white;
@@ -253,50 +218,41 @@
         justify-content: center;
         margin-top: 20px;
     }
-    
     .buy-button i {
         margin-right: 10px;
     }
-    
     .recipe-complete-image {
         position: relative;
         margin-bottom: 30px;
     }
-    
     .recipe-complete-image img {
         width: 100%;
         border-radius: 4px;
     }
-    
     .recipe-info-box {
         background-color: #f9f9f9;
         padding: 20px;
         border-radius: 4px;
         margin-top: 20px;
     }
-    
     .recipe-info-title {
         font-weight: 700;
         font-size: 16px;
         margin-bottom: 10px;
         color: #333;
     }
-    
     .recipe-info-content {
         font-size: 14px;
         line-height: 1.6;
         color: #666;
     }
-    
     @media (max-width: 768px) {
         .recipe-title {
             font-size: 22px;
         }
-        
         .recipe-sections {
             padding: 0 15px;
         }
-        
         .step-number {
             position: static;
             margin-bottom: 10px;
@@ -305,7 +261,6 @@
 </style>
 </head>
 <body>
-
 <!-- 상단 메뉴 -->
 <div class="top">
     <c:import url="/WEB-INF/views/include/top_menu.jsp" />
@@ -366,17 +321,6 @@
                         </c:if>
                     </div>
                 </c:forEach>
-            </div>
-        </div>
-        
-        <!-- 팁과 정보 섹션 -->
-        <div class="recipe-section">
-            <h2 class="section-title">요리 팁</h2>
-            <div class="recipe-info-box">
-                <p class="recipe-info-title">나중에 팁 제목 추가해서 el로 불러오기</p>
-                <p class="recipe-info-content">
-                    나중에 팁 내용 추가해서 el로 불러오기
-                </p>
             </div>
         </div>
     </div>
@@ -457,6 +401,5 @@ $(document).ready(function() {
     });
 });
 </script>
-
 </body>
 </html>

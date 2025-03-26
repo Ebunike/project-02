@@ -28,6 +28,75 @@
     
     <!-- 외부 CSS 파일 링크 -->
     <link rel="stylesheet" href="${root}/css/main.css" />
+    <style type="text/css">
+    .swiper-container {
+    width: 100%;
+    height: 500px; /* 원하는 높이로 고정 */
+}
+
+.banner-slide {
+     background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100%;
+}
+
+.banner-text-container {
+    text-align: center;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 80%;
+    z-index: 10; /* 이미지 위에 표시 */
+    position: absolute; /* 배경 이미지 위에 절대 위치 */
+	top: 50%;
+	left: 50%;
+	margin: -50px 0 0 -50px;
+}
+
+.banner-title {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.banner-subtitle {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+}
+
+/* 반응형 스타일 */
+@media (max-width: 768px) {
+    .swiper-container {
+        height: 300px;
+    }
+
+    .banner-title {
+        font-size: 1.8rem;
+    }
+
+    .banner-subtitle {
+        font-size: 1.2rem;
+    }
+}
+	.banner-text-container a:link {
+	  color : white;
+	  text-decoration: none;
+	}
+	.banner-text-container a:visited {
+	  color : white;
+	  text-decoration: none;
+	}
+	.banner-text-container a:hover {
+	  color : white;
+		text-decoration: none;
+	}
+	.banner-text-container a:active {
+	  color : white;
+	  text-decoration: none;
+	}
+    </style>
 </head>
 <body>
 
@@ -53,47 +122,32 @@
     </div>
     
     <!-- 메인 배너 슬라이더 - 페이드 효과가 적용된 메인 이미지 슬라이더 -->
-    <div class="swiper-container">
-        <div class="swiper mySwiper">
-            <div class="swiper-wrapper">
-                <!-- 동적으로 배너 생성 -->
-                <c:choose>
-                    <c:when test="${not empty bannerList}">
-                        <c:forEach var="banner" items="${bannerList}">
-                            <div class="swiper-slide">
-                                <a href="${banner.banner_link}">
-                                    <img src="${root}/upload/${banner.banner_img}" alt="${banner.banner_name}">
-                                </a>
-                            </div>
-                        </c:forEach>
-                    </c:when>
-                    <c:otherwise>
-                        <!-- 기본 배너 표시 (데이터베이스에서 배너를 가져오지 못한 경우) -->
-                        <div class="swiper-slide">
-                            <a href="">
-                                <img src="${root}/pic/back.jpg" alt="배너 이미지 1">
-                            </a>
-                        </div>
-                        <div class="swiper-slide">
-                            <a href="">
-                                <img src="${root}/pic/back2.jpg" alt="배너 이미지 2">
-                            </a>
-                        </div>
-                        <div class="swiper-slide">
-                            <a href="">
-                                <img src="${root}/pic/back3.png" alt="배너 이미지 3">
-                            </a>
-                        </div>
-                    </c:otherwise>
-                </c:choose>
-            </div>
-            <!-- 배너 슬라이더 네비게이션 버튼 -->
-            <div class="swiper-button-next"></div>
-            <div class="swiper-button-prev"></div>
-            <!-- 배너 슬라이더 페이지네이션(점) -->
-            <div class="swiper-pagination"></div>
+    <!-- main.jsp의 배너 슬라이더 부분 -->
+<div class="swiper-container">
+    <div class="swiper mySwiper">
+        <div class="swiper-wrapper">
+            <c:forEach var="banner" items="${bannerList}">
+                <div class="swiper-slide">
+				    <div class="banner-slide" style="background-image: url('${root}/upload/${banner.banner_img}');">
+				        <div class="banner-text-container">
+				        	<a href="${banner.banner_link}" class="banner-link">
+				            <c:if test="${not empty banner.banner_title}">
+				                <h2 class="banner-title">${banner.banner_title}</h2>
+				            </c:if>
+				            <c:if test="${not empty banner.banner_subtitle}">
+				                <p class="banner-subtitle">${banner.banner_subtitle}</p>
+				            </c:if>
+				            </a>
+				        </div>
+				    </div>
+				</div>
+            </c:forEach>
         </div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-pagination"></div>
     </div>
+</div>
 
     <!-- 상품 슬라이더 제목 - 스타일이 적용된 제목 영역 -->
     <div class="item_title">
@@ -156,7 +210,6 @@
         <!-- 상품 슬라이더 페이지네이션(점) -->
         <div class="swiper-pagination"></div>
     </div>
-
     <!-- 두 번째 상품 슬라이더 제목 -->
     <div class="item_title">
         <h3>오늘의 발견 |</h3> <h5>승호가 추천하는 상품!</h5>

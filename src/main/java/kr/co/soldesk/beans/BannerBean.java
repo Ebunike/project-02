@@ -8,7 +8,29 @@ public class BannerBean {
     private int banner_order;
     private String is_active;
     
-    public int getBanner_idx() {
+    //새로 추가한것(DB추가해야 함)
+    private String banner_title;
+    private String banner_subtitle;
+    
+    
+    
+    public String getBanner_title() {
+		return banner_title;
+	}
+
+	public void setBanner_title(String banner_title) {
+		this.banner_title = banner_title;
+	}
+
+	public String getBanner_subtitle() {
+		return banner_subtitle;
+	}
+
+	public void setBanner_subtitle(String banner_subtitle) {
+		this.banner_subtitle = banner_subtitle;
+	}
+
+	public int getBanner_idx() {
         return banner_idx;
     }
     

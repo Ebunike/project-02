@@ -18,50 +18,9 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
-    <style>
-        .admin-content {
-            padding: 30px;
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0,0,0,0.1);
-            margin-bottom: 30px;
-        }
-        .image-preview {
-            width: 150px;
-            height: 100px;
-            object-fit: cover;
-            border-radius: 5px;
-            margin-right: 10px;
-        }
-        .tab-pane {
-            padding: 20px;
-            background-color: #f9f9f9;
-            border-radius: 0 0 10px 10px;
-        }
-        .nav-tabs .nav-link {
-            background-color: #f5f5f5;
-            margin-right: 5px;
-            border-radius: 10px 10px 0 0;
-        }
-        .nav-tabs .nav-link.active {
-            background-color: #f9f9f9;
-            font-weight: bold;
-        }
-        .action-buttons {
-            display: flex;
-            gap: 5px;
-        }
-        .action-buttons .btn {
-            padding: 3px 8px;
-            font-size: 0.8rem;
-        }
-        .btn-add {
-            margin-bottom: 20px;
-        }
-        .modal-body form .form-group {
-            margin-bottom: 15px;
-        }
-    </style>
+    <!-- 외부 CSS -->
+    <link rel="stylesheet" href="${root}/css/admin_system.css" />
+  
 </head>
 <body>
 <div class="background_container">
@@ -233,14 +192,12 @@
             </div>
         </div>
     </div>
-    
     <!-- 하단 고정 바 -->
     <div class="bottom">
         <c:import url="/WEB-INF/views/include/bottom_info.jsp" />
     </div>
 </div>
-
-<!-- 배너 추가 모달 -->
+<!-- 배너 추가 모달 (수정) -->
 <div class="modal fade" id="addBannerModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -261,10 +218,36 @@
                         <label for="banner_img">배너 이미지</label>
                         <div class="custom-file">
                             <input type="file" class="custom-file-input" id="banner_img" name="banner_img" required
-                                   accept="image/jpeg, image/png, image/gif, image/jpg">
+                                   accept="image/jpeg, image/png, image/gif, image/jpg" onchange="previewBannerImage(this)">
                             <label class="custom-file-label" for="banner_img">이미지 선택...</label>
                         </div>
                         <small class="form-text text-muted">권장 크기: 1920 x 800px</small>
+                    </div>
+                    
+                    <!-- 배너 텍스트 입력 필드 추가 -->
+                    <div class="form-group">
+                        <label for="banner_title">배너 제목 텍스트 (선택사항)</label>
+                        <input type="text" class="form-control" id="banner_title" name="banner_title" 
+                               placeholder="배너 이미지에 표시할 제목" onkeyup="updatePreview()">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="banner_subtitle">배너 부제목 텍스트 (선택사항)</label>
+                        <input type="text" class="form-control" id="banner_subtitle" name="banner_subtitle" 
+                               placeholder="배너 이미지에 표시할 부제목" onkeyup="updatePreview()">
+                    </div>
+                    
+                    <!-- 배너 미리보기 영역 추가 -->
+                    <div class="form-group">
+                        <label>배너 미리보기</label>
+                        <div class="banner-preview-container">
+                            <div class="banner-preview" id="preview-image">
+                                <div class="banner-text">
+                                    <h3 id="preview-title"></h3>
+                                    <p id="preview-subtitle"></p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     
                     <div class="form-group">
@@ -287,7 +270,7 @@
     </div>
 </div>
 
-<!-- 배너 수정 모달 -->
+<!-- 배너 수정 모달 (수정) -->
 <div class="modal fade" id="editBannerModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -317,10 +300,36 @@
                         <label for="edit_banner_img">새 이미지 (선택사항)</label>
                         <div class="custom-file">
                             <input type="file" class="custom-file-input" id="edit_banner_img" name="banner_img"
-                                   accept="image/jpeg, image/png, image/gif, image/jpg">
+                                   accept="image/jpeg, image/png, image/gif, image/jpg" onchange="previewEditImage(this)">
                             <label class="custom-file-label" for="edit_banner_img">이미지 변경...</label>
                         </div>
                         <small class="form-text text-muted">권장 크기: 1920 x 800px</small>
+                    </div>
+                    
+                    <!-- 배너 텍스트 입력 필드 추가 -->
+                    <div class="form-group">
+                        <label for="edit_banner_title">배너 제목 텍스트 (선택사항)</label>
+                        <input type="text" class="form-control" id="edit_banner_title" name="banner_title" 
+                               placeholder="배너 이미지에 표시할 제목" onkeyup="updateEditPreview()">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="edit_banner_subtitle">배너 부제목 텍스트 (선택사항)</label>
+                        <input type="text" class="form-control" id="edit_banner_subtitle" name="banner_subtitle" 
+                               placeholder="배너 이미지에 표시할 부제목" onkeyup="updateEditPreview()">
+                    </div>
+                    
+                    <!-- 배너 미리보기 영역 추가 -->
+                    <div class="form-group">
+                        <label>배너 미리보기</label>
+                        <div class="banner-preview-container">
+                            <div class="banner-preview" id="edit-preview-image">
+                                <div class="banner-text">
+                                    <h3 id="edit-preview-title"></h3>
+                                    <p id="edit-preview-subtitle"></p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     
                     <div class="form-group">
@@ -349,7 +358,6 @@
         </div>
     </div>
 </div>
-
 <!-- 상품 추가 모달 -->
 <div class="modal fade" id="addProductModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -411,7 +419,6 @@
         </div>
     </div>
 </div>
-
 <!-- 상품 수정 모달 -->
 <div class="modal fade" id="editProductModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -489,75 +496,120 @@
         </div>
     </div>
 </div>
-
 <!-- JavaScript -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+/* admin_system.js */
 
-<!-- 외부 JavaScript -->
-<%-- <script src="${root}/js/admin.js"></script>
- --%>
-<!-- 페이지 스크립트 -->
-<script>
-    // 파일 입력 필드에 파일명 표시
-    $('.custom-file-input').on('change', function() {
-        var fileName = $(this).val().split('\\').pop();
-        $(this).next('.custom-file-label').html(fileName);
-    });
-    
-    // 배너 수정 버튼 클릭 이벤트
-    $('.edit-banner-btn').on('click', function() {
-        var idx = $(this).data('idx');
-        var name = $(this).data('name');
-        var img = $(this).data('img');
-        var link = $(this).data('link');
-        var order = $(this).data('order');
-        var active = $(this).data('active');
-        
-        $('#edit_banner_idx').val(idx);
-        $('#edit_banner_name').val(name);
-        $('#current_banner_img').attr('src', '${root}/pic/' + img);
-        $('#edit_banner_link').val(link);
-        $('#edit_banner_order').val(order);
-        $('#edit_banner_active').prop('checked', active === 'Y');
-        
-        $('#editBannerModal').modal('show');
-    });
-    
-    // 상품 수정 버튼 클릭 이벤트
-    $('.edit-product-btn').on('click', function() {
-        var idx = $(this).data('idx');
-        var name = $(this).data('name');
-        var desc = $(this).data('desc');
-        var img = $(this).data('img');
-        var link = $(this).data('link');
-        var price = $(this).data('price');
-        var order = $(this).data('order');
-        var active = $(this).data('active');
-        
-        $('#edit_product_idx').val(idx);
-        $('#edit_product_name').val(name);
-        $('#edit_product_desc').val(desc);
-        $('#current_product_img').attr('src', '${root}/pic/' + img);
-        $('#edit_product_link').val(link);
-        $('#edit_product_price').val(price);
-        $('#edit_product_order').val(order);
-        $('#edit_product_active').prop('checked', active === 'Y');
-        
-        $('#editProductModal').modal('show');
-    });
-    
-  /*   // 메뉴 토글 함수
-    function toggleMenu() {
-        var sideMenu = document.getElementById('sideMenu');
-        sideMenu.classList.toggle('active');
-    }
-    
-    // 메뉴 버튼 클릭 이벤트
-    document.getElementById('menuToggle').addEventListener('click', function() {
-        toggleMenu();
-    }); */
+//페이지 로드 시 실행
+document.addEventListener('DOMContentLoaded', function() {
+ // 파일 입력 필드에 파일명 표시
+ $('.custom-file-input').on('change', function() {
+     var fileName = $(this).val().split('\\').pop();
+     $(this).next('.custom-file-label').html(fileName);
+ });
+ 
+ // 배너 수정 버튼 클릭 이벤트
+ $('.edit-banner-btn').on('click', function() {
+     var idx = $(this).data('idx');
+     var name = $(this).data('name');
+     var img = $(this).data('img');
+     var title = $(this).data('title') || '';
+     var subtitle = $(this).data('subtitle') || '';
+     var link = $(this).data('link');
+     var order = $(this).data('order');
+     var active = $(this).data('active');
+     
+     // 폼 필드 값 설정
+     $('#edit_banner_idx').val(idx);
+     $('#edit_banner_name').val(name);
+     $('#edit_banner_title').val(title);
+     $('#edit_banner_subtitle').val(subtitle);
+     $('#current_banner_img').attr('src', contextPath + '/upload/' + img);
+     $('#edit_banner_link').val(link);
+     $('#edit_banner_order').val(order);
+     $('#edit_banner_active').prop('checked', active === 'Y');
+     
+     // 미리보기 이미지 설정
+     $('#edit-preview-image').css('background-image', 'url(' + contextPath + '/upload/' + img + ')');
+     $('#edit-preview-title').text(title);
+     $('#edit-preview-subtitle').text(subtitle);
+     
+     $('#editBannerModal').modal('show');
+ });
+ 
+ // 상품 수정 버튼 클릭 이벤트
+ $('.edit-product-btn').on('click', function() {
+     var idx = $(this).data('idx');
+     var name = $(this).data('name');
+     var desc = $(this).data('desc');
+     var img = $(this).data('img');
+     var link = $(this).data('link');
+     var price = $(this).data('price');
+     var order = $(this).data('order');
+     var active = $(this).data('active');
+     
+     $('#edit_product_idx').val(idx);
+     $('#edit_product_name').val(name);
+     $('#edit_product_desc').val(desc);
+     $('#current_product_img').attr('src', contextPath + '/upload/' + img);
+     $('#edit_product_link').val(link);
+     $('#edit_product_price').val(price);
+     $('#edit_product_order').val(order);
+     $('#edit_product_active').prop('checked', active === 'Y');
+     
+     $('#editProductModal').modal('show');
+ });
+});
+
+//컨텍스트 경로를 가져오는 함수 (JSP에서 설정)
+var contextPath = document.querySelector('meta[name="context-path"]')?.getAttribute('content') || '';
+
+//배너 이미지 미리보기 (추가 모달)
+function previewBannerImage(input) {
+ if (input.files && input.files[0]) {
+     var reader = new FileReader();
+     
+     reader.onload = function(e) {
+         $('#preview-image').css('background-image', 'url(' + e.target.result + ')');
+     }
+     
+     reader.readAsDataURL(input.files[0]);
+ }
+}
+
+//배너 이미지 미리보기 (수정 모달)
+function previewEditImage(input) {
+ if (input.files && input.files[0]) {
+     var reader = new FileReader();
+     
+     reader.onload = function(e) {
+         $('#edit-preview-image').css('background-image', 'url(' + e.target.result + ')');
+     }
+     
+     reader.readAsDataURL(input.files[0]);
+ }
+}
+
+//미리보기 텍스트 업데이트 (추가 모달)
+function updatePreview() {
+ var title = $('#banner_title').val();
+ var subtitle = $('#banner_subtitle').val();
+ 
+ $('#preview-title').text(title);
+ $('#preview-subtitle').text(subtitle);
+}
+
+//미리보기 텍스트 업데이트 (수정 모달)
+function updateEditPreview() {
+ var title = $('#edit_banner_title').val();
+ var subtitle = $('#edit_banner_subtitle').val();
+ 
+ $('#edit-preview-title').text(title);
+ $('#edit-preview-subtitle').text(subtitle);
+}
 </script>
 </body>
 </html>

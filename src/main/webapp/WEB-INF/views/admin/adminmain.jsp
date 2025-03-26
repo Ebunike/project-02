@@ -31,19 +31,16 @@
             <h1>DDuk Bae Gi</h1>
             <h1>Admin</h1>
         </div>
-        
         <!-- 스크롤 다운 표시 -->
         <div class="scroll-down">
             <span>Scroll Down</span>
             <i class="fas fa-chevron-down scroll-arrow"></i>
         </div>
     </div>
-    
     <!-- 메뉴 버튼 -->
     <button id="menuToggle" class="menu-button">
         <img src="${root}/logo/catalog_logo.png" alt="Menu">
     </button>
-    
     <!-- 사이드 메뉴 -->
     <div id="sideMenu">
         <button class="close-btn" onclick="toggleMenu()">
@@ -62,7 +59,6 @@
             </ul>
         </div>
     </div>
-    
     <!-- 콘텐츠 섹션 -->
     <section class="content-section">
         <!-- 배경과 추가 div들을 감싸는 컨테이너 -->
@@ -75,7 +71,6 @@
                     <h2>커피생활</h2>
                 </div>
             </div>
-            
             <!-- 오른쪽 이미지 그리드 -->
             <div class="image_boxes">
                 <!-- 위쪽 3개 박스 -->
@@ -108,7 +103,6 @@
                         </a>
                     </div>
                 </div>
-                
                 <!-- 아래쪽 큰 박스 -->
                 <div class="slide-in-box">
                     <a href="${root }/admin/system">
@@ -122,18 +116,15 @@
             </div>
         </div>
     </section>
-    
     <!-- 하단 고정 바 -->
     <div class="bottom">
         <c:import url="/WEB-INF/views/include/bottom_info.jsp" />
     </div>
 </div>
-
 <!-- JavaScript -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
-
 <!-- 외부 JavaScript -->
 <script src="${root}/js/admin.js"></script>
 </body>

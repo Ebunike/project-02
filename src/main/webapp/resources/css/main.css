@@ -412,4 +412,137 @@ img {
     .animated-text p {
         font-size: 20px;
     }
+    
+
+/* 상품 슬라이더 스타일 */
+.item_title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 30px 0;
+}
+
+.item_title h3 {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.item_title h5 {
+    color: #666;
+}
+
+.swiper2 .swiper-slide {
+    text-align: center;
+}
+
+.slide-content {
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.slide-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+}
+
+.slide-content img:hover {
+    transform: scale(1.05);
+}
+
+.slide-info {
+    margin-top: 15px;
+}
+
+.slide-info h5 {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.slide-info h6 {
+    color: #666;
+}
+
+/* 스크롤 애니메이션 섹션 */
+.scroll-section {
+    position: relative;
+    height: 500px;
+    overflow: hidden;
+}
+
+.background-image {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: url('${root}/pic/scroll-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 1s, transform 1s;
+}
+
+.animated-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: white;
+    opacity: 0;
+    transition: opacity 1s;
+}
+
+.animated-text h2 {
+    font-size: 3rem;
+    margin-bottom: 15px;
+}
+
+.animated-text p {
+    font-size: 2rem;
+}
+
+@media (max-width: 768px) {
+    .animated-text h2 {
+        font-size: 2rem;
+    }
+
+    .animated-text p {
+        font-size: 1.5rem;
+    }
+}
+
+/* 카테고리 메뉴 스타일 */
+.category-menu {
+    background-color: #f8f9fa;
+    padding: 15px 0;
+}
+
+.category-menu ul {
+    display: flex;
+    justify-content: center;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.category-menu li {
+    margin: 0 15px;
+}
+
+.category-menu a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.category-menu a:hover {
+    color: #007bff;
+}
+
+.category-menu i {
+    margin-right: 5px;
+}
 }
