@@ -18,8 +18,6 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
-
-    
     <style>
         .admin-content {
             padding: 30px;
@@ -28,7 +26,6 @@
             box-shadow: 0 0 15px rgba(0,0,0,0.1);
             margin-bottom: 30px;
         }
-        
         .image-preview {
             width: 150px;
             height: 100px;
@@ -36,38 +33,31 @@
             border-radius: 5px;
             margin-right: 10px;
         }
-        
         .tab-pane {
             padding: 20px;
             background-color: #f9f9f9;
             border-radius: 0 0 10px 10px;
         }
-        
         .nav-tabs .nav-link {
             background-color: #f5f5f5;
             margin-right: 5px;
             border-radius: 10px 10px 0 0;
         }
-        
         .nav-tabs .nav-link.active {
             background-color: #f9f9f9;
             font-weight: bold;
         }
-        
         .action-buttons {
             display: flex;
             gap: 5px;
         }
-        
         .action-buttons .btn {
             padding: 3px 8px;
             font-size: 0.8rem;
         }
-        
         .btn-add {
             margin-bottom: 20px;
         }
-        
         .modal-body form .form-group {
             margin-bottom: 15px;
         }
@@ -75,7 +65,6 @@
 </head>
 <body>
 <div class="background_container">
-
     <!-- 사이드 메뉴 -->
    <div class="side">
         <c:import url="/WEB-INF/views/include/admin_side.jsp" />
@@ -507,8 +496,8 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 
 <!-- 외부 JavaScript -->
-<script src="${root}/js/admin.js"></script>
-
+<%-- <script src="${root}/js/admin.js"></script>
+ --%>
 <!-- 페이지 스크립트 -->
 <script>
     // 파일 입력 필드에 파일명 표시

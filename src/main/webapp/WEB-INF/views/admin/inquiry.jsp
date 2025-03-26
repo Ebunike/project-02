@@ -92,7 +92,7 @@
         }
         
         .card:hover {
-            transform: translateY(-5px); /* 호버 시 위로 살짝 이동 */
+            /* transform: translateY(-5px); /* 호버 시 위로 살짝 이동 */ */
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); /* 호버 시 그림자 강화 */
         }
         
@@ -222,7 +222,7 @@
                     
                     <!-- 문의 목록을 순회하며 읽지 않은 문의만 표시 -->
                     <c:forEach var="suggestion" items="${inquiry}">
-                        <c:if test="${suggestion.inquiry_read == '답변X'}">
+                        <c:if test="${suggestion.inquiry_read == '답변 대기중'}">
                             <c:set var="hasUnread" value="true" />
                             <li>
                                 <a href="${root}/admin/viewinquiry?idx=${suggestion.inquiry_idx}">
@@ -254,7 +254,7 @@
                     
                     <!-- 문의 목록을 순회하며 읽은 문의만 표시 -->
                     <c:forEach var="suggestion" items="${inquiry}">
-                        <c:if test="${suggestion.inquiry_read == '답변O'}">
+                        <c:if test="${suggestion.inquiry_read == '답변 완료'}">
                             <c:set var="hasRead" value="true" />
                             <li>
                                 <a href="${root}/admin/viewinquiry?idx=${suggestion.inquiry_idx}">

@@ -327,7 +327,10 @@
             <!-- 구매 버튼 영역 -->
             <div class="button-group">
                 <button class="buy-button">구매하기</button>
-                <button class="cart-button">장바구니</button>
+                 <!-- 장바구니 버튼 -->
+	            <button class="cart-button" onclick="addToCart('${item.item_index}', this)">
+	                <i class="fas fa-shopping-cart"></i>장바구니 추가
+	            </button>
             </div>
         </div>
     </div>
@@ -531,7 +534,54 @@
         </div>
     </div>
 </div>
-
+<script type="text/javascript">
+function addToCart(item_index, button) {
+	   
+	   button.disabled = true;
+	   // 로딩 상태 표시
+	   const originalContent = button.innerHTML;
+	   button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 처리 중...';
+	    
+	   fetch('${root}/cart/addToCart', {
+	        method: 'POST',
+	        headers: {
+	            'Content-Type': 'application/json'
+	        },
+	        body: JSON.stringify({ item_index: item_index }) 
+	    })
+	    .then(response => {
+	        if (response.status == 409) {
+	           throw new Error('이미 장바구니에 있는 상품입니다.');
+	        }
+	       if (!response.ok) {
+	            throw new Error(`HTTP 상태 코드: ${response.status}`);
+	        }
+	        return response.text();
+	    })
+	    .then(data => { /*
+	        console.log('응답 데이터:', data);
+	        alert('장바구니에 추가되었습니다.'); */
+		    if(confirm("장바구니에 추가되었습니다. 장바구니로 이동하시겠습니까?")){
+				location.href = "${root}/cart/my_cart"
+			}else{
+				location.href = "${root}/item/kit/kitMain"
+			}
+			
+	    })
+	    .catch(error => {
+	        console.error('에러 발생:', error);
+	        alert(error.message);
+	        // 오류 발생 시 버튼 원래 상태로 복원
+	        button.innerHTML = originalContent;
+	        button.disabled = false;
+	    })
+	    .finally(() => {
+	       setTimeout(() => {
+	             button.disabled = false;
+	           }, 1000);   
+	    });
+	}
+</script>
 <!-- 하단 정보 -->
 <c:import url="/WEB-INF/views/include/bottom_info.jsp" />	
 </body>
