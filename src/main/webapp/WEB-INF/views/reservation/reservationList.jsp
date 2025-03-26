@@ -61,7 +61,7 @@
         .status-select {
             padding: 5px;
             border-radius: 3px;
-        }
+        } 
     </style>
 </head>
 <body>
