@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import kr.co.soldesk.beans.BuyingListDTO;
 import kr.co.soldesk.beans.CartBean;
 import kr.co.soldesk.beans.MemberBean;
 import kr.co.soldesk.beans.PaymentReqDTO;
@@ -28,7 +29,7 @@ import kr.co.soldesk.service.PaymentService;
 
 @Controller
 @RequestMapping("/payment")
-public class TossPayController {
+public class PaymentController {
 
 	private String secretKey = "";
 	
@@ -49,11 +50,9 @@ public class TossPayController {
 	// *장바구니에서 결제하기누르면 POST해주기
 	
 	@GetMapping("/forpayment")
-	public String forpayment(@ModelAttribute("paymentReq") PaymentReqDTO paymentReq, Model model) {
+	public String forpayment(@ModelAttribute("paymentReq") PaymentReqDTO paymentReq,@RequestParam("totalPrice") int totalPrice,
+							 Model model) {
 		
-		List<CartBean> list = cartService.getCart();
-    	model.addAttribute("allCart", list);
-    	int totalPrice = cartService.getAllTotalAmount();
     	model.addAttribute("cartTotalPrice", totalPrice);
 		model.addAttribute("loginUser", loginMember);
 		return "payment/forpayment";
@@ -80,8 +79,10 @@ public class TossPayController {
 	public String paymentSuccess(@RequestParam(name = "orderId", required = true) String orderId,
 			@RequestParam(name = "paymentKey", required = true) String paymentKey,
 			@RequestParam(name = "amount", required = true) int amount, Model model) {
-
 		
+		
+		System.out.println(orderId);
+		System.out.println(paymentKey);
 		System.out.println("success: " + paymentKey);
 		
 		try {
@@ -97,21 +98,23 @@ public class TossPayController {
 			
 			//최종승인 요청
 			String result = paymentService.requestFinalPayment(paymentKey, orderId, amount);
-			System.out.println(paymentKey);
+			System.out.println("여기까지는 안터짐" + paymentKey);
 			//paymentKey도 DB에 저장
-	       //paymentService.savepaymentKey(paymentKey,orderId);
-			System.out.println(result);
+			paymentService.savepaymentKey(paymentKey,orderId);
 			
 	        model.addAttribute("paymentKey", paymentKey);
 	        model.addAttribute("result", result);
 	        
-	        //판매자 sales를 amount만큼 올려주기. 관리자 or 판매자 매출처리
+
 	        
-			/*
-			 * try { paymentService.updateSales(orderId);
-			 * System.out.println("판매자 매출 업뎃 성공"); } catch (Exception e) {
-			 * System.out.println("매출이 안감"); e.printStackTrace(); }
-			 */
+	        //판매자 sales를 amount만큼 올려주기. 관리자 or 판매자 매출처리
+	        try {
+	            paymentService.updateSales(orderId);
+	            System.out.println("판매자 매출 업뎃 성공");
+	        } catch (Exception e) {
+	        	System.out.println("매출이 안감");
+	            e.printStackTrace();
+	        }
 	        
 	        
 	    } catch (Exception e) {
@@ -128,13 +131,39 @@ public class TossPayController {
 
 		return "payment/fail";
 	}
+	
+	
+	//환불1. 환불 이유까지 채우는 페이지
+	@GetMapping("/refund")
+    public String refund(@RequestParam("paymentKey") String paymentKey,
+                              @RequestParam("itemName") String itemName,
+                              @RequestParam("cancelAmount") int cancelAmount,
+                              @RequestParam("orderDetailIndex") int order_detail_index,
+                              Model model) {
 
+		
+		System.out.println("refund쪽" + paymentKey);
+		
+		model.addAttribute("paymentKey",paymentKey);
+		model.addAttribute("itemName",itemName);
+		model.addAttribute("cancelAmount",cancelAmount);
+		model.addAttribute("order_detail_index",order_detail_index);
+		return "payment/refund";
+	
+	}
 	
 	
-	//@PostMapping("/cancel") 
-	@GetMapping("/cancel") 
+	//환불2. 환불 요청하는 페이지
+	@GetMapping("/cancel")
+	public String Tosscancel() {
+		
+		return "payment/cancel";
+	}
+	
+	@PostMapping("/cancel") 
 	public String paymentcancel(@RequestParam(name="paymentKey", required = true) String paymentKey,
 				@RequestParam(name="cancelReason", required = true) String cancelReason,
+				@RequestParam(name="order_detail_index", required = true) int order_detail_index,
 				@RequestParam(name="cancelAmount") int cancelAmount, Model model) {
 		
 		System.out.println("서비스쪽 " + paymentKey);
@@ -150,9 +179,11 @@ public class TossPayController {
 
 			RefundBean refund = new RefundBean();
 			refund.setRefund_reason(cancelReason);
+			refund.setOrder_detail_index(order_detail_index);
 			
-			//order_detail_index는 구매목록에서 버튼누르면 보내주도록해야함. 임시
-			refund.setOrder_detail_index(1);
+			
+			//order_detail테이블에서 refund_check를 refund로 업뎃해주기ㅎ
+			paymentService.updaterefund(order_detail_index);
 			
 			paymentService.addRefund(refund);
 		}
@@ -195,5 +226,19 @@ public class TossPayController {
         	return "payment/forpayment";
         }
 	}
+	
+	//구매목록 페이지
+    @GetMapping("/buyingList")
+    public String getOrderHistory(Model model) {
+        if (loginMember == null) {
+            return "login/google_join";//이거 로그인 페이지로 보내고싶은데 로그인 페이지 어딨지
+        }
+        
+        List<BuyingListDTO> orderHistory = paymentService.getBuyingList(loginMember.getId());
+        model.addAttribute("orderHistory", orderHistory);
+        
+        return "payment/buyingList";
+    }
+	
 
 }

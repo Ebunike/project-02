@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<c:set var="root" value="${pageContext.request.contextPath }" />
+<c:set var="root" value="${pageContext.request.contextPath }"/>
 <!DOCTYPE html>
-<html> 
-<head> 
+<html>
+<head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>장바구니</title>
@@ -340,11 +340,6 @@
         </div>
 
         <div class="summary-section">
-            <div class="summary-title">주문 요약</div>
-            <div class="summary-item">
-                <span>선택한 상품 금액</span>
-                <span id="selected-total">0</span> 원
-            </div>
             <div class="summary-total">
                 <span>총 결제금액</span>
                 <span id="final-total">0</span> 원
@@ -372,7 +367,7 @@
             }
         });
         
-        document.getElementById('selected-total').innerText = selectedTotal;
+      
         document.getElementById('final-total').innerText = selectedTotal;
         
         // 결제 버튼 활성화/비활성화
