@@ -26,7 +26,7 @@
     </div>
     <div class="search-container">
         <form class="search-box" action="${root}/search/result" method="GET">
-            <input type="text" id="search-input" name="query" placeholder="검색어를 입력하세요...">
+            <input type="text" id="search-input" name="result" placeholder="검색어를 입력하세요...">
             <div class="logo-item">
 	            <button type="submit">
 	            	<img src="${root }/logo/search_logo.png">
@@ -98,7 +98,7 @@
 			    </div>
 		    </c:when>  --%>
 		    <%-- 판매자 전용  --%>
-		    <c:when test="${loginUser.login=='seller'||loginUser.login=='sellerawaiter'}">
+		    <c:when test="${loginUser.login=='seller'}">
 		    	<div class="menu-items">
 			        <h3>운영 모드</h3>
 			        <a href="${root }/manager/manager_order">주문 내역 확인</a>
@@ -106,6 +106,22 @@
 			        <a href="${root }/manager/manager_product">상품 관리</a>
 			        <a href="${root }/manager/manager_ask">문의 관리</a>
 			        <a href="${root }/manager/manager_review">리뷰 관리</a> <br> <br>
+			        <h3></h3>
+			        <a href="${root }/member/my_info">내 정보</a>
+			        <a href="${root }/cart/my_cart">장바구니</a>
+			        <a href="${root }/inquiry/inquiry_list?id=${loginUser.id}">내 문의 사항</a>
+			        <a href="${root }/chating/main">채팅</a>
+			        <a href="${root }/member/logout">로그아웃</a>
+			    </div>
+		    </c:when>
+		    <c:when test="${loginUser.login=='sellerawaiter'}">
+		    	<div class="menu-items">
+			        <h3>운영 모드</h3>
+			        <a href="${root }/manager/manager_order_fail">주문 내역 확인</a>
+			        <a href="${root }/manager/manager_sales_fail">매출 관리</a>
+			        <a href="${root }/manager/manager_product_fail">상품 관리</a>
+			        <a href="${root }/manager/manager_ask_fail">문의 관리</a>
+			        <a href="${root }/manager/manager_review_fail">리뷰 관리</a> <br> <br>
 			        <h3></h3>
 			        <a href="${root }/member/my_info">내 정보</a>
 			        <a href="${root }/cart/my_cart">장바구니</a>
@@ -119,11 +135,12 @@
 			        <h3>HOT한 HOT딜 상품!</h3>
 			        <a href="">스포츠/레저</a>
 			        <a href="">뷰티</a>
-			        <a href="">완구/취미</a>
+			        <a href="">완구/취미d\멍충멍충</a>
 			        <a href="">식품</a>
 			        <h3></h3>
 			        <a href="${root }/member/my_info">내 정보</a>
 			        <a href="${root }/cart/my_cart">장바구니</a>
+			        <a href="${root }/inquiry/inquiry_list?id=${loginUser.id}">내 문의 사항</a>
 			        <a href="${root }/chating/main">채팅</a>
 			        <a href="${root }/member/logout">로그아웃</a>
 			    </div>

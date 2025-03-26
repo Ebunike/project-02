@@ -10,7 +10,20 @@ public class InquiryBean {
     private String inquiry_reply;
     private String inquiry_read;
     private String inquiry_replyer;
+    private String inquiry_date;
     
+    public InquiryBean() {
+    	inquiry_read = "답변X";
+    }
+    
+	public String getInquiry_date() {
+		return inquiry_date;
+	}
+
+	public void setInquiry_date(String inquiry_date) {
+		this.inquiry_date = inquiry_date;
+	}
+
 	public int getInquiry_idx() {
 		return inquiry_idx;
 	}

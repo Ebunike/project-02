@@ -101,7 +101,7 @@
     
     .sidebar-footer a {
         color: #555;
-        display: inline-flex;
+        display: table-cell;
         align-items: center;
         justify-content: center;
         padding: 8px 12px;

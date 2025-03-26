@@ -30,6 +30,12 @@
     <link rel="stylesheet" href="${root}/css/main.css" />
 </head>
 <body>
+
+	<c:if test="${not empty param.error}">
+        <div class="alert alert-danger">
+            <strong> ${param.error}</strong>
+        </div>
+    </c:if>
 	<!-- 상단 메뉴 부분 - include로 불러옴 -->
 	<div class="top">
 		<c:import url="/WEB-INF/views/include/top_menu.jsp" /> 
@@ -42,7 +48,7 @@
             <li><a href="onedayclass/onedayMain"><i class="fas fa-chalkboard-teacher fa-fw"></i> 원데이클라스</a></li>
             <li><a href="item/kit/kitMain"><i class="fas fa-box-open fa-fw"></i> 키트 메인</a></li>
             <li><a href="report/report_list"><i class="fas fa-comments fa-fw"></i> 자유게시판</a></li>
-            <li><a href="#"><i class="fas fa-user fa-fw"></i> 장재훈</a></li>
+            <li><a href="inquiry/inquiry_main">고객문의</a></li>
         </ul>
     </div>
     

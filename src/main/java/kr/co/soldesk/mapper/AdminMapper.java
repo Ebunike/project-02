@@ -41,7 +41,7 @@ public interface AdminMapper {
 	   @Update("update inquiry set inquiry_reply = null where inquiry_idx = #{idx}")
 	   public void deleteReply(int idx);
 	   
-	   @Update("update inquiry set inquiry_read ='읽음' where inquiry_idx = #{idx}")
+	   @Update("update inquiry set inquiry_read ='답변O' where inquiry_idx = #{idx}")
 	   public void read(int idx);
 	   
 	   @Delete("delete from seller where id=#{id}")

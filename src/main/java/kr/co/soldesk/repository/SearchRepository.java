@@ -5,10 +5,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import kr.co.soldesk.beans.ItemBean;
 import kr.co.soldesk.beans.KitBean;
 import kr.co.soldesk.beans.OnedayBean;
 import kr.co.soldesk.beans.OpenRecipeBean;
-//import kr.co.soldesk.mapper.SearchMapper;
+import kr.co.soldesk.mapper.SearchMapper;
 
 
 
@@ -16,14 +17,17 @@ import kr.co.soldesk.beans.OpenRecipeBean;
 public class SearchRepository {
 
 	
-	//@Autowired
-	//private SearchMapper searchMapper;
+	@Autowired
+	private SearchMapper searchMapper;
 	
-	/*
-	 * public List<OnedayBean> OnedaySearch(String result){ return
-	 * searchMapper.OnedaySearch(result); } public List<KitBean> KitSearch(String
-	 * result){ return searchMapper.KitSearch(result); } public List<OpenRecipeBean>
-	 * OpenRecipeSearch(String result){ return
-	 * searchMapper.OpenRecipeSearch(result); }
-	 */
+	
+	public List<OnedayBean> OnedaySearch(String result){ 
+		 return searchMapper.OnedaySearch(result); 
+	 }
+	 public List<ItemBean> KitSearch(String result){
+		 return searchMapper.KitSearch(result); 
+	 }
+	 public List<OpenRecipeBean> OpenRecipeSearch(String result){ 
+		 return searchMapper.OpenRecipeSearch(result); 
+	 }
 }

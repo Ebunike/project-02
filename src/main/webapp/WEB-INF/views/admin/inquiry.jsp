@@ -222,7 +222,7 @@
                     
                     <!-- 문의 목록을 순회하며 읽지 않은 문의만 표시 -->
                     <c:forEach var="suggestion" items="${inquiry}">
-                        <c:if test="${suggestion.inquiry_read == '안읽음'}">
+                        <c:if test="${suggestion.inquiry_read == '답변X'}">
                             <c:set var="hasUnread" value="true" />
                             <li>
                                 <a href="${root}/admin/viewinquiry?idx=${suggestion.inquiry_idx}">
@@ -254,7 +254,7 @@
                     
                     <!-- 문의 목록을 순회하며 읽은 문의만 표시 -->
                     <c:forEach var="suggestion" items="${inquiry}">
-                        <c:if test="${suggestion.inquiry_read == '읽음'}">
+                        <c:if test="${suggestion.inquiry_read == '답변O'}">
                             <c:set var="hasRead" value="true" />
                             <li>
                                 <a href="${root}/admin/viewinquiry?idx=${suggestion.inquiry_idx}">
