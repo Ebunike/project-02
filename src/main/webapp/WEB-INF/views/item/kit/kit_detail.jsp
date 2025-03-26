@@ -342,7 +342,7 @@
                 <a class="nav-link" id="review-tab" data-toggle="tab" href="#review" role="tab" aria-controls="review" aria-selected="false">리뷰</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="qna-tab" data-toggle="tab" href="#qna" role="tab" aria-controls="qna" aria-selected="false">Q&A</a>
+                <a class="nav-link" id="qna-tab" data-toggle="tab" href="#qna" role="tab" aria-controls="qna" aria-selected="false"> Q&A </a>
             </li>
         </ul>
         <div class="tab-content" id="productTabsContent">

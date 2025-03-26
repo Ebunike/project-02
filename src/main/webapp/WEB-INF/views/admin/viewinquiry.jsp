@@ -1,10 +1,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
-
-<c:set var="root" value="${pageContext.request.contextPath}" />
+<c:set var="root" value="${pageContext.request.contextPath }" />
 <html>
 <head>
-    <title>고객 문의 상세보기</title>
+    <title>고객 문의 상세보기</title> 
     <!-- JavaScript 추가 -->
     <script>
         function showReplyForm() {

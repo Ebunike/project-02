@@ -3,7 +3,7 @@
 <c:set var="root" value="${pageContext.request.contextPath }" />
 <!DOCTYPE html>
 <html>
-<head>
+<head>  
 <meta charset="UTF-8">
 <title>search</title>
 <link rel="stylesheet" href="${root }/css/top.css" />

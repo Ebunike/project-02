@@ -1,12 +1,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<c:set var="root" value="${pageContext.request.contextPath}" />
+<c:set var="root" value="${pageContext.request.contextPath }" />
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <html>
 <head>
 <title>개인 문의</title>
-</head>
+</head>  
 <body>
 	<!-- <h2>채팅방 목록</h2>
 	<button onclick="createChatRoom()">새 채팅방 만들기</button> -->

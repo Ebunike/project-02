@@ -3,8 +3,8 @@
 <c:set var="root" value="${pageContext.request.contextPath }" />
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
+<head> 
+<meta charset="UTF-8">  
 <title>관리자 메뉴</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 <style>
