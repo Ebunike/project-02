@@ -28,12 +28,18 @@
 <c:choose>
 	<c:when test="${theme_index eq '1'}">
 		<h2>푸드 카테고리</h2>
-		<c:forEach var="obj" items="${openRecipeList }">
+		<c:forEach var="obj" items="${openRecipeList}">
 		<li class="recipe_list1">
 		<a href="${root}/recipe/recipe_read?openRecipe_index=${obj.openRecipe_index}" class="recipe_read-link">
 		 <img src="${root}/upload/${obj.openRecipe_picture}" alt="${obj.openRecipe_title}" class="img-thumbnail" style="width: 100px; height: 100px; object-fit: cover;" />
 		</a>
-		<a href="${root}/recipe/recipe_read?openRecipe_index=${obj.openRecipe_index}" class="recipe_read-link">${obj.openRecipe_title }</a>
+		<a href="${root}/recipe/recipe_read?openRecipe_index=${obj.openRecipe_index}" class="recipe_read-link">${obj.openRecipe_title}</a>
+		
+		<!-- 조회수 출력 -->
+        <span class="badge badge-secondary">
+            조회수: ${recipeViewCounts[obj.openRecipe_index] != null ? recipeViewCounts[obj.openRecipe_index] : 0}
+        </span>
+		</li>
 		</c:forEach>
 	</c:when>
 			
