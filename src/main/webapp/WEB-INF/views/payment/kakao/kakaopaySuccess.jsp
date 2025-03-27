@@ -105,7 +105,7 @@
     <div class="payment-info">
         <p><span>결제 고유번호:</span> <span>${payInfo.aid}</span></p>
         <p><span>상품명:</span> <span>${payInfo.item_name}</span></p>
-        <p><span>수량:</span> <span>${payInfo.quantity}개</span></p>
+        <p><span>수량:</span> <span>${quantity}개</span></p>
         <p><span>결제수단:</span> <span>${payInfo.payment_method_type == 'CARD' ? '신용카드' : '카카오페이머니'}</span></p>
         <p><span>결제시간:</span> <span><fmt:formatDate value="${payInfo.approved_at}" pattern="yyyy-MM-dd HH:mm:ss"/></span></p>
         
@@ -121,7 +121,7 @@
         <p class="total"><span>결제금액:</span> <span><fmt:formatNumber value="${payInfo.amount.total}" pattern="#,###"/>원</span></p>
     </div>
     
-    <a href="${pageContext.request.contextPath}/payment/kakao/forpayment" class="btn">메인으로 돌아가기</a>
+    <a href="${pageContext.request.contextPath}/payment/buyingList" class="btn">메인으로 돌아가기</a>
 </div>
 
 <!-- 공통 하단 정보 포함 -->

@@ -28,8 +28,8 @@ public class KakaoPayService {
     // 테스트 시크릿 키 - 개발자 사이트에서 발급받아야 함
     private String adminKey = "DEV1F1FFD8CAD2BDD0D068AEE560DEF8A6CB3531";
     
-    public KakaoPayReadyDTO kakaoPayReady(String itemName, int quantity, int totalAmount, int taxFreeAmount) {
-        logger.info("카카오페이 결제 준비 - 상품명: {}, 수량: {}, 금액: {}", itemName, quantity, totalAmount);
+    public KakaoPayReadyDTO kakaoPayReady(String orderId, String itemName, int quantity, int totalAmount, int taxFreeAmount) {
+        logger.info("카카오페이 결제 준비 - 주문ID: {}, 상품명: {}, 수량: {}, 금액: {}", orderId, itemName, quantity, totalAmount);
         
         RestTemplate restTemplate = new RestTemplate();
         
@@ -42,7 +42,8 @@ public class KakaoPayService {
         
         // JSON 요청 본문 생성
         Map<String, Object> requestBody = new HashMap<>();
-        String partnerOrderId = "PARTNER_ORDER_" + System.currentTimeMillis();
+        String partnerOrderId = (orderId != null && !orderId.isEmpty()) ? 
+                               orderId : "PARTNER_ORDER_" + System.currentTimeMillis();
         String partnerUserId = "PARTNER_USER_" + System.currentTimeMillis();
         
         requestBody.put("cid", CID);
@@ -52,9 +53,9 @@ public class KakaoPayService {
         requestBody.put("quantity", quantity);
         requestBody.put("total_amount", totalAmount);
         requestBody.put("tax_free_amount", taxFreeAmount);
-        requestBody.put("approval_url", "http://localhost:9091/Project_hoop/payment/kakao/success");
-        requestBody.put("cancel_url", "http://localhost:9091/Project_hoop/payment/kakao/cancel");
-        requestBody.put("fail_url", "http://localhost:9091/Project_hoop/payment/kakao/fail");
+        requestBody.put("approval_url", "http://localhost:9091/Project_hoon/payment/kakao/success");
+        requestBody.put("cancel_url", "http://localhost:9091/Project_hoon/payment/kakao/cancel");
+        requestBody.put("fail_url", "http://localhost:9091/Project_hoon/payment/kakao/fail");
         
         logger.debug("요청 본문: {}", requestBody);
         

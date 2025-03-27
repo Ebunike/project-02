@@ -22,6 +22,22 @@ public class PaymentReqDTO {
 	}
 	
 	
+	public PaymentReqDTO(String orderId, int amount, String successUrl, String failUrl, String paymentKey,
+			String pay_Method, String orderName, String customerEmail, String customerName,
+			String customerMobilePhone) {
+		this.orderId = orderId;
+		this.amount = amount;
+		this.successUrl = successUrl;
+		this.failUrl = failUrl;
+		this.paymentKey = paymentKey;
+		this.pay_Method = pay_Method;
+		this.orderName = orderName;
+		this.customerEmail = customerEmail;
+		this.customerName = customerName;
+		this.customerMobilePhone = customerMobilePhone;
+	}
+
+
 	public String getOrderId() {
 		return orderId;
 	}
