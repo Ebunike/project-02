@@ -28,7 +28,7 @@ public class KakaoPayController {
 
     @Resource(name = "loginMemberBean")
     private MemberBean loginUser;
-    	
+    
     @Autowired
     private KakaoPayService kakaoPayService;
     

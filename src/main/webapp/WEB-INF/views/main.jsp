@@ -118,6 +118,7 @@
             <li><a href="item/kit/kitMain"><i class="fas fa-box-open fa-fw"></i> 키트 메인</a></li>
             <li><a href="report/report_list"><i class="fas fa-comments fa-fw"></i> 자유게시판</a></li>
             <li><a href="inquiry/inquiry_main">고객문의</a></li>
+            <li><a href="kakaomap/main">고객문의</a></li>
         </ul>
     </div>
     

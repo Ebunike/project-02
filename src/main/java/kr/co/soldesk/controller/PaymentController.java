@@ -56,6 +56,7 @@ public class PaymentController {
     	model.addAttribute("cartTotalPrice", totalPrice);
 		model.addAttribute("loginUser", loginMember);
 		return "payment/forpayment";
+		//return "payment/tossPay";
 	}
 	
 	//여기 종학님하고 다른데

@@ -16,16 +16,83 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
     <!-- 부트스트랩 아이콘 추가 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
     
     <!-- 스타일 추가 -->
     <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1000px;
+        }
+        
+        .card {
+            border: none;
+            box-shadow: 0 0 20px rgba(0,0,0,0.05);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .card-header {
+            background-color: #e67e22;
+            color: white;
+            padding: 15px 20px;
+            border-bottom: none;
+        }
+        
+        .card-header h4 {
+            margin: 0;
+            font-weight: 600;
+        }
+        
+        .card-body {
+            padding: 30px;
+        }
+        
+        .form-group label {
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 8px;
+        }
+        
+        .form-control {
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            padding: 10px 15px;
+            transition: all 0.3s;
+        }
+        
+        .form-control:focus {
+            border-color: #e67e22;
+            box-shadow: 0 0 0 0.2rem rgba(230, 126, 34, 0.25);
+        }
+        
+        select.form-control {
+            height: 45px;
+        }
+        
         /* 스텝 컨테이너 스타일 */
         .step-item {
-            margin-bottom: 20px;
-            padding: 15px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
+            margin-bottom: 25px;
+            padding: 20px;
+            border: 1px solid #eee;
+            border-radius: 8px;
             position: relative;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+            background-color: #fff;
+            transition: all 0.3s ease;
+        }
+        
+        .step-item:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transform: translateY(-2px);
         }
         
         /* 스텝 헤더 스타일 */
@@ -33,15 +100,41 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 10px;
-            padding-bottom: 5px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
             border-bottom: 1px solid #eee;
+        }
+        
+        .step-header h5 {
+            font-weight: 600;
+            color: #e67e22;
+            margin: 0;
+        }
+        
+        .step-number {
+            display: inline-block;
+            background-color: #e67e22;
+            color: white;
+            width: 28px;
+            height: 28px;
+            line-height: 28px;
+            text-align: center;
+            border-radius: 50%;
+            margin-left: 8px;
+            font-weight: normal;
         }
         
         /* 삭제 버튼 스타일 */
         .delete-step-btn {
-            padding: 3px 8px;
+            padding: 5px 10px;
             font-size: 0.8em;
+            border-radius: 4px;
+            background-color: #ff6b6b;
+            border: none;
+        }
+        
+        .delete-step-btn:hover {
+            background-color: #e74c3c;
         }
         
         /* 이미지 미리보기 스타일 */
@@ -51,7 +144,74 @@
             margin-top: 10px;
             display: none;
             border: 1px solid #ddd;
-            border-radius: 5px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        /* 버튼 스타일 */
+        .btn-primary {
+            background-color: #e67e22;
+            border-color: #e67e22;
+            padding: 10px 25px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary:hover {
+            background-color: #d35400;
+            border-color: #d35400;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+        }
+        
+        .btn-success {
+            background-color: #74b243;
+            border-color: #74b243;
+            transition: all 0.3s;
+        }
+        
+        .btn-success:hover {
+            background-color: #639a39;
+            border-color: #639a39;
+            transform: translateY(-2px);
+        }
+        
+        /* 메인 카드 내부 카드 스타일 */
+        .card .card {
+            box-shadow: none;
+            border: 1px solid #eee;
+        }
+        
+        .card .card-header {
+            background-color: #f8f9fa;
+            color: #333;
+            border-bottom: 1px solid #eee;
+            padding: 15px 20px;
+        }
+        
+        .card .card-header h5 {
+            font-weight: 600;
+            margin: 0;
+        }
+        
+        /* 파일 업로드 스타일 */
+        input[type="file"] {
+            padding: 8px;
+            background-color: #f9f9f9;
+        }
+        
+        /* 텍스트 에어리어 스타일 */
+        textarea.form-control {
+            resize: none;
+            min-height: 100px;
+        }
+        
+        /* 페이지 타이틀 */
+        .page-title {
+            text-align: center;
+            margin: 30px 0;
+            color: #333;
+            font-weight: 700;
         }
     </style>
 </head>
@@ -59,13 +219,16 @@
     <!-- JSP 변수를 JavaScript에 전달하기 위한 hidden 필드 추가 -->
     <input type="hidden" id="rootPath" value="${root}">
 
-    <div class="container" style="margin-top:100px">
+    <c:import url="/WEB-INF/views/include/top_menu.jsp"/>
+
+    <h1 class="page-title">나만의 레시피 작성</h1>
+
+    <div class="container" style="margin-top:30px; margin-bottom:50px;">
         <div class="row">
-            <div class="col-sm-2"></div>
-            <div class="col-sm-8">
+            <div class="col-lg-10 offset-lg-1">
                 <div class="card shadow">
                     <div class="card-header">
-                        <h4>레시피 작성</h4>
+                        <h4><i class="fas fa-edit"></i> 레시피 작성</h4>
                     </div>
                     <div class="card-body">
                         <form:form id="recipeForm" action="${root}/recipe/recipe_write_pro" method="post" modelAttribute="writeRecipe" enctype="multipart/form-data">
@@ -91,29 +254,30 @@
                             <!-- 제목 필드 -->
                             <div class="form-group">
                                 <form:label path="openRecipe_title">제목</form:label>
-                                <form:input type="text" id="openRecipe_title" path="openRecipe_title" class="form-control"/>
+                                <form:input type="text" id="openRecipe_title" path="openRecipe_title" class="form-control" placeholder="레시피 제목을 입력해주세요"/>
                             </div>
 
                             <!-- 한줄 소개 필드 -->
                             <div class="form-group">
                                 <form:label path="openRecipe_intro">한줄 소개</form:label>
-                                <form:input type="text" id="openRecipe_intro" path="openRecipe_intro" class="form-control"/>
+                                <form:input type="text" id="openRecipe_intro" path="openRecipe_intro" class="form-control" placeholder="레시피에 대한 간단한 소개를 입력해주세요"/>
                             </div>
 
                             <!-- 재료 필드 -->
                             <div class="form-group">
                                 <form:label path="openRecipe_prepare">재료</form:label>
-                                <form:input type="text" id="openRecipe_prepare" path="openRecipe_prepare" class="form-control"/>
+                                <form:input type="text" id="openRecipe_prepare" path="openRecipe_prepare" class="form-control" placeholder="필요한 재료를 쉼표(,)로 구분하여 입력해주세요"/>
+                                <small class="form-text text-muted">예: 당근 100g, 양파 1개, 소고기 300g</small>
                             </div>
 
                             <!-- 작품 완성 사진 -->
                             <div class="form-group">
                                 <form:label path="upload_picture">작품 완성 사진</form:label>
-                                <div>
+                                <div class="custom-file">
                                     <input type="file" id="upload_picture" name="upload_picture" class="form-control" accept="image/*" onchange="previewMainImage(this)" />
                                 </div>
                                 <!-- 메인 이미지 미리보기 영역 추가 -->
-                                <div class="mt-2">
+                                <div class="mt-3 text-center">
                                     <img id="mainImagePreview" class="image-preview" src="#" alt="메인 이미지 미리보기" />
                                 </div>
                             </div>
@@ -121,7 +285,7 @@
                             <!-- 레시피 단계 컨테이너 -->
                             <div class="card mt-4 mb-4">
                                 <div class="card-header d-flex justify-content-between align-items-center">
-                                    <h5>요리 단계</h5>
+                                    <h5><i class="fas fa-list-ol"></i> 요리 단계</h5>
                                     <div>
                                         <button type="button" class="btn btn-sm btn-success" onclick="addStep()">
                                             <i class="bi bi-plus-circle"></i> 순서추가
@@ -144,18 +308,19 @@
                             </div>
 
                             <!-- 컨트롤 버튼 -->
-                            <div class="text-center">
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="bi bi-check-circle"></i> 저장
+                            <div class="text-center mt-4">
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    <i class="bi bi-check-circle"></i> 저장하기
                                 </button>
                             </div>
                         </form:form>
                     </div>
                 </div>
             </div>
-            <div class="col-sm-2"></div>
         </div>
     </div>
+    
+    <c:import url="/WEB-INF/views/include/bottom_info.jsp"/>
     
     <script>
     // 전역 변수 정의
@@ -253,7 +418,7 @@
         
         // 이미지 미리보기 영역
         const previewDiv = document.createElement('div');
-        previewDiv.className = 'mt-2';
+        previewDiv.className = 'mt-3 text-center';
         const previewImg = document.createElement('img');
         previewImg.id = 'stepImagePreview_' + stepIndex;
         previewImg.className = 'image-preview';

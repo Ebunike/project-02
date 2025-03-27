@@ -24,7 +24,7 @@
 		<form:radiobutton path="pay_Method" id="pay_Method_CARD" value="CARD" />
 		<label for="pay_Method_CARD">CARD</label>
 		
-		<form:radiobutton path="pay_Method" id="pay_Method_VA" value="VirtualAccount" />
+		<form:radiobutton path="pay_Method" id="pay_Method_VA" value="VIRTUAL_ACCOUNT" />
 		<label for="pay_Method_VA">Virtual Account</label>
 		<br><br>
 
@@ -38,7 +38,7 @@
       <label for="customerName">고객 이름:</label>
       <form:input path="customerName" id="customerName" readonly="true" /><br><br>
 
-	<form:hidden path="successUrl" value="/Project_hoon/payment/success" />
+	  <form:hidden path="successUrl" value="/Project_hoon/payment/success" />
 	
 	
       <label for="customerName">고객 전번:</label>
