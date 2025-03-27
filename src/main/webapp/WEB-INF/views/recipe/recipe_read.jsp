@@ -261,10 +261,8 @@
 </style>
 </head>
 <body>
-<!-- 상단 메뉴 -->
-<div class="top">
-    <c:import url="/WEB-INF/views/include/top_menu.jsp" />
-</div>
+
+<c:import url="/WEB-INF/views/include/top_menu.jsp"/>
 
 <!-- 레시피 컨테이너 -->
 <div class="container-recipe">
@@ -279,9 +277,8 @@
         <p class="recipe-intro">${readRecipeBean.openRecipe_intro}</p>
         
         <div class="recipe-stats">
-            <span><i class="far fa-eye"></i> 조회수 215</span>
+            <span><i class="far fa-eye"></i> 조회수 ${viewCount}</span>
             <span><i class="far fa-heart"></i> 좋아요 <span id="likeCount">${readRecipeBean.openRecipe_like}</span></span>
-            <span><i class="far fa-comment"></i> 댓글 0</span>
         </div>
     </div>
     
@@ -328,7 +325,7 @@
     <!-- 액션 버튼 섹션 -->
     <div class="action-buttons">
         <div>
-            <a href="${root}/recipe_kit/recipe_main?theme_index=${readRecipeBean.theme_index}" class="btn-action">목록보기</a>
+            <a href="${root}/recipe/recipe_main?theme_index=${readRecipeBean.theme_index}" class="btn-action">목록보기</a>
             
             <c:if test="${loginMember.id == readRecipeBean.id}">
                 <a href="${root}/recipe/recipe_modify?openRecipe_index=${readRecipeBean.openRecipe_index}" class="btn-action btn-info">수정하기</a>
@@ -342,6 +339,7 @@
                     <button class="btn-like disabled">
                         <i class="far fa-heart"></i> 좋아요
                     </button>
+                    <small class="text-muted ml-2">로그인 후 좋아요를 누를 수 있습니다.</small>
                 </c:when>
                 <c:otherwise>
                     <button id="likeBtn" data-recipe-index="${readRecipeBean.openRecipe_index}" class="btn-like">
@@ -351,27 +349,18 @@
             </c:choose>
         </div>
     </div>
-     <!-- 레시피 키트 구매 섹션 -->
-    <div style="padding: 30px; background-color: #f9f9f9; text-align: center; border-top: 1px solid #eee;">
-        <h3 style="font-size: 20px; margin-bottom: 15px; color: #333;">이 레시피로 요리하고 싶으신가요?</h3>
-        <p style="color: #666; margin-bottom: 20px;">지금 바로 필요한 재료가 포함된 레시피 키트를 구매하세요!</p>
-        <a href="${root}/payment/payment?openRecipe_index=${readRecipeBean.openRecipe_index}" class="buy-button">
-            <i class="fas fa-shopping-cart"></i> 레시피 키트 구매하기
-        </a>
-    </div>
 </div>
 
-<!-- 하단 정보 -->
 <c:import url="/WEB-INF/views/include/bottom_info.jsp"/>
 
-<!-- 좋아요 버튼 스크립트 -->
-<script type="text/javascript">
+<!-- 좋아요 버튼 스크립트 - 기존 기능 그대로 유지 -->
+<script>
 $(document).ready(function() {
     // 좋아요 버튼 클릭 이벤트
     $("#likeBtn").click(function(e) {
         e.preventDefault();
         
-        // 로그인 상태 체크
+        // 로그인 상태 체크 (optional, 서버에서도 체크해야 함)
         <c:if test="${empty loginMember.id}">
             alert("로그인이 필요한 기능입니다.");
             return;
@@ -390,8 +379,7 @@ $(document).ready(function() {
                 $("#likeCount").text(newLikeCount);
                 
                 // 좋아요 버튼 스타일 토글 (선택사항)
-                $("#likeBtn").toggleClass("active");
-                $("#likeBtn i").toggleClass("far fas");
+                $("#likeBtn").toggleClass("btn-danger btn-outline-danger");
             },
             error: function(xhr, status, error) {
                 console.error("좋아요 처리 중 오류 발생:", error);

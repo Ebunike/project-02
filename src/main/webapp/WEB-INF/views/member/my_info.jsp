@@ -19,7 +19,6 @@
         font-family: 'Arial', sans-serif; /* 기본 글꼴 */
         /*background-color: #f5f5dc; /* 페이지 전체 배경색 (베이지) */
     }
-
     /* 🟢 컨테이너 스타일 (메인 박스) */
     .container_info {
         max-width: 700px; /* 최대 가로 크기 제한 */
@@ -29,7 +28,6 @@
         border-radius: 15px; /* 둥근 모서리 */
         box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2); /* 그림자 효과 추가 */
     }
-
     /* 🟢 제목 스타일 */
     h2 {
         text-align: center; /* 제목 중앙 정렬 */
@@ -37,7 +35,6 @@
         font-weight: bold; /* 볼드 처리 */
         margin-bottom: 20px; /* 아래 여백 추가 */
     }
-
     /* 🟢 각 정보 박스 스타일 */
     .info-box {
         background: #f9f9f3; /* 연한 배경색 */
@@ -51,7 +48,6 @@
         font-size: 16px; /* 글씨 크기 조정 */
         font-weight: 500; /* 글씨 조금 두껍게 */
     }
-
     /* 🟢 라벨 (항목 제목) 스타일 */
     .info-box label {
         font-weight: bold; /* 글씨 굵게 */
@@ -59,20 +55,17 @@
         margin-right: 10px; /* 오른쪽 여백 추가 */
         min-width: 90px; /* 최소 너비 설정 (정렬 통일) */
     }
-
     /* 🟢 정보 값 스타일 */
     .info-box span {
         color: #333; /* 기본 글씨 색상 */
         flex-grow: 1; /* 가변 크기로 확장 */
         text-align: right; /* 오른쪽 정렬 */
     }
-
     /* 🟢 버튼 컨테이너 스타일 */
     .btn-container {
         text-align: center; /* 가운데 정렬 */
         margin-top: 20px; /* 버튼과 내용 사이 간격 */
     }
-
     /* 🟢 "정보 수정" 버튼 스타일 */
     .btn-edit {
         background-color: #b38b6d; /* 버튼 기본 색상 */
@@ -87,7 +80,6 @@
         text-decoration: none; /* 밑줄 제거 */
         display: inline-block; /* 인라인 블록 형태 */
     }
-
     /* 🟢 "정보 수정" 버튼 마우스 오버 효과 */
     .btn-edit:hover {
         background-color: #9c7554; /* 버튼 색상 어둡게 변경 */
@@ -103,7 +95,6 @@
 	    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
 	    cursor: pointer;
 	}
-	
 	.custom-cancel-btn {
 	    background-color: #b3a18e !important;
 	    color: #ffffff !important;
@@ -114,11 +105,9 @@
 	    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
 	    cursor: pointer;
 	}
-	
 	.custom-confirm-btn:hover {
 	    background-color: #a59785 !important;
 	}
-	
 	.custom-cancel-btn:hover {
 	    background-color: #988675 !important;
 	}
@@ -174,22 +163,9 @@
                 </c:choose>
             </span>
         </div>
-         <%-- <c:choose>
-        	<c:when test="${loginUser.login.equals('s')}">
-        		<div class="info-box">
-			        <label>사업자명:</label> 
-			        <span>${loginUser.company_name}</span>
-	   	 		</div>
-	   	 		<div class="info-box">
-			        <label>사업자 번호:</label> 
-			        <span>${loginUser.company_num}</span>
-	   	 		</div>
-        	</c:when>
-        </c:choose>  --%>
      </div>
-	        
         <div class="btn-container">
-            <a href="${root}/member/modify_user" class="btn-edit">정보 수정</a> 
+            <a href="${root}/member/modify_user" class="btn-edit">정보 수정</a>
             <form:form id="delete-form" action="${root}/member/member_delete_pro" method="post">
 			    <input type="hidden" id="password" name="pw" />  <!-- 비밀번호 전달 -->
 			    <input type="hidden" id="user-id" name="id" value="${loginUser.id}" />  <!-- 로그인한 사용자의 ID 전달 -->
@@ -254,7 +230,6 @@
 	    });
 	});
 	</script>
-
 <!-- 게시판 하단 부분 -->
 <c:import url="/WEB-INF/views/include/bottom_info.jsp" />
 </body>

@@ -79,7 +79,7 @@ body {
     margin: 0;
 }
 
-.recipe-list .recipe_list1 {
+.recipe_list1 {
     margin-bottom: 15px;
     padding: 15px;
     background: white;
@@ -89,7 +89,7 @@ body {
     align-items: center;
 }
 
-.recipe-list .recipe_list1 img {
+.recipe_list1 img {
     width: 120px;
     height: 120px;
     object-fit: cover;
@@ -97,15 +97,24 @@ body {
     margin-right: 15px;
 }
 
-.recipe-list .recipe_list1 a.recipe_read-link {
+.recipe_list1 a.recipe_read-link {
     color: #333;
     text-decoration: none;
     font-weight: 500;
     transition: color 0.2s;
+    margin-right: 10px;
 }
 
-.recipe-list .recipe_list1 a.recipe_read-link:hover {
-    color: #f8b400;
+.recipe_list1 a.recipe_read-link:hover {
+    color: #e67e22;
+}
+
+.recipe_list1 .badge {
+    background-color: #e67e22;
+    color: white;
+    font-size: 0.8rem;
+    padding: 5px 8px;
+    border-radius: 4px;
 }
 
 .pagination {
@@ -122,9 +131,9 @@ body {
 }
 
 .pagination .page-link:hover {
-    background-color: #f8b400;
+    background-color: #e67e22;
     color: white;
-    border-color: #f8b400;
+    border-color: #e67e22;
 }
 
 .btn-write {
@@ -139,17 +148,17 @@ body {
 }
 
 .btn-write:hover {
-    background-color: #e67e22;
+    background-color: #d35400;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
 @media (max-width: 768px) {
-    .recipe-list .recipe_list1 {
+    .recipe_list1 {
         flex-direction: column;
         align-items: flex-start;
     }
     
-    .recipe-list .recipe_list1 img {
+    .recipe_list1 img {
         width: 100%;
         height: 180px;
         margin-right: 0;
@@ -183,40 +192,46 @@ body {
         </a>
     </div>
 
-    <!-- 카테고리 타이틀 -->
+    <!-- 카테고리 타이틀과 콘텐츠 -->
     <c:choose>
         <c:when test="${theme_index eq '1'}">
             <h2 class="category-title">푸드 카테고리</h2>
             <ul class="recipe-list">
                 <c:forEach var="obj" items="${openRecipeList}">
-                    <li class="recipe_list1">
-                        <a href="${root}/recipe/recipe_read?openRecipe_index=${obj.openRecipe_index}" class="recipe_read-link">
-                            <img src="${root}/upload/${obj.openRecipe_picture}" alt="${obj.openRecipe_title}" />
-                        </a>
+                <li class="recipe_list1">
+                    <a href="${root}/recipe/recipe_read?openRecipe_index=${obj.openRecipe_index}" class="recipe_read-link">
+                        <img src="${root}/upload/${obj.openRecipe_picture}" alt="${obj.openRecipe_title}" />
+                    </a>
+                    <div>
                         <a href="${root}/recipe/recipe_read?openRecipe_index=${obj.openRecipe_index}" class="recipe_read-link">${obj.openRecipe_title}</a>
-                    </li>
+                        <!-- 조회수 출력 -->
+                        <span class="badge badge-secondary">
+                            <i class="fas fa-eye"></i> 조회수: ${recipeViewCounts[obj.openRecipe_index] != null ? recipeViewCounts[obj.openRecipe_index] : 0}
+                        </span>
+                    </div>
+                </li>
                 </c:forEach>
             </ul>
         </c:when>
-        
+                
         <c:when test="${theme_index eq '2'}">
             <h2 class="category-title">뷰티 카테고리</h2>
             <ul class="recipe-list">
                 <c:forEach var="obj" items="${openRecipeList}">
-                    <li class="recipe_list1">
-                        <a href="${root}/recipe/recipe_read?openRecipe_index=${obj.openRecipe_index}" class="recipe_read-link">${obj.openRecipe_title}</a>
-                    </li>
+                <li class="recipe_list1">
+                    <a href="${root}/recipe/recipe_read?openRecipe_index=${obj.openRecipe_index}" class="recipe_read-link">${obj.openRecipe_title}</a>
+                </li>
                 </c:forEach>
             </ul>
         </c:when>
-        
+            
         <c:when test="${theme_index eq '3'}">
             <h2 class="category-title">문구 카테고리</h2>
             <ul class="recipe-list">
                 <c:forEach var="obj" items="${openRecipeList}">
-                    <li class="recipe_list1">
-                        <a href="${root}/recipe/recipe_read?openRecipe_index=${obj.openRecipe_index}" class="recipe_read-link">${obj.openRecipe_title}</a>
-                    </li>
+                <li class="recipe_list1">
+                    <a href="${root}/recipe/recipe_read?openRecipe_index=${obj.openRecipe_index}" class="recipe_read-link">${obj.openRecipe_title}</a>
+                </li>
                 </c:forEach>
             </ul>
         </c:when>
@@ -225,9 +240,9 @@ body {
             <h2 class="category-title">리빙 카테고리</h2>
             <ul class="recipe-list">
                 <c:forEach var="obj" items="${openRecipeList}">
-                    <li class="recipe_list1">
-                        <a href="${root}/recipe/recipe_read?openRecipe_index=${obj.openRecipe_index}" class="recipe_read-link">${obj.openRecipe_title}</a>
-                    </li>
+                <li class="recipe_list1">
+                    <a href="${root}/recipe/recipe_read?openRecipe_index=${obj.openRecipe_index}" class="recipe_read-link">${obj.openRecipe_title}</a>
+                </li>
                 </c:forEach>
             </ul>
         </c:when>
@@ -236,20 +251,20 @@ body {
             <h2 class="category-title">패션 카테고리</h2>
             <ul class="recipe-list">
                 <c:forEach var="obj" items="${openRecipeList}">
-                    <li class="recipe_list1">
-                        <a href="${root}/recipe/recipe_read?openRecipe_index=${obj.openRecipe_index}" class="recipe_read-link">${obj.openRecipe_title}</a>
-                    </li>
+                <li class="recipe_list1">
+                    <a href="${root}/recipe/recipe_read?openRecipe_index=${obj.openRecipe_index}" class="recipe_read-link">${obj.openRecipe_title}</a>
+                </li>
                 </c:forEach>
             </ul>
         </c:when>
-                    
+                        
         <c:otherwise>
             <h2 class="category-title">모든 항목 최고 좋아요 카테고리</h2>
             <ul class="recipe-list">
                 <c:forEach var="obj" items="${allRecipeList}">
-                    <li class="recipe_list1">
-                        <a href="${root}/recipe/recipe_read?openRecipe_index=${obj.openRecipe_index}" class="recipe_read-link">${obj.openRecipe_title}</a>
-                    </li>
+                <li class="recipe_list1">
+                    <a href="${root}/recipe/recipe_read?openRecipe_index=${obj.openRecipe_index}" class="recipe_read-link">${obj.openRecipe_title}</a>
+                </li>
                 </c:forEach>
             </ul>
         </c:otherwise>

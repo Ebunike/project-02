@@ -115,6 +115,11 @@ public class MemberService {
 	         return false;
 	      }
 	   }
-  
+   public String findId(MemberBean memberBean) {
+	      return memberRepository.findId(memberBean);
+	   }
+	   public int findPw(MemberBean memberBean) {
+	      return memberRepository.findPw(memberBean);
+	   }
    
 }

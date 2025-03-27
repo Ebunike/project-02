@@ -189,6 +189,35 @@ public class MemberController {
 	        return "redirect:/member/my_info";
 	    }
 	}
-	
+	@GetMapping("findidpw")
+	   public String findidpw(@ModelAttribute("memberBean") MemberBean memberBean) {
+	      
+	      return "member/findidpw";
+	   }
+	   @PostMapping("findid")
+	   public String findId(@ModelAttribute("memberBean") MemberBean memberBean,Model model) {
+	      String id = memberService.findId(memberBean);
+	      model.addAttribute("id",id);
+	      if(id==null) {
+	         return "member/findfail";
+	      }else {
+	         return "member/findid";
+	      }
+	   }
+	   @PostMapping("findpw")
+	   public String findPw(@Valid@ModelAttribute("memberBean") MemberBean memberBean,BindingResult result) {
+	        if (result.hasFieldErrors("pw")) {
+	           System.out.println("유효성검사");
+	              return "member/findidpw";  // 오류가 있을 경우 다시 보여줄 페이지
+	          }
+	      int pw = memberService.findPw(memberBean);
+	      if(pw==0) {
+	         System.out.println("정보 틀림");
+	         return "member/findfail";
+	      }else {
+	         System.out.println("전부 다됨");
+	      return "member/findpw";
+	      }
+	   }
 	
 }
