@@ -1,7 +1,10 @@
 package kr.co.soldesk.service;
+import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -56,56 +59,62 @@ public class OnedayService {
         
         if (result > 0) {
             // 네이버 캘린더에 이벤트 등록
-            try {
-                // 이벤트 정보 세팅
-                NaverCalendarEventDTO event = new NaverCalendarEventDTO();
-                event.setCalendarId(publicCalendarId);  // 공개 캘린더 ID
-                event.setTitle("[원데이 클래스] " + oneday.getOneday_name());
-                
-                // 내용 생성
-                StringBuilder body = new StringBuilder();
-                body.append("일시: ").append(formatDate(oneday.getOneday_date())).append(" ")
-                    .append(oneday.getOneday_start()).append(" ~ ").append(oneday.getOneday_end()).append("\n")
-                    .append("장소: ").append(oneday.getOneday_location()).append("\n")
-                    .append("수강료: ").append(oneday.getOneday_price()).append("원\n")
-                    .append("정원: ").append(oneday.getOneday_personnel()).append("명\n\n")
-                    .append(oneday.getOneday_info());
-                
-                event.setBody(body.toString());
-                
-                // 시작 및 종료 시간 설정
-                Calendar calendar = Calendar.getInstance();
-                calendar.setTime(oneday.getOneday_date());
-                
-                // 시작 시간 설정
-                String[] startTimeParts = oneday.getOneday_start().split(":");
-                calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(startTimeParts[0]));
-                calendar.set(Calendar.MINUTE, Integer.parseInt(startTimeParts[1]));
-                calendar.set(Calendar.SECOND, 0);
-                event.setStartDateTime(calendar.getTime());
-                
-                // 종료 시간 설정
-                String[] endTimeParts = oneday.getOneday_end().split(":");
-                calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(endTimeParts[0]));
-                calendar.set(Calendar.MINUTE, Integer.parseInt(endTimeParts[1]));
-                calendar.set(Calendar.SECOND, 0);
-                event.setEndDateTime(calendar.getTime());
-                
-                event.setLocation(oneday.getOneday_location());
-                event.setColor("#69B1FF");  // 원데이 클래스 색상 (파란색)
-                event.setAccessType("public");  // 공개 일정
-                
-                // 네이버 캘린더에 이벤트 생성
-                String eventId = naverCalendarClient.createCalendarEvent(sellerToken, event);
-                
-                // TODO: 생성된 이벤트 ID를 원데이 클래스 테이블에 저장 (테이블 스키마 수정 필요)
-                
-                return oneday;
-            } catch (Exception e) {
-                // 캘린더 이벤트 생성 실패 시에도 원데이 클래스 등록은 유지
-                e.printStackTrace();
-                return oneday;
-            }
+        	// 네이버 캘린더에 이벤트 등록
+        	try {
+        	    // 이벤트 제목
+        	    String title = "[원데이 클래스] " + oneday.getOneday_name();
+        	    
+        	    // 내용 생성
+        	    StringBuilder body = new StringBuilder();
+        	    body.append("일시: ").append(formatDate(oneday.getOneday_date())).append(" ")
+        	        .append(oneday.getOneday_start()).append(" ~ ").append(oneday.getOneday_end()).append("\n")
+        	        .append("장소: ").append(oneday.getOneday_location()).append("\n")
+        	        .append("수강료: ").append(oneday.getOneday_price()).append("원\n")
+        	        .append("정원: ").append(oneday.getOneday_personnel()).append("명\n\n")
+        	        .append(oneday.getOneday_info());
+        	    
+        	    // 시작 및 종료 시간 설정
+        	    Calendar calendar = Calendar.getInstance();
+        	    calendar.setTime(oneday.getOneday_date());
+        	    
+        	    // 시작 시간 설정
+        	    String[] startTimeParts = oneday.getOneday_start().split(":");
+        	    calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(startTimeParts[0]));
+        	    calendar.set(Calendar.MINUTE, Integer.parseInt(startTimeParts[1]));
+        	    calendar.set(Calendar.SECOND, 0);
+        	    Date startDateTime = calendar.getTime();
+        	    
+        	    // 종료 시간 설정
+        	    String[] endTimeParts = oneday.getOneday_end().split(":");
+        	    calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(endTimeParts[0]));
+        	    calendar.set(Calendar.MINUTE, Integer.parseInt(endTimeParts[1]));
+        	    calendar.set(Calendar.SECOND, 0);
+        	    Date endDateTime = calendar.getTime();
+        	    
+        	    // iCalendar 형식의 일정 생성
+        	    String scheduleIcalString = createIcalString(
+        	        title, 
+        	        body.toString(), 
+        	        oneday.getOneday_location(),
+        	        startDateTime,
+        	        endDateTime
+        	    );
+        	    
+        	    // 네이버 캘린더에 이벤트 생성
+        	    String eventId = naverCalendarClient.createCalendarEvent(
+        	        sellerToken, 
+        	        publicCalendarId, 
+        	        scheduleIcalString
+        	    );
+        	    
+        	    // TODO: 생성된 이벤트 ID를 원데이 클래스 테이블에 저장 (테이블 스키마 수정 필요)
+        	    
+        	    return oneday;
+        	} catch (Exception e) {
+        	    // 캘린더 이벤트 생성 실패 시에도 원데이 클래스 등록은 유지
+        	    e.printStackTrace();
+        	    return oneday;
+        	}
         }
         
         return null;
@@ -230,4 +239,39 @@ public class OnedayService {
         java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
         return sdf.format(date);
     }
+    
+    private String createIcalString(String title, String description, String location,
+            Date startDateTime, Date endDateTime) throws Exception {
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd'T'HHmmss");
+			String uid = UUID.randomUUID().toString();
+			
+			return "BEGIN:VCALENDAR\n" +
+			"VERSION:2.0\n" +
+			"PRODID:Naver Calendar\n" +
+			"CALSCALE:GREGORIAN\n" +
+			"BEGIN:VTIMEZONE\n" +
+			"TZID:Asia/Seoul\n" +
+			"BEGIN:STANDARD\n" +
+			"DTSTART:19700101T000000\n" +
+			"TZNAME:GMT%2B09:00\n" +
+			"TZOFFSETFROM:%2B0900\n" +
+			"TZOFFSETTO:%2B0900\n" +
+			"END:STANDARD\n" +
+			"END:VTIMEZONE\n" +
+			"BEGIN:VEVENT\n" +
+			"SEQUENCE:0\n" +
+			"CLASS:PUBLIC\n" +
+			"TRANSP:OPAQUE\n" +
+			"UID:" + uid + "\n" +
+			"DTSTART;TZID=Asia/Seoul:" + sdf.format(startDateTime) + "\n" +
+			"DTEND;TZID=Asia/Seoul:" + sdf.format(endDateTime) + "\n" +
+			"SUMMARY:" + URLEncoder.encode(title, "UTF-8") + "\n" +
+			"DESCRIPTION:" + URLEncoder.encode(description, "UTF-8") + "\n" +
+			"LOCATION:" + URLEncoder.encode(location, "UTF-8") + "\n" +
+			"CREATED:" + sdf.format(new Date()) + "Z\n" +
+			"LAST-MODIFIED:" + sdf.format(new Date()) + "Z\n" +
+			"DTSTAMP:" + sdf.format(new Date()) + "Z\n" +
+			"END:VEVENT\n" +
+			"END:VCALENDAR";
+		}
 }

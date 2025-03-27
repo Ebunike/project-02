@@ -159,8 +159,8 @@
                                 <td>
                                     <c:if test="${reservation.reservation_status ne 'CANCELLED'}">
                                         <form action="<c:url value='/reservation/class/update-status'/>" method="post" style="display: inline;">
-                                            <input type="hidden" name="reservationIndex" value="${reservation.reservation_index}">
-                                            <input type="hidden" name="onedayIndex" value="${oneday.oneday_index}">
+                                            <input type="hidden" name="reservation_index" value="${reservation.reservation_index}">
+                                            <input type="hidden" name="oneday_index" value="${oneday.oneday_index}">
                                             <select name="status" class="status-select" onchange="this.form.submit()">
                                                 <option value="">상태 변경</option>
                                                 <option value="CONFIRMED" <c:if test="${reservation.reservation_status eq 'CONFIRMED'}">disabled</c:if>>확정</option>
@@ -179,7 +179,7 @@
             
             <div class="button-container" style="margin-top: 20px;">
                 <a href="<c:url value='/oneday/my-classes'/>" class="btn">내 클래스 목록</a>
-                <a href="<c:url value='/oneday/detail/${oneday.onedayIndex}'/>" class="btn">클래스 상세</a>
+                <a href="<c:url value='/oneday/detail/${oneday.oneday_index}'/>" class="btn">클래스 상세</a>
             </div>
         </div>
     </div>

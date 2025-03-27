@@ -78,11 +78,11 @@
             </div>
             
             <form action="<c:url value='/reservation/reserve'/>" method="post">
-                <input type="hidden" name="onedayIndex" value="${oneday.oneday_index}">
+                <input type="hidden" name="oneday_index" value="${oneday.oneday_index}">
                 
                 <div class="form-group">
                     <label for="participantCount">예약 인원</label>
-                    <select name="participantCount" id="participantCount" class="form-control" onchange="updateTotalPrice()">
+                    <select name="participant_count" id="participantCount" class="form-control" onchange="updateTotalPrice()">
                         <c:forEach var="i" begin="1" end="${oneday.oneday_personnel - oneday.current_participants}">
                             <option value="${i}">${i}명</option>
                         </c:forEach>
@@ -91,7 +91,7 @@
                 
                 <div class="form-group">
                     <label for="specialRequests">요청사항 (선택)</label>
-                    <textarea name="specialRequests" id="specialRequests" class="form-control" 
+                    <textarea name="special_requests" id="specialRequests" class="form-control" 
                               placeholder="요청사항이 있으면 입력해주세요." rows="3" maxlength="200"></textarea>
                 </div>
                 

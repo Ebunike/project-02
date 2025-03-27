@@ -24,11 +24,11 @@ public interface OnedayReservationMapper {
      * @param reservation 등록할 예약 정보
      * @return 등록된 행 수
      */
-    @Insert("INSERT INTO OnedayReservation (reservation_index, oneday_index, member_id, " +
-            "reservation_date, reservation_status, participant_count, calendar_event_id) " +
-            "VALUES (reservation_seq.NEXTVAL, #{onedayIndex}, #{memberId}, " +
-            "SYSDATE, #{reservationStatus}, #{participantCount}, #{calendarEventId})")
-    @Options(useGeneratedKeys = true, keyProperty = "reservationIndex", keyColumn = "reservation_index")
+	@Insert("INSERT INTO OnedayReservation (reservation_index, oneday_index, member_id, " +
+            "reservation_date, reservation_status, participant_count, calendar_event_id, special_requests) " +
+            "VALUES (reservation_seq.NEXTVAL, #{oneday_index}, #{member_id}, " +
+            "SYSDATE, #{reservation_status}, #{participant_count}, #{calendar_event_id}, #{special_requests})")
+    @Options(useGeneratedKeys = true, keyProperty = "reservation_index", keyColumn = "reservation_index")
     int insertReservation(OnedayReservationDTO reservation);
     
     /**
@@ -60,9 +60,11 @@ public interface OnedayReservationMapper {
      * @return 예약 정보
      */
     @Select("SELECT r.*, o.oneday_name, o.oneday_date, o.oneday_start, o.oneday_end, " +
-            "o.oneday_location, o.oneday_info, m.name as member_name, m.email as member_email, m.tel as member_tel " +
+            "o.oneday_location, o.oneday_info, o.oneday_price, t.theme_name, " +
+            "m.name as member_name, m.email as member_email, m.tel as member_tel " +
             "FROM OnedayReservation r " +
             "JOIN Oneday o ON r.oneday_index = o.oneday_index " +
+            "JOIN Theme t ON o.theme_index = t.theme_index " +
             "JOIN Member m ON r.member_id = m.id " +
             "WHERE r.reservation_index = #{reservationIndex}")
     OnedayReservationDTO getReservationByIndex(@Param("reservationIndex") int reservationIndex);
@@ -74,9 +76,10 @@ public interface OnedayReservationMapper {
      * @return 예약 목록
      */
     @Select("SELECT r.*, o.oneday_name, o.oneday_date, o.oneday_start, o.oneday_end, " +
-            "o.oneday_location, o.oneday_info " +
+            "o.oneday_location, o.oneday_info, o.oneday_price, t.theme_name " +
             "FROM OnedayReservation r " +
             "JOIN Oneday o ON r.oneday_index = o.oneday_index " +
+            "JOIN Theme t ON o.theme_index = t.theme_index " +
             "WHERE r.member_id = #{memberId} " +
             "ORDER BY o.oneday_date DESC")
     List<OnedayReservationDTO> getReservationsByMemberId(@Param("memberId") String memberId);
@@ -105,7 +108,6 @@ public interface OnedayReservationMapper {
             "WHERE oneday_index = #{onedayIndex} " +
             "AND reservation_status != 'CANCELLED'")
     int getCurrentParticipantCount(@Param("onedayIndex") int onedayIndex);
-    
     /**
      * 회원이 특정 원데이 클래스를 예약했는지 확인하는 메서드
      * 
@@ -113,9 +115,10 @@ public interface OnedayReservationMapper {
      * @param memberId 회원 ID
      * @return 예약 정보 (없으면 null)
      */
-    @Select("SELECT * FROM OnedayReservation " +
-            "WHERE oneday_index = #{onedayIndex} " +
-            "AND member_id = #{memberId} " +
-            "AND reservation_status != 'CANCELLED'")
-    OnedayReservationDTO checkReservationExists(@Param("onedayIndex") int onedayIndex, @Param("memberId") String memberId);
+     @Select("SELECT * FROM OnedayReservation " +
+             "WHERE oneday_index = #{onedayIndex} " +
+             "AND member_id = #{memberId} " +
+             "AND reservation_status != 'CANCELLED'")
+     OnedayReservationDTO checkReservationExists(@Param("onedayIndex") int onedayIndex, @Param("memberId") String memberId);
+
 }

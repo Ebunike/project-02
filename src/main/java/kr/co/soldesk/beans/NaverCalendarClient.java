@@ -113,12 +113,11 @@ public class NaverCalendarClient {
      * @param event 생성할 이벤트 정보
      * @return 생성된 이벤트 ID
      */
-    public String createCalendarEvent(String accessToken, NaverCalendarEventDTO event) {
+    public String createCalendarEvent(String accessToken, String calendarId, String scheduleIcalString) {
         HttpURLConnection conn = null;
         StringBuilder response = new StringBuilder();
         
         try {
-            // 네이버 캘린더 API URL 수정
             URL url = new URL("https://openapi.naver.com/calendar/createSchedule.json");
             conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
@@ -126,46 +125,7 @@ public class NaverCalendarClient {
             conn.setRequestProperty("Authorization", "Bearer " + accessToken);
             conn.setDoOutput(true);
             
-            // 날짜 포맷 변환
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd'T'HHmmss");
-            String startDateTime = sdf.format(event.getStartDateTime());
-            String endDateTime = sdf.format(event.getEndDateTime());
-            
-            // UUID 생성
-            String uid = UUID.randomUUID().toString();
-            
-            // iCalendar 형식의 일정 데이터 생성
-            String scheduleIcalString = "BEGIN:VCALENDAR\n" +
-                    "VERSION:2.0\n" +
-                    "PRODID:Naver Calendar\n" +
-                    "CALSCALE:GREGORIAN\n" +
-                    "BEGIN:VTIMEZONE\n" +
-                    "TZID:Asia/Seoul\n" +
-                    "BEGIN:STANDARD\n" +
-                    "DTSTART:19700101T000000\n" +
-                    "TZNAME:GMT%2B09:00\n" +
-                    "TZOFFSETFROM:%2B0900\n" +
-                    "TZOFFSETTO:%2B0900\n" +
-                    "END:STANDARD\n" +
-                    "END:VTIMEZONE\n" +
-                    "BEGIN:VEVENT\n" +
-                    "SEQUENCE:0\n" +
-                    "CLASS:PUBLIC\n" +
-                    "TRANSP:OPAQUE\n" +
-                    "UID:" + uid + "\n" +
-                    "DTSTART;TZID=Asia/Seoul:" + startDateTime + "\n" +
-                    "DTEND;TZID=Asia/Seoul:" + endDateTime + "\n" +
-                    "SUMMARY:" + URLEncoder.encode(event.getTitle(), "UTF-8") + "\n" +
-                    "DESCRIPTION:" + URLEncoder.encode(event.getBody(), "UTF-8") + "\n" +
-                    "LOCATION:" + URLEncoder.encode(event.getLocation(), "UTF-8") + "\n" +
-                    "CREATED:" + sdf.format(new Date()) + "Z\n" +
-                    "LAST-MODIFIED:" + sdf.format(new Date()) + "Z\n" +
-                    "DTSTAMP:" + sdf.format(new Date()) + "Z\n" +
-                    "END:VEVENT\n" +
-                    "END:VCALENDAR";
-            
             // 요청 데이터 준비
-            String calendarId = event.getCalendarId() != null ? event.getCalendarId() : "defaultCalendarId";
             String postParams = "calendarId=" + calendarId + "&scheduleIcalString=" + URLEncoder.encode(scheduleIcalString, "UTF-8");
             
             // 데이터 전송
@@ -195,20 +155,20 @@ public class NaverCalendarClient {
             
             if (responseCode >= 200 && responseCode < 300) {
                 JSONObject jsonResponse = new JSONObject(response.toString());
-                // 응답에서 일정 ID 추출 (네이버 API 응답 구조에 따라 수정 필요)
-                return jsonResponse.optString("id", uid);
+                // 응답에서 일정 ID 추출
+                return jsonResponse.optString("id", UUID.randomUUID().toString());
             } else {
                 throw new RuntimeException("네이버 캘린더 이벤트 생성 실패: " + response.toString());
             }
             
-        } catch (Exception e) {
-            logger.error("네이버 캘린더 이벤트 생성 중 오류 발생", e);
-            throw new RuntimeException("네이버 캘린더 이벤트 생성 중 오류가 발생했습니다.", e);
-        } finally {
-            if (conn != null) {
-                conn.disconnect();
-            }
-        }
+	        } catch (Exception e) {
+	            logger.error("네이버 캘린더 이벤트 생성 중 오류 발생", e);
+	            throw new RuntimeException("네이버 캘린더 이벤트 생성 중 오류가 발생했습니다.", e);
+	        } finally {
+	            if (conn != null) {
+	                conn.disconnect();
+	            }
+	        }
     }
     
     /**
@@ -223,10 +183,21 @@ public class NaverCalendarClient {
         HttpURLConnection conn = null;
         
         try {
-            URL url = new URL(apiUrl + "/v1/calendars/" + calendarId + "/events/" + eventId);
+            URL url = new URL("https://openapi.naver.com/calendar/deleteSchedule.json");
             conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("DELETE");
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
             conn.setRequestProperty("Authorization", "Bearer " + accessToken);
+            conn.setDoOutput(true);
+            
+            // 요청 데이터 준비
+            String postParams = "calendarId=" + calendarId + "&scheduleId=" + eventId;
+            
+            // 데이터 전송
+            try (OutputStream os = conn.getOutputStream()) {
+                byte[] input = postParams.getBytes("utf-8");
+                os.write(input, 0, input.length);
+            }
             
             // 응답 받기
             int responseCode = conn.getResponseCode();

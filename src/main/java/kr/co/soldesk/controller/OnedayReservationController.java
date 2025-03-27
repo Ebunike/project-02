@@ -13,11 +13,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.co.soldesk.beans.MemberBean;
 import kr.co.soldesk.beans.OnedayDTO;
 import kr.co.soldesk.beans.OnedayReservationDTO;
+import kr.co.soldesk.mapper.MemberMapper;
 import kr.co.soldesk.service.NaverCalendarService;
 import kr.co.soldesk.service.OnedayReservationService;
 import kr.co.soldesk.service.OnedayService;
@@ -40,6 +42,9 @@ public class OnedayReservationController {
     
     @Autowired
     private NaverCalendarService naverCalendarService;
+    
+    @Autowired
+    private MemberMapper memberMapper;
     
     /**
      * 원데이 클래스 예약 폼으로 이동
@@ -230,5 +235,78 @@ public class OnedayReservationController {
         }
         
         return "redirect:/reservation/list";
+    }
+    
+    /**
+     * 클래스별 예약 목록 페이지로 이동 (판매자 기능)
+     */
+    @GetMapping("/class/{oneday_index}")
+    public String classReservations(@PathVariable("oneday_index") int oneday_index, Model model, HttpSession session) {
+        // 로그인 상태 확인
+        if (loginMember == null) {
+            return "redirect:/member/login";
+        }
+        
+        // 판매자 권한 확인
+        int sellerIndex = memberMapper.getSellerIndex(loginMember.getId());
+        if (sellerIndex <= 0) {
+            return "redirect:/member/login";
+        }
+        
+        // 클래스 정보 조회
+        OnedayDTO oneday = onedayService.getOnedayByIndex(oneday_index);
+        if (oneday == null || oneday.getSeller_index() != sellerIndex) {
+            // 존재하지 않는 클래스이거나 접근 권한이 없는 경우
+            return "redirect:/oneday/my-classes";
+        }
+        
+        // 예약 목록 조회
+        List<OnedayReservationDTO> reservationList = reservationService.getReservationsByOnedayIndex(oneday_index);
+        
+        model.addAttribute("oneday", oneday);
+        model.addAttribute("reservationList", reservationList);
+        model.addAttribute("loginMember", loginMember);
+        
+        return "reservation/reservationList";
+    }
+    
+    /**
+     * 예약 상태 업데이트 (판매자용)
+     */
+    @PostMapping("/class/update-status")
+    public String updateStatus(@RequestParam("reservation_index") int reservation_index,
+                               @RequestParam("status") String status,
+                               @RequestParam("oneday_index") int oneday_index,
+                               HttpSession session,
+                               RedirectAttributes rttr) {
+        
+        // 로그인 상태 확인
+        if (loginMember == null) {
+            return "redirect:/member/login";
+        }
+        
+        // 판매자 권한 확인
+        int sellerIndex = memberMapper.getSellerIndex(loginMember.getId());
+        if (sellerIndex <= 0) {
+            return "redirect:/member/login";
+        }
+        
+        // 클래스 정보 조회
+        OnedayDTO oneday = onedayService.getOnedayByIndex(oneday_index);
+        if (oneday == null || oneday.getSeller_index() != sellerIndex) {
+            // 존재하지 않는 클래스이거나 접근 권한이 없는 경우
+            return "redirect:/oneday/my-classes";
+        }
+        
+        // 예약 상태 업데이트
+        boolean result = reservationService.updateReservationStatus(reservation_index, status);
+        
+        if (result) {
+            rttr.addFlashAttribute("message", "예약 상태가 업데이트되었습니다.");
+        } else {
+            rttr.addFlashAttribute("errorMessage", "예약 상태 업데이트에 실패했습니다.");
+        }
+        
+        return "redirect:/reservation/class/" + oneday_index;
     }
 }
