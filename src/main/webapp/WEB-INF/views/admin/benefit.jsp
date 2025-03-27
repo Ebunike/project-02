@@ -12,5 +12,10 @@
         <c:import url="/WEB-INF/views/include/admin_side.jsp" />
     </div>
     
+    
+    <!-- 하단 고정 바 -->
+    <div class="bottom">
+        <c:import url="/WEB-INF/views/include/bottom_info.jsp" />
+    </div>
 </body>
 </html>

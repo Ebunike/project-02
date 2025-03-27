@@ -13,7 +13,7 @@ public class InquiryBean {
     private String inquiry_date;
     
     public InquiryBean() {
-    	inquiry_read = "답변X";
+    	inquiry_read = "답변 대기중";
     }
     
 	public String getInquiry_date() {

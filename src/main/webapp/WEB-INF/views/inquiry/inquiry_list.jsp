@@ -250,10 +250,10 @@
                                     <!-- 답변 상태 표시 -->
                                     <td>
                                         <c:choose>
-                                            <c:when test="${inquiry.inquiry_read == '답변X'}">
+                                            <c:when test="${inquiry.inquiry_read == '답변 대기중'}">
                                                 <span class="badge badge-waiting">답변 대기중</span>
                                             </c:when>
-                                            <c:when test="${inquiry.inquiry_read == '답변O'}">
+                                            <c:when test="${inquiry.inquiry_read == '답변 완료'}">
                                                 <span class="badge badge-answered">답변 완료</span>
                                             </c:when>
                                             <c:otherwise>
