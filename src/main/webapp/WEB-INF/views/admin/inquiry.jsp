@@ -92,7 +92,7 @@
         }
         
         .card:hover {
-            transform: translateY(-5px); /* 호버 시 위로 살짝 이동 */
+            /*transform: translateY(-5px);*/ /* 호버 시 위로 살짝 이동 */
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); /* 호버 시 그림자 강화 */
         }
         

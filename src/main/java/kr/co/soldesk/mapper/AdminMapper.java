@@ -57,11 +57,21 @@ public interface AdminMapper {
 		@Select("SELECT * FROM banner_table WHERE banner_idx = #{idx}")
 		BannerBean getBannerById(int idx);
 		
-		@Insert("INSERT INTO banner_table (banner_idx, banner_name, banner_img, banner_link, banner_order, is_active) VALUES (banner_seq.NEXTVAL, #{banner_name}, #{banner_img}, #{banner_link}, #{banner_order}, 'Y')")
-		void addBanner(BannerBean bean);
+		 // 배너 관리 기능 - 타이틀과 서브타이틀 포함
+	    @Insert("INSERT INTO banner_table (banner_idx, banner_name, banner_img, banner_link, banner_order, is_active, banner_title, banner_subtitle) " +
+	            "VALUES (banner_seq.NEXTVAL, #{banner_name}, #{banner_img}, #{banner_link}, #{banner_order}, 'Y', #{banner_title}, #{banner_subtitle})")
+	    void addBanner(BannerBean bean);
 		
-		@Update("UPDATE banner_table SET banner_name = #{banner_name}, banner_img = #{banner_img}, banner_link = #{banner_link}, banner_order = #{banner_order}, is_active = #{is_active} WHERE banner_idx = #{banner_idx}")
-		void updateBanner(BannerBean bean);
+	    @Update("UPDATE banner_table SET " +
+	            "banner_name = #{banner_name}, " +
+	            "banner_img = #{banner_img}, " +
+	            "banner_link = #{banner_link}, " +
+	            "banner_order = #{banner_order}, " +
+	            "is_active = #{is_active}, " +
+	            "banner_title = #{banner_title}, " +
+	            "banner_subtitle = #{banner_subtitle} " +
+	            "WHERE banner_idx = #{banner_idx}")
+	    void updateBanner(BannerBean bean);
 		
 		@Delete("DELETE FROM banner_table WHERE banner_idx = #{idx}")
 		void deleteBanner(int idx);
@@ -94,9 +104,9 @@ public interface AdminMapper {
 		@Delete("DELETE FROM product_table WHERE product_idx = #{idx}")
 		void deleteProduct(int idx);
 		
-		// 메인 페이지용 활성화된 배너 목록 조회
-		@Select("SELECT * FROM banner_table WHERE is_active = 'Y' ORDER BY banner_order ASC")
-		List<BannerBean> getActiveBanners();
+		// 메인 페이지용 활성화된 배너 목록 조회 (타이틀과 서브타이틀 포함)
+	    @Select("SELECT * FROM banner_table WHERE is_active = 'Y' ORDER BY banner_order ASC")
+	    List<BannerBean> getActiveBanners();
 		
 		// 메인 페이지용 활성화된 상품 목록 조회
 		@Select("SELECT * FROM product_table WHERE is_active = 'Y' ORDER BY product_order ASC")

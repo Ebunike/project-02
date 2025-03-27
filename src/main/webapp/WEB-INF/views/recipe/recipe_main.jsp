@@ -6,6 +6,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+<title>DDuk Bae Gi - 레시피</title>
+
+<!-- Font Awesome 아이콘 라이브러리 -->
+<script src="https://kit.fontawesome.com/516da99189.js" crossorigin="anonymous"></script>
 <title>레시피 메인페이지</title>
 
 <!-- Bootstrap CDN -->
