@@ -50,28 +50,50 @@
 	  </div>
     </form:form>
         <script type="text/javascript">
-        	//결제취소 후 장바구니로 되돌아감
-	        function cancelPayment() {
-	        	// order_id 가져오기
-	            const orderId = document.getElementById('orderId').value;
-	            const data = {
-	                    order_id: orderId // order_id 추가
-	                };
-	            //AJAX 요청
-	        	const xhr = new XMLHttpRequest();
-	            xhr.open("POST", "${root}/order/cancelPayment", true); // 결제 취소 엔드포인트
-	            xhr.setRequestHeader("Content-Type", "application/json");
-	            xhr.onload = function () {
-	                if (xhr.status === 200) {
-	                    alert("결제가 취소되었습니다.");
-	                    window.history.back(); // 이전 페이지로 돌아가기
-	                } else {
-	                    console.error("결제 취소 실패:", xhr.responseText);
-	                    alert("결제 취소에 실패했습니다.");
-	                }
-	            };
-	            xhr.send(JSON.stringify(data)); // 데이터를 JSON 형태로 전송   
-	        }
+     	// 결제 취소 함수
+        function cancelPayment(isTriggeredByPopstate = false) {
+            const orderId = document.getElementById('orderId').value;
+            const data = { order_id: orderId };
+
+            const xhr = new XMLHttpRequest();
+            xhr.open("POST", `${root}/order/cancelPayment`, true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    if (!isTriggeredByPopstate) { // 뒤로가기 이벤트가 아니라면 실행
+                        alert("결제가 취소되었습니다.");
+                        history.pushState({ canceled: true }, null, location.href); // 상태 추가
+
+                        // 대체 로직: 이전 페이지로 이동
+                        if (document.referrer) {
+                            window.location.href = document.referrer;
+                        } else {
+                            window.history.back(); // 브라우저가 참조 페이지를 가지고 있지 않을 경우
+                        }
+                    }
+                } else {
+                    console.error("결제 취소 실패:", xhr.responseText);
+                    alert("결제 취소에 실패했습니다.");
+                }
+            };
+            xhr.onerror = function () {
+                console.error("AJAX 요청 실패");
+                alert("서버에 연결할 수 없습니다.");
+            };
+            xhr.send(JSON.stringify(data));
+        }
+
+        // popstate 이벤트 감지
+        let isFirstPopstateHandled = false;
+
+        window.addEventListener('popstate', function(event) {
+            if (event.state && event.state.canceled && !isFirstPopstateHandled) {
+                isFirstPopstateHandled = true; // popstate 이벤트를 한 번만 처리
+                cancelPayment(true); // 뒤로가기에서 결제 취소 호출
+            }
+        });
+        
+        
 		 // 주문 ID 랜덤 생성 함수
 		    function generateOrderId(length) {
 		        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -87,12 +109,16 @@
 		        saveOrderToServer(orderId, orderDate);
 		        return orderId;
 		    }
+		    // 이미 my_cart에서 저장된 items 문자열 활용
+		    const urlParams = new URLSearchParams(window.location.search);
 		    function saveOrderToServer(orderId, orderDate) {
+		    	const selectedItems = urlParams.get('items');
 		        const data = {
 		            order_id: orderId,
 		            order_date: orderDate,
 		        };
 
+		        
 		        const xhr = new XMLHttpRequest();
 		        xhr.open("POST", "${root}/order/saveOrder", true);
 		        xhr.setRequestHeader("Content-Type", "application/json");
@@ -179,3 +205,4 @@
     </script>
   </body>
 </html>
+

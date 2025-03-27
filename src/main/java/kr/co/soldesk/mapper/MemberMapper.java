@@ -52,4 +52,7 @@ public interface MemberMapper {
    
    @Update("UPDATE member SET pw=#{pw} WHERE name=#{name} AND tel=#{tel} AND id=#{id}")
    int findPw(MemberBean memberBean);
+   
+   @Select("SELECT seller_index FROM seller WHERE id = #{sellerId}")
+   int getSellerIndex(String sellerId);
 }   

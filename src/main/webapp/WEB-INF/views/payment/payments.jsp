@@ -25,9 +25,9 @@
       // const payment = tossPayments.payment({customerKey: TossPayments.ANONYMOUS})
       // ------ '결제하기' 버튼 누르면 결제창 띄우기 ------
       // @docs https://docs.tosspayments.com/sdk/v2/js#paymentrequestpayment
-      async function requestPayment() {
-    	let test = `${paymentRes.orderId}`;
-    	console.log(test);
+async function requestPayment() {
+       let test = `${paymentRes.orderId}`;
+       console.log(test);
  
         // 결제를 요청하기 전에 orderId, amount를 서버에 저장하세요.
         // 결제 과정에서 악의적으로 결제 금액이 바뀌는 것을 확인하는 용도입니다.
@@ -39,11 +39,11 @@
           },
           //orderId: "t4pAul9BsB4fLnKl_cYjL", // 고유 주문번호
           orderId: `${paymentRes.orderId}`,
-          orderName: "머지",
+          orderName: `${paymentRes.orderName}`,
           successUrl: window.location.origin + "/Project_hoon/payment/success", // 결제 요청이 성공하면 리다이렉트되는 URL
-          failUrl: window.location.origin + "/Project_hoon/payment/fail", // 결제 요청이 실패하면 리다이렉트되는 URL
-          customerEmail: "customer123@gmail.com",
-          customerName: "김토스",
+          failUrl: window.location.origin + "/Project_hoon/payment/forpayment", // 결제 요청이 실패하면 리다이렉트되는 URL
+          customerEmail: `${paymentRes.customerEmail}`,
+          customerName: `${paymentRes.customerName}`,
           customerMobilePhone: "01012341234",
           // 카드 결제에 필요한 정보
           card: {

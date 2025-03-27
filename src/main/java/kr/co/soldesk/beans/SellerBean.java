@@ -12,6 +12,7 @@ public class SellerBean extends MemberBean{
     @Size(min = 10, max = 10, message = "사업자 등록 번호는 10글자입니다.")
     private String company_num;
     private int is_commit;
+    private int sales;
     
     public SellerBean() {
 		is_commit = 0;
@@ -41,6 +42,14 @@ public class SellerBean extends MemberBean{
 	}
 	public void setCompany_num(String company_num) {
 		this.company_num = company_num;
+	}
+
+	public int getSales() {
+		return sales;
+	}
+
+	public void setSales(int sales) {
+		this.sales = sales;
 	}
     
     

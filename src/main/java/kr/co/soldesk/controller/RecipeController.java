@@ -1,10 +1,17 @@
 package kr.co.soldesk.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +51,7 @@ public class RecipeController {
 
 	//메인
 	@GetMapping("/recipe_main")
-	public String recipe_main(@RequestParam(value = "theme_index", required = false, defaultValue = "0") int theme_index, @RequestParam(value = "page", defaultValue = "1") int page, Model model) {
+	public String recipe_main(@RequestParam(value = "theme_index", required = false, defaultValue = "0") int theme_index, @RequestParam(value = "page", defaultValue = "1") int page, Model model, HttpSession session) {
 		
 		List<OpenRecipeBean> openRecipeList =
 				openRecipeService.getLikeRecipe(theme_index, page);
@@ -55,6 +62,10 @@ public class RecipeController {
 		List<OpenRecipeBean> allRecipeList =
 				openRecipeService.getAllLikeRecipe(page);
 		
+		
+		  
+	    // 세션에서 조회수 맵 가져오기
+	    Map<Integer, Integer> recipeViewCounts = getViewCountMapFromSession(session);
 		
 		model.addAttribute("openRecipeList", openRecipeList);
 		model.addAttribute("allRecipeList", allRecipeList);
@@ -74,7 +85,21 @@ public class RecipeController {
 	public String recipe_write(
 		Model model) {
 		  OpenRecipeBean writeRecipe = new OpenRecipeBean();
-	        
+	      
+		  
+		  if(loginMember.getLogin().equals("x")) {
+	            String errorMessage;
+	           try {
+	              errorMessage = URLEncoder.encode("로그인을 먼저 해주세요.", "UTF-8");
+	               return "redirect:/member/login?error=" + errorMessage;
+	           } catch (UnsupportedEncodingException e) {
+	              
+	              e.printStackTrace();
+	              return "redirect:/?error=알 수 없는 오류가 발생했습니다.";
+	           }
+	         }
+		  
+		  
 	        // 기본 Step 20개 미리 생성 (JSP에서 표시/숨김 처리)
 	        for (int i = 0; i < 20; i++) {
 	            StepBean step = new StepBean();
@@ -125,11 +150,16 @@ public class RecipeController {
         //List<StepBean>을 JSON으로 변환해서 content에 저장
         writeRecipe.setOpenRecipe_content(writeRecipe.getStepBeanList());
         
+        
+        
+        
+        
         //글쓰기 카테고리 선택 안했을 경우
 		  if (writeRecipe.getTheme_index() == 0) {
 			  System.out.println("카테고리 선택 오류");
 			  return "recipe/recipe_write";  // 폼으로 돌아가서 오류 메시지를 표시
 		   }
+		  
 		  
 		 //writeRecipe.setUpload_picture(upload_file);
 		  
@@ -140,18 +170,26 @@ public class RecipeController {
 			    });
 			    return "recipe/recipe_write";
 			}
+		
+	       
+	        
 		  
 		openRecipeService.addOpenRecipe(writeRecipe);
 	
 		model.addAttribute("theme_index", writeRecipe.getTheme_index());
 		
 		return "recipe/recipe_write_success";
+		
 	}
+	
+	
+	
+	
 	
 	//읽기
 	@GetMapping("/recipe_read")
 	public String recipe_read(@RequestParam("openRecipe_index") int openRecipe_index,
-			Model model) {
+			Model model, HttpSession session) {
 		
 		OpenRecipeBean openRecipe = openRecipeService.getRecipe(openRecipe_index);
 
@@ -160,6 +198,8 @@ public class RecipeController {
 		//contents JSON 변환
 		List<StepBean> readstepBeanList = openRecipe.getStepList();
 		openRecipe.setStepBeanList(readstepBeanList);
+		
+		
 		
 		//contents쪽 오류 확인용 코드
 		System.out.println("DB에서 읽어온 openRecipe_content: " + openRecipe);
@@ -173,8 +213,41 @@ public class RecipeController {
 		model.addAttribute("readRecipeBean", openRecipe);
 		model.addAttribute("loginMember", loginMember);
 		
+		
+		
+		
+		  // 조회수 기능
+	    // 세션에서 조회수 관리 맵 가져오기
+	    Map<Integer, Integer> recipeViewCounts = getViewCountMapFromSession(session);
+	    
+	    // 해당 레시피의 조회수 가져오기 (없으면 0)
+	    int viewCount = recipeViewCounts.getOrDefault(openRecipe_index, 0);
+	    
+	    // 무조건 조회수 증가 (중복 방지 로직 제거)
+	    viewCount++; 
+	    recipeViewCounts.put(openRecipe_index, viewCount); 
+	    
+	    // 세션에 업데이트된 정보 저장
+	    session.setAttribute("recipeViewCounts", recipeViewCounts);
+	    
+	    // 조회수 정보를 모델에 추가
+	    model.addAttribute("viewCount", viewCount);
+	    
 		return "recipe/recipe_read";
 	}
+	
+	
+	// 세션에서 조회수 맵 가져오기
+	@SuppressWarnings("unchecked")
+	private Map<Integer, Integer> getViewCountMapFromSession(HttpSession session) {
+	    Map<Integer, Integer> viewCounts = (Map<Integer, Integer>) session.getAttribute("recipeViewCounts");
+	    if (viewCounts == null) {
+	        viewCounts = new HashMap<>();
+	    }
+	    return viewCounts;
+	}
+	
+	
 	
 	//수정
 	@GetMapping("/recipe_modify")
