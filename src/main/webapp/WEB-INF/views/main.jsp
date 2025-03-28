@@ -28,75 +28,8 @@
     
     <!-- 외부 CSS 파일 링크 -->
     <link rel="stylesheet" href="${root}/css/main.css" />
-    <style type="text/css">
-    .swiper-container {
-    width: 100%;
-    height: 500px; /* 원하는 높이로 고정 */
-}
-
-.banner-slide {
-     background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    width: 100%;
-    height: 100%;
-}
-
-.banner-text-container {
-    text-align: center;
-    color: white;
-    padding: 20px;
-    border-radius: 10px;
-    max-width: 80%;
-    z-index: 10; /* 이미지 위에 표시 */
-    position: absolute; /* 배경 이미지 위에 절대 위치 */
-	top: 50%;
-	left: 50%;
-	margin: -50px 0 0 -50px;
-}
-
-.banner-title {
-    font-size: 2.5rem;
-    margin-bottom: 15px;
-    font-weight: bold;
-}
-
-.banner-subtitle {
-    font-size: 1.5rem;
-    margin-bottom: 20px;
-}
-
-/* 반응형 스타일 */
-@media (max-width: 768px) {
-    .swiper-container {
-        height: 300px;
-    }
-
-    .banner-title {
-        font-size: 1.8rem;
-    }
-
-    .banner-subtitle {
-        font-size: 1.2rem;
-    }
-}
-	.banner-text-container a:link {
-	  color : white;
-	  text-decoration: none;
-	}
-	.banner-text-container a:visited {
-	  color : white;
-	  text-decoration: none;
-	}
-	.banner-text-container a:hover {
-	  color : white;
-		text-decoration: none;
-	}
-	.banner-text-container a:active {
-	  color : white;
-	  text-decoration: none;
-	}
-    </style>
+    <!-- 사이드바 버튼 CSS -->
+    <link rel="stylesheet" href="${root}/css/main_sidebar.css" />
 </head>
 <body>
 
@@ -117,103 +50,299 @@
             <li><a href="oneday/list"><i class="fas fa-chalkboard-teacher fa-fw"></i> 원데이클라스</a></li>
             <li><a href="item/kit/kitMain"><i class="fas fa-box-open fa-fw"></i> 키트 메인</a></li>
             <li><a href="report/report_list"><i class="fas fa-comments fa-fw"></i> 자유게시판</a></li>
-            <li><a href="inquiry/inquiry_main">고객문의</a></li>
-            <li><a href="kakaomap/main">고객문의</a></li>
+            <li><a href="inquiry/inquiry_main"><i class="fa-solid fa-headset"></i> 고객문의</a></li>
         </ul>
     </div>
     
-    <!-- 메인 배너 슬라이더 - 페이드 효과가 적용된 메인 이미지 슬라이더 -->
-    <!-- main.jsp의 배너 슬라이더 부분 -->
-<div class="swiper-container">
-    <div class="swiper mySwiper">
-        <div class="swiper-wrapper">
-            <c:forEach var="banner" items="${bannerList}">
-                <div class="swiper-slide">
-				    <div class="banner-slide" style="background-image: url('${root}/upload/${banner.banner_img}');">
-				        <div class="banner-text-container">
-				        	<a href="${banner.banner_link}" class="banner-link">
-				            <c:if test="${not empty banner.banner_title}">
-				                <h2 class="banner-title">${banner.banner_title}</h2>
-				            </c:if>
-				            <c:if test="${not empty banner.banner_subtitle}">
-				                <p class="banner-subtitle">${banner.banner_subtitle}</p>
-				            </c:if>
-				            </a>
-				        </div>
-				    </div>
-				</div>
-            </c:forEach>
+    <!-- 고정 사이드바 버튼 - 제품 카테고리 및 스크롤 top 버튼 -->
+    <div class="fixed-sidebar">
+        <!-- 패션 카테고리 버튼 -->
+        <div class="sidebar-btn" data-target="fashion-section">
+            <i class="fas fa-tshirt"></i>
+            <span class="sidebar-btn-text">Fashion | 2025 F/W</span>
         </div>
-        <div class="swiper-button-next"></div>
-        <div class="swiper-button-prev"></div>
-        <div class="swiper-pagination"></div>
+        <!-- 액세서리 카테고리 버튼 -->
+        <div class="sidebar-btn" data-target="accessories-section">
+            <i class="fas fa-gem"></i>
+            <span class="sidebar-btn-text">Accessories | new brand launching!</span>
+        </div>
+        <!-- 뷰티 카테고리 버튼 -->
+        <div class="sidebar-btn" data-target="beauty-section">
+            <i class="fa-solid fa-spray-can-sparkles"></i>
+            <span class="sidebar-btn-text">Beauty | perfume / cosmetics</span>
+        </div>
+        <!-- DIY 키트 카테고리 버튼 -->
+        <div class="sidebar-btn" data-target="diy-section">
+            <i class="fas fa-hammer"></i>
+            <span class="sidebar-btn-text">DIY kit |</span>
+        </div>
+        <!-- 밀키트 카테고리 버튼 -->
+        <div class="sidebar-btn" data-target="mealkit-section">
+            <i class="fas fa-utensils"></i>
+            <span class="sidebar-btn-text">Mealkit | ssi bal !</span>
+        </div>
+        <!-- 페이지 상단으로 스크롤 버튼 -->
+        <div class="sidebar-btn scroll-top-btn">
+            <i class="fas fa-arrow-up"></i>
+        </div>
     </div>
-</div>
 
-    <!-- 상품 슬라이더 제목 - 스타일이 적용된 제목 영역 -->
-    <div class="item_title">
-        <h3>오늘의 발견 |</h3> <h5>승호가 추천하는 상품!</h5>
+    <!-- 메인 배너 슬라이더 - 페이드 효과가 적용된 메인 이미지 슬라이더 -->
+    <div class="swiper-container">
+        <div class="swiper mySwiper">
+            <div class="swiper-wrapper">
+                <c:forEach var="banner" items="${bannerList}">
+                    <div class="swiper-slide">
+                        <div class="banner-slide" style="background-image: url('${root}/upload/${banner.banner_img}');">
+                            <div class="banner-text-container">
+                                <a href="${banner.banner_link}" class="banner-link">
+                                <c:if test="${not empty banner.banner_title}">
+                                    <h2 class="banner-title">${banner.banner_title}</h2>
+                                </c:if>
+                                <c:if test="${not empty banner.banner_subtitle}">
+                                    <p class="banner-subtitle">${banner.banner_subtitle}</p>
+                                </c:if>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </c:forEach>
+            </div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-pagination"></div>
+        </div>
     </div>
-    
-    <!-- 상품 슬라이더 - 여러 상품을 자동으로 슬라이드 표시 -->
-    <div class="swiper swiper2 myItemSwiper">
-        <div class="swiper-wrapper">
-            <!-- 동적으로 상품 생성 -->
-            <c:choose>
-                <c:when test="${not empty productList}">
-                    <c:forEach var="product" items="${productList}">
+
+    <!-- 패션 섹션 -->
+    <div id="fashion-section" class="section">
+        <!-- 상품 슬라이더 제목  -->
+        <div class="item_title">
+            <h3>Fashion | </h3> <h5 style="color:red;">2025 F/W</h5>
+        </div>
+        <!-- 첫 번째 상품 슬라이더 - 오늘의 발견 -->
+        <div class="swiper swiper2 myItemSwiper">
+            <div class="swiper-wrapper">
+                <c:choose>
+                    <c:when test="${not empty dailyProducts}">
+                        <c:forEach var="product" items="${dailyProducts}">
+                            <div class="swiper-slide">
+                                <div class="slide-content">
+                                    <a href="${product.product_link}">
+                                        <img src="${root}/upload/${product.product_img}" alt="${product.product_name}">
+                                    </a>
+                                    <div class="slide-info">
+                                        <a href="${product.product_link}">
+                                            <h5>${product.product_name}</h5>
+                                            <h6>${product.product_desc} ${product.product_price}원</h6>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </c:forEach>
+                    </c:when>
+                    <c:otherwise>
                         <div class="swiper-slide">
                             <div class="slide-content">
-                                <a href="${product.product_link}">
-                                    <img src="${root}/upload/${product.product_img}" alt="${product.product_name}">
+                                <a href="">
+                                    <img src="${root}/pic/item1.jpg" alt="샘플 상품">
                                 </a>
                                 <div class="slide-info">
-                                    <a href="${product.product_link}">
-                                        <h5>${product.product_name}</h5>
-                                        <h6>${product.product_desc} ${product.product_price}원</h6>
+                                    <a href="">
+                                        <h5>[샘플] 상품</h5>
+                                        <h6>밀키트 샘플 35,000원</h6>
                                     </a>
                                 </div>
                             </div>
                         </div>
-                    </c:forEach>
-                </c:when>
-                <c:otherwise>
-                    <!-- 기본 상품 표시 (데이터베이스에서 상품을 가져오지 못한 경우) -->
-                    <div class="swiper-slide">
-                        <div class="slide-content">
-                            <a href="">
-                                <img src="${root}/pic/item1.jpg" alt="쇠고기 샤브샤브">
-                            </a>
-                            <div class="slide-info">
-                                <a href="">
-                                    <h5>[쇠고기 샤브샤브]</h5>
-                                    <h6>푸드 어셈블 밀키트 35,000원</h6>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="slide-content">
-                            <a href="">
-                                <img src="${root}/pic/item2.jpg" alt="추천상품">
-                            </a>
-                            <div class="slide-info">
-                                <a href="">
-                                    <h5>[추천상품]</h5>
-                                    <h6>밀키트 15,000원</h6>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </c:otherwise>
-            </c:choose>
+                    </c:otherwise>
+                </c:choose>
+            </div>
+            <div class="swiper-pagination"></div>
         </div>
-        <!-- 상품 슬라이더 페이지네이션(점) -->
-        <div class="swiper-pagination"></div>
     </div>
-    <!-- 두 번째 상품 슬라이더 제목 -->
-    <div class="item_title">
-        <h3>오늘의 발견 |</h3> <h5>승호가 추천하는 상품!</h5>
+
+    <!-- 액세서리 섹션 -->
+    <div id="accessories-section" class="section">
+        <div class="item_title">
+            <h3>Accessories | </h3> <h5 style="color:red;">new brand launching!</h5>
+        </div>
+        <div class="swiper swiper2 myItemSwiper2">
+            <div class="swiper-wrapper">
+                <c:choose>
+                    <c:when test="${not empty bestProducts}">
+                        <c:forEach var="product" items="${bestProducts}">
+                            <div class="swiper-slide">
+                                <div class="slide-content">
+                                    <a href="${product.product_link}">
+                                        <img src="${root}/upload/${product.product_img}" alt="${product.product_name}">
+                                    </a>
+                                    <div class="slide-info">
+                                        <a href="${product.product_link}">
+                                            <h5>${product.product_name}</h5>
+                                            <h6>${product.product_desc} ${product.product_price}원</h6>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </c:forEach>
+                    </c:when>
+                    <c:otherwise>
+                        <div class="swiper-slide">
+                            <div class="slide-content">
+                                <a href="">
+                                    <img src="${root}/pic/item1.jpg" alt="베스트 상품 1">
+                                </a>
+                                <div class="slide-info">
+                                    <a href="">
+                                        <h5>[베스트] 상품 1</h5>
+                                        <h6>인기 밀키트 32,000원</h6>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </c:otherwise>
+                </c:choose>
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+    </div>
+
+    <!-- 뷰티 섹션 -->
+    <div id="beauty-section" class="section">
+        <div class="item_title">
+            <h3>Beauty | </h3> <h5 style="color:red;">perfume / cosmetics</h5>
+        </div>
+        <div class="swiper swiper2 myItemSwiper3">
+            <div class="swiper-wrapper">
+                <c:choose>
+                    <c:when test="${not empty newProducts}">
+                        <c:forEach var="product" items="${newProducts}">
+                            <div class="swiper-slide">
+                                <div class="slide-content">
+                                    <a href="${product.product_link}">
+                                        <img src="${root}/upload/${product.product_img}" alt="${product.product_name}">
+                                    </a>
+                                    <div class="slide-info">
+                                        <a href="${product.product_link}">
+                                            <h5>${product.product_name}</h5>
+                                            <h6>${product.product_desc} ${product.product_price}원</h6>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </c:forEach>
+                    </c:when>
+                    <c:otherwise>
+                        <div class="swiper-slide">
+                            <div class="slide-content">
+                                <a href="">
+                                    <img src="${root}/pic/item2.jpg" alt="신규 상품 1">
+                                </a>
+                                <div class="slide-info">
+                                    <a href="">
+                                        <h5>[신규] 상품 1</h5>
+                                        <h6>신상 밀키트 27,000원</h6>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </c:otherwise>
+                </c:choose>
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+    </div>
+
+    <!-- DIY 키트 섹션 -->
+    <div id="diy-section" class="section">
+        <div class="item_title">
+            <h3>DIY kit | </h3> <h5 style="color:red;"></h5>
+        </div>
+        <div class="swiper swiper2 myItemSwiper4">
+            <div class="swiper-wrapper">
+                <c:choose>
+                    <c:when test="${not empty saleProducts}">
+                        <c:forEach var="product" items="${saleProducts}">
+                            <div class="swiper-slide">
+                                <div class="slide-content">
+                                    <a href="${product.product_link}">
+                                        <img src="${root}/upload/${product.product_img}" alt="${product.product_name}">
+                                    </a>
+                                    <div class="slide-info">
+                                        <a href="${product.product_link}">
+                                            <h5>${product.product_name}</h5>
+                                            <h6>${product.product_desc} ${product.product_price}원</h6>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </c:forEach>
+                    </c:when>
+                    <c:otherwise>
+                        <div class="swiper-slide">
+                            <div class="slide-content">
+                                <img src="${root}/pic/item1.jpg" alt="할인 상품 1">
+                </a>
+                <div class="slide-info">
+                    <a href="">
+                        <h5>[할인] 상품 1</h5>
+                        <h6>특가 밀키트 20,000원</h6>
+                    </a>
+                </div>
+            </div>
+        </div>
+        </c:otherwise>
+    </c:choose>
+    </div>
+    <div class="swiper-pagination"></div>
+    </div>
+    </div>
+
+    <!-- 밀키트 섹션 -->
+    <div id="mealkit-section" class="section">
+        <div class="item_title">
+            <h3>Mealkit | </h3> <h5 style="color:red;">ssi bal !</h5>
+        </div>	
+        <div class="swiper swiper2 myItemSwiper5">
+            <div class="swiper-wrapper">
+                <c:choose>
+                    <c:when test="${not empty seasonalProducts}">
+                        <c:forEach var="product" items="${seasonalProducts}">
+                            <div class="swiper-slide">
+                                <div class="slide-content">
+                                    <a href="${product.product_link}">
+                                        <img src="${root}/upload/${product.product_img}" alt="${product.product_name}">
+                                    </a>
+                                    <div class="slide-info">
+                                        <a href="${product.product_link}">
+                                            <h5>${product.product_name}</h5>
+                                            <h6>${product.product_desc} ${product.product_price}원</h6>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </c:forEach>
+                    </c:when>
+                    <c:otherwise>
+                        <div class="swiper-slide">
+                            <div class="slide-content">
+                                <a href="">
+                                    <img src="${root}/pic/item2.jpg" alt="제철 상품 1">
+                                </a>
+                                <div class="slide-info">
+                                    <a href="">
+                                        <h5>[제철] 상품 1</h5>
+                                        <h6>계절 밀키트 29,000원</h6>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </c:otherwise>
+                </c:choose>
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
     </div>
     
     <!-- 스크롤 애니메이션 섹션 - 스크롤 시 등장하는 이미지와 텍스트 -->
@@ -236,5 +365,7 @@
     
     <!-- 외부 JS 파일 - 애니메이션과 상호작용 효과 -->
     <script src="${root}/js/main.js"></script>
+    <!-- 사이드바 버튼 JS -->
+    <script src="${root}/js/main_sidebar.js"></script>
 </body>
 </html>

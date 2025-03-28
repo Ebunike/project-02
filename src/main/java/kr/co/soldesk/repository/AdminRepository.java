@@ -110,5 +110,8 @@ public class AdminRepository {
 		public List<ProductBean> getActiveProducts() {
 		    return adminMapper.getActiveProducts();
 		}
-
+		
+		public List<ProductBean> getActiveProductsByCategory(int category_type) {
+		    return adminMapper.getActiveProductsByCategory(category_type);
+		}
 }

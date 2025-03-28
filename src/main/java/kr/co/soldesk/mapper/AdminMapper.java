@@ -95,10 +95,10 @@ public interface AdminMapper {
 		ProductBean getProductById(int idx);
 		
 		// 상품 추가 쿼리 수정 - product_idx 필드를 추가하고 시퀀스 사용
-		@Insert("INSERT INTO product_table (product_idx, product_name, product_desc, product_img, product_link, product_price, product_order, is_active) VALUES (product_seq.NEXTVAL, #{product_name}, #{product_desc}, #{product_img}, #{product_link}, #{product_price}, #{product_order}, 'Y')")
+		@Insert("INSERT INTO product_table (product_idx, product_name, product_desc, product_img, product_link, product_price, product_order, is_active, category_type) VALUES (product_seq.NEXTVAL, #{product_name}, #{product_desc}, #{product_img}, #{product_link}, #{product_price}, #{product_order}, 'Y', #{category_type})")
 		void addProduct(ProductBean bean);
-		
-		@Update("UPDATE product_table SET product_name = #{product_name}, product_desc = #{product_desc}, product_img = #{product_img}, product_link = #{product_link}, product_price = #{product_price}, product_order = #{product_order}, is_active = #{is_active} WHERE product_idx = #{product_idx}")
+
+		@Update("UPDATE product_table SET product_name = #{product_name}, product_desc = #{product_desc}, product_img = #{product_img}, product_link = #{product_link}, product_price = #{product_price}, product_order = #{product_order}, is_active = #{is_active}, category_type = #{category_type} WHERE product_idx = #{product_idx}")
 		void updateProduct(ProductBean bean);
 		
 		@Delete("DELETE FROM product_table WHERE product_idx = #{idx}")
@@ -111,4 +111,7 @@ public interface AdminMapper {
 		// 메인 페이지용 활성화된 상품 목록 조회
 		@Select("SELECT * FROM product_table WHERE is_active = 'Y' ORDER BY product_order ASC")
 		List<ProductBean> getActiveProducts();
+		// 상품 카테고리
+		@Select("SELECT * FROM product_table WHERE is_active = 'Y' AND category_type = #{category_type} ORDER BY product_order ASC")
+		List<ProductBean> getActiveProductsByCategory(int category_type);
 	}

@@ -9,6 +9,15 @@ public class ProductBean {
     private int product_price;
     private int product_order;
     private String is_active;
+    private int category_type;
+    
+    public int getCategory_type() {
+		return category_type;
+	}
+
+	public void setCategory_type(int category_type) {
+		this.category_type = category_type;
+	}
     
     public int getProduct_idx() {
         return product_idx;

@@ -1,140 +1,141 @@
 @charset "UTF-8";
-	body {
-		font-family: 'NanumGaRamYeonGgoc';
-		font-weight: 700;
-	}
+body {
+    font-family: 'NanumGaRamYeonGgoc';
+    font-weight: 700;
+}
 
-    .test-nav {
-        background-color: white; 
-        position: relative; /* 검색창을 네비게이션 내부에서 정렬할 수 있도록 함 */
-        z-index: 1000;
-    }
-    .search-container {
-        position: absolute;  /* 네비게이션 바 내부에서 절대 위치 */
-        top: 50%;  /* 세로 중앙 정렬 */
-        left: 50%; /* 가로 중앙 정렬 */
-        height: 50px;
-        transform: translate(-50%, -50%); /* 완벽한 중앙 정렬 */
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: white;
-        border-radius: 15px;
-        /* box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1); */
-        padding: 10px;
-    }
-    .search-box {
-        display: flex;
-        align-items: center;
-        background-color: white;
-        border: 2px solid #c2a87d;
-        border-radius: 25px;
-        padding: 5px 10px;
-        /* box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15); */
-        overflow: hidden;
-    }
-    .search-box input {
-        padding: 8px;
-        border: none;
-        outline: none;
-        background: transparent;
-        width: 200px;
-        font-size: 14px;
-        color: #5a4635;
-    }
-    .search-box input::placeholder {
-        color: #8b7765;
-    }
-    .search-box button {
-        padding: 8px 12px;
-        background-color: #b38b6d;
-        color: white;
-        border: none;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-        border-radius: 15px;
-        font-weight: bold;
-    }
-    .search-box button:hover {
-        background-color: #9c7554;
-    }
-    .logo-item {
-	    width: 50px; /* 크기 조정 */
-	    height: 45px;
-	    display: flex; /* flex 사용 */
-	    align-items: center;
-	    justify-content: center;
-	    margin: 0 10px;
-	}
+.test-nav {
+    background-color: #e67e22; 
+    position: relative;
+    z-index: 1000;
+}
 
-	.logo-item img {
-	    width: 100%; /* 부모 요소 크기와 맞춤 */
-	    height: auto;
-	    object-fit: contain; /* 이미지 비율 유지 */
-	}
-	.logo-item img[src*="alarm_logo.png"] {
-	    max-width: 35px; /* 필요시 크기 조정 */
-	    max-height: 35px;
-	}
-	.logo-item img[src*="join_logo.png"] {
-	    width: 55px; /* 필요시 크기 조정 */
-	    height: 60px;
-	}
-	.test-nav {
-        background-color: white;
-        position: relative;
-        z-index: 1000;
-    }
-    .search-container {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color:white;
-        border-radius: 15px;
-        /* box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1); */
-        padding: 10px;
-    }
-    
-    /* 사이드바 스타일 */
-    #sideMenu {
-        position: fixed;
-        top: 0;
-        right: 0;
-        width: 400px;
-        height: 100%;
-        background-color: white;
-        /* box-shadow: -3px 0 6px rgba(0, 0, 0, 0.2); */
-        transform: translateX(100%);
-        transition: transform 0.3s ease;
-        padding: 20px;
-        z-index: 1001;
-    }
-    #sideMenu.active {
-        transform: translateX(0);
-    }
-    .close-btn {
-        background: none;
-        border: none;
-        font-size: 20px;
-        font-weight: bold;
-        cursor: pointer;
-        float: right;
-    }
-    .menu-items {
-        margin-top: 20px;
-    }
-    .menu-items a {
-        display: block;
-        padding: 10px;
-        text-decoration: none;
-        color: #5a4635;
-        font-size: 16px;
-    }
-    .menu-items a:hover {
-        background-color: #c2a87d;
-        color: white;
-    }
+.test-nav .search-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #e67e22;
+    border-radius: 15px;
+    padding: 10px;
+}
+
+.test-nav .search-box {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    border: 2px solid #c2a87d;
+    border-radius: 25px;
+    padding: 5px 10px;
+    overflow: hidden;
+}
+
+.test-nav .search-box input {
+    padding: 8px;
+    border: none;
+    outline: none;
+    background: transparent;
+    width: 200px;
+    font-size: 14px;
+    color: #5a4635;
+}
+
+.test-nav .search-box input::placeholder {
+    color: #8b7765;
+}
+
+.test-nav .search-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.test-nav .search-btn i {
+    font-size: 1.6rem;
+    color: #000;
+}
+
+.test-nav .logo-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 10px;
+}
+
+.test-nav .logo-item a {
+    text-decoration: none;
+}
+
+.test-nav .nav-icon {
+    font-size: 1.8rem;
+    color: #000;
+    transition: none;
+}
+
+.test-nav .nav-icon:hover {
+    color: #000;
+}
+
+/* 사이드바 스타일 */
+#sideMenu {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 400px;
+    height: 100%;
+    background-color: white;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    padding: 20px;
+    z-index: 1001;
+}
+
+#sideMenu.active {
+    transform: translateX(0);
+}
+
+#sideMenu .close-btn {
+    background: none;
+    border: none;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    float: right;
+    color: #000;
+}
+
+#sideMenu .menu-items {
+    margin-top: 20px;
+}
+
+#sideMenu .menu-items a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: #5a4635;
+    font-size: 16px;
+}
+
+#sideMenu .menu-items a i {
+    margin-right: 10px;
+    font-size: 1.2rem;
+    color: #000;
+}
+
+#sideMenu .menu-items a:hover {
+    background-color: #c2a87d;
+    color: white;
+}
+	
+#sideMenu .menu-items a:hover i {
+    color: white;
+}
+
+.test-nav .menu-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
