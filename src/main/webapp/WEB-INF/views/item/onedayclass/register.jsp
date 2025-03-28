@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <title>원데이 클래스 등록</title>
-    <link rel="stylesheet" href="<c:url value='/resources/css/style.css'/>">
+    <link rel="stylesheet" href="<c:url value='${pageContext.request.contextPath}/resources/css/style.css'/>">
     <style>
         .register-form {
             width: 800px;
