@@ -190,7 +190,7 @@ public class PaymentController {
 		}
 		
 		 return "payment/cancel_success"; 
-		 }
+	}
 	
 	
 	@GetMapping("/account_finished_page")
