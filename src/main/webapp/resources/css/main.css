@@ -2,13 +2,12 @@
 
 /* ===== 기본 변수 설정 - 사이트 전체 색상 테마 ===== */
 :root {
-    --primary-color: #5a4635;      /* 기본 강조색 (갈색 계열) */
-    --accent-color: #c2a87d;       /* 보조 강조색 (밝은 갈색) */
-    --background-color: #fffaf0;   /* 배경색 (아이보리) */
+    
     --text-color: #333;            /* 기본 텍스트 색상 */
     --light-text: #777;            /* 밝은 텍스트 색상 */
     --hover-color: #e67e22;        /* 호버 시 색상 (주황색) */
     --shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* 기본 그림자 효과 */
+    --container-width: 1000px;     /* 컨테이너 기본 너비 - 일관성을 위해 변수로 정의 */
 }
 
 /* ===== 기본 스타일 초기화 및 공통 설정 ===== */
@@ -48,7 +47,6 @@ img {
     position: sticky; /* 스크롤 시 상단에 고정 */
     top: 0px;
     z-index: 9999; /* 다른 요소보다 위에 표시 */
-   /*  box-shadow: var(--shadow); */
 }
 
 /* ===== 카테고리 메뉴 - 가시성 개선 ===== */
@@ -56,7 +54,6 @@ img {
     background-color: #fff; /* 확실한 흰색 배경으로 가시성 향상 */
     padding: 15px 0;
     text-align: center;
-    /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 그림자 효과 강화 */
     margin-bottom: 20px;
     position: relative;
     z-index: 10;
@@ -90,30 +87,31 @@ img {
     position: relative;
     display: block; /* 전체 영역이 클릭 가능하도록 */
     border-radius: 5px; /* 둥근 모서리 추가 */
-    background-color: rgba(0, 0, 0, 0.02); /* 아주 연한 배경색 추가하여 구분감 향상 */
 }
 
 .category-menu a:hover {
-    color: #e67e22; /* 호버 시 오렌지 색상으로 변경 */
-    background-color: rgba(0, 0, 0, 0.05); /* 호버 시 약간 진한 배경 */
+    color: var(--hover-color); /* 호버 시 오렌지 색상으로 변경 */
 }
 
 .category-menu a i {
     margin-right: 8px; /* 아이콘과 텍스트 사이 간격 */
-    color: #e67e22; /* 아이콘 색상을 오렌지색으로 강조 */
+    color: var(--hover-color); /* 아이콘 색상을 오렌지색으로 강조 */
 }
 
 /* ===== 메인 배너 슬라이더 ===== */
 .swiper-container {
+    width: var(--container-width); /* 컨테이너 변수 사용 */
     margin: 0 auto;
     position: relative;
+    overflow: hidden; /* 넘침 방지 */
+    height: 400px; /* 높이 설정 */
 }
 
 .swiper {
-    width: 1000px;
-    height: 400px;
+    width: 100%; /* 컨테이너 너비에 맞춤 */
+    height: 100%; /* 컨테이너 높이에 맞춤 */
     margin: 0 auto;
-    border-radius: 12px; /* 둥근 모서리 */
+    border-radius: 12px;
     overflow: hidden;
     box-shadow: var(--shadow);
 }
@@ -128,16 +126,46 @@ img {
     overflow: hidden;
 }
 
-.swiper-slide img {
-    display: block;
-    width: 1000px;
-    height: 400px;
-    object-fit: cover; /* 이미지 비율 유지하며 꽉 채우기 */
-    transition: transform 0.5s ease; /* 이미지 확대 효과 애니메이션 */
+.banner-slide {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100%;
 }
 
-.swiper-slide:hover img {
-    transform: scale(1.05); /* 호버 시 이미지 확대 */
+.banner-text-container {
+    text-align: center;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 80%;
+    z-index: 10; /* 이미지 위에 표시 */
+    position: absolute; /* 배경 이미지 위에 절대 위치 */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* 중앙 정렬 개선 */
+}
+
+.banner-title {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.banner-subtitle {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+}
+
+.banner-text-container a {
+    color: white;
+    text-decoration: none;
+}
+
+.banner-text-container a:hover {
+    color: white;
+    text-decoration: none;
 }
 
 /* 슬라이더 이전/다음 버튼 디자인 */
@@ -213,11 +241,11 @@ img {
 
 /* ===== 상품 슬라이더 ===== */
 .swiper2 {
-    width: 1400px;
+    width: var(--container-width); /* 배너와 동일한 너비 사용 */
     margin: 0 auto;
     height: 350px;
-    overflow: visible;
-    padding: 0 30px;
+    overflow: hidden; /* 넘침 방지 */
+    padding: 0; /* 패딩 제거 */
 }
 
 .swiper2 .swiper-slide {
@@ -229,7 +257,7 @@ img {
     background-color: transparent;
     border-radius: 12px;
     overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* 호버 효과 애니메이션 */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .swiper2 .swiper-slide:hover {
@@ -256,6 +284,7 @@ img {
     height: 220px;
     object-fit: cover;
     transition: transform 0.5s ease; /* 이미지 확대 효과 애니메이션 */
+    border-radius: 10px;
 }
 
 .swiper2 .swiper-slide:hover img {
@@ -292,7 +321,7 @@ img {
 /* ===== 스크롤 애니메이션 섹션 ===== */
 .scroll-section {
     position: relative;
-    width: 1400px;
+    width: var(--container-width); /* 다른 섹션과 동일한 너비 */
     height: 350px;
     margin: 50px auto;
     display: flex;
@@ -356,15 +385,18 @@ img {
 }
 
 /* ===== 반응형 미디어 쿼리 ===== */
-@media (max-width: 1500px) {
-    /* 큰 화면에서 요소들의 너비 조정 */
-    .swiper, .swiper2, .scroll-section {
-        width: 90%;
+@media (max-width: 1300px) {
+    :root {
+        --container-width: 90%; /* 큰 화면에서는 너비를 비율로 조정 */
     }
 }
 
 @media (max-width: 992px) {
     /* 태블릿 크기에서의 조정 */
+    .swiper-container {
+        height: 350px;
+    }
+    
     .swiper2 {
         height: 320px;
     }
@@ -384,11 +416,7 @@ img {
 
 @media (max-width: 768px) {
     /* 모바일 크기에서의 조정 */
-    .swiper {
-        height: 300px;
-    }
-    
-    .swiper-slide img {
+    .swiper-container {
         height: 300px;
     }
     
@@ -398,6 +426,14 @@ img {
     
     .swiper2 .swiper-slide {
         height: 280px;
+    }
+    
+    .banner-title {
+        font-size: 1.8rem;
+    }
+
+    .banner-subtitle {
+        font-size: 1.2rem;
     }
     
     .animated-text {
@@ -412,137 +448,13 @@ img {
     .animated-text p {
         font-size: 20px;
     }
-    
-
-/* 상품 슬라이더 스타일 */
-.item_title {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 30px 0;
+    :root {
+    --background-color: white;   /* 배경색 (흰색) */
 }
 
-.item_title h3 {
-    font-weight: bold;
-    margin-right: 10px;
+html, body {
+    background: var(--background-color) !important;
+    background-color: white !important;
 }
 
-.item_title h5 {
-    color: #666;
-}
-
-.swiper2 .swiper-slide {
-    text-align: center;
-}
-
-.slide-content {
-    max-width: 300px;
-    margin: 0 auto;
-}
-
-.slide-content img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 10px;
-    transition: transform 0.3s ease;
-}
-
-.slide-content img:hover {
-    transform: scale(1.05);
-}
-
-.slide-info {
-    margin-top: 15px;
-}
-
-.slide-info h5 {
-    font-weight: bold;
-    margin-bottom: 5px;
-}
-
-.slide-info h6 {
-    color: #666;
-}
-
-/* 스크롤 애니메이션 섹션 */
-.scroll-section {
-    position: relative;
-    height: 500px;
-    overflow: hidden;
-}
-
-.background-image {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-image: url('${root}/pic/scroll-bg.jpg');
-    background-size: cover;
-    background-position: center;
-    opacity: 0;
-    transform: translateY(50px);
-    transition: opacity 1s, transform 1s;
-}
-
-.animated-text {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    color: white;
-    opacity: 0;
-    transition: opacity 1s;
-}
-
-.animated-text h2 {
-    font-size: 3rem;
-    margin-bottom: 15px;
-}
-
-.animated-text p {
-    font-size: 2rem;
-}
-
-@media (max-width: 768px) {
-    .animated-text h2 {
-        font-size: 2rem;
-    }
-
-    .animated-text p {
-        font-size: 1.5rem;
-    }
-}
-
-/* 카테고리 메뉴 스타일 */
-.category-menu {
-    background-color: #f8f9fa;
-    padding: 15px 0;
-}
-
-.category-menu ul {
-    display: flex;
-    justify-content: center;
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-}
-
-.category-menu li {
-    margin: 0 15px;
-}
-
-.category-menu a {
-    text-decoration: none;
-    color: #333;
-    font-weight: bold;
-    transition: color 0.3s ease;
-}
-
-.category-menu a:hover {
-    color: #007bff;
-}
-
-.category-menu i {
-    margin-right: 5px;
-}
 }

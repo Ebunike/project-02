@@ -1,7 +1,9 @@
 package kr.co.soldesk.controller;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -108,173 +110,205 @@ public class AdminController {
       model.addAttribute("benefit", benefit);
       return "admin/benefit";
    }
-   @GetMapping("/system")
-   public String system(Model model) {
-      // 배너 및 상품 데이터 로드
-      List<BannerBean> bannerList = adminService.getAllBanners();
-      List<ProductBean> productList = adminService.getAllProducts();
-      
-      model.addAttribute("bannerList", bannerList);
-      model.addAttribute("productList", productList);
-      
-      return "admin/system";
-   }
+	// AdminController.java
+	@GetMapping("/system")
+	public String system(Model model) {
+	    // 배너 및 상품 데이터 로드
+	    List<BannerBean> bannerList = adminService.getAllBanners();
+	    List<ProductBean> productList = adminService.getAllProducts();
+	    
+	    // 다음 배너 순서 계산
+	    int nextBannerOrder = bannerList.isEmpty() ? 1 : bannerList.stream()
+	            .mapToInt(BannerBean::getBanner_order)
+	            .max()
+	            .orElse(0) + 1;
+	    
+	    // 카테고리별 최대 순서 계산
+	    Map<Integer, Integer> categoryMaxOrders = new HashMap<>();
+	    for (int i = 1; i <= 5; i++) {
+	        final int category = i;
+	        int maxOrder = productList.stream()
+	                .filter(p -> p.getCategory_type() == category)
+	                .mapToInt(ProductBean::getProduct_order)
+	                .max()
+	                .orElse(0);
+	        categoryMaxOrders.put(category, maxOrder);
+	    }
+	    
+	    model.addAttribute("bannerList", bannerList);
+	    model.addAttribute("productList", productList);
+	    model.addAttribute("nextBannerOrder", nextBannerOrder);
+	    
+	    // 카테고리별 최대 순서값 추가
+	    for (int i = 1; i <= 5; i++) {
+	        model.addAttribute("category" + i + "MaxOrder", categoryMaxOrders.get(i));
+	    }
+	    
+	    return "admin/system";
+	}
    
-   // 배너 관리 기능
-   @PostMapping("/add_banner")
-   public String addBanner(@RequestParam("banner_name") String name,
-                           @RequestParam("banner_link") String link,
-                           @RequestParam("banner_img") MultipartFile imgFile,
-                           @RequestParam("banner_order") int order,
-                           @RequestParam(value = "banner_title", required = false) String title,
-                           @RequestParam(value = "banner_subtitle", required = false) String subtitle,
-                           HttpServletRequest request) {
-       
-       BannerBean bean = new BannerBean();
-       bean.setBanner_name(name);
-       bean.setBanner_link(link);
-       bean.setBanner_order(order);
-       bean.setIs_active("Y");
-       
-       // 새로 추가된 타이틀과 서브타이틀
-       bean.setBanner_title(title);
-       bean.setBanner_subtitle(subtitle);
-       
-       // 이미지 파일 처리
-       String fileName = saveUploadFile(imgFile, "banner");
-       bean.setBanner_img(fileName);
-       
-       adminService.addBanner(bean);
-       
-       return "redirect:/admin/system";
-   }
+	@PostMapping("/add_banner")
+	public String addBanner(@RequestParam("banner_name") String name,
+	                        @RequestParam("banner_link") String link,
+	                        @RequestParam("banner_img") MultipartFile imgFile,
+	                        @RequestParam("banner_order") int order,
+	                        @RequestParam(value = "banner_title", required = false) String title,
+	                        @RequestParam(value = "banner_subtitle", required = false) String subtitle,
+	                        @RequestParam(value = "activeTab", required = false) String activeTab,
+	                        HttpServletRequest request) {
+	    
+	    BannerBean bean = new BannerBean();
+	    bean.setBanner_name(name);
+	    bean.setBanner_link(link);
+	    bean.setBanner_order(order);
+	    bean.setIs_active("Y");
+	    
+	    // 새로 추가된 타이틀과 서브타이틀
+	    bean.setBanner_title(title);
+	    bean.setBanner_subtitle(subtitle);
+	    
+	    // 이미지 파일 처리
+	    String fileName = saveUploadFile(imgFile, "banner");
+	    bean.setBanner_img(fileName);
+	    
+	    adminService.addBanner(bean);
+	    
+	    return "redirect:/admin/system?activeTab=" + (activeTab != null ? activeTab : "banner");
+	}
 
-   @PostMapping("/update_banner")
-   public String updateBanner(@RequestParam("banner_idx") int idx,
-                              @RequestParam("banner_name") String name,
-                              @RequestParam("banner_link") String link,
-                              @RequestParam(value = "banner_img", required = false) MultipartFile imgFile,
-                              @RequestParam("banner_order") int order,
-                              @RequestParam(value = "is_active", required = false, defaultValue = "N") String isActive,
-                              @RequestParam(value = "banner_title", required = false) String title,
-                              @RequestParam(value = "banner_subtitle", required = false) String subtitle,
-                              HttpServletRequest request) {
+	@PostMapping("/update_banner")
+	public String updateBanner(@RequestParam("banner_idx") int idx,
+	                           @RequestParam("banner_name") String name,
+	                           @RequestParam("banner_link") String link,
+	                           @RequestParam(value = "banner_img", required = false) MultipartFile imgFile,
+	                           @RequestParam("banner_order") int order,
+	                           @RequestParam(value = "is_active", required = false, defaultValue = "N") String isActive,
+	                           @RequestParam(value = "banner_title", required = false) String title,
+	                           @RequestParam(value = "banner_subtitle", required = false) String subtitle,
+	                           @RequestParam(value = "activeTab", required = false) String activeTab,
+	                           HttpServletRequest request) {
 
-       BannerBean bean = adminService.getBannerById(idx);
-       bean.setBanner_name(name);
-       bean.setBanner_link(link);
-       bean.setBanner_order(order);
-       
-       // 새로 추가된 타이틀과 서브타이틀
-       bean.setBanner_title(title);
-       bean.setBanner_subtitle(subtitle);
-       
-       // boolean을 Y/N으로 변환
-       bean.setIs_active(isActive != null && (isActive.equals("true") || isActive.equals("on") || isActive.equals("Y")) ? "Y" : "N");
-       
-       // 새 이미지가 업로드된 경우에만 처리
-       if(imgFile != null && !imgFile.isEmpty()) {
-           // 기존 이미지 파일 삭제
-           deleteFile(bean.getBanner_img());
-           
-           // 새 이미지 파일 저장
-           String fileName = saveUploadFile(imgFile, "banner");
-           bean.setBanner_img(fileName);
-       }
-       
-       adminService.updateBanner(bean);
-       
-       return "redirect:/admin/system";
-   }
-   @GetMapping("/delete_banner")
-   public String deleteBanner(@RequestParam("idx") int idx) {
-      BannerBean bean = adminService.getBannerById(idx);
-      
-      // 이미지 파일 삭제
-      deleteFile(bean.getBanner_img());
-      
-      // 데이터베이스에서 삭제
-      adminService.deleteBanner(idx);
-      
-      return "redirect:/admin/system";
-   }
+	    BannerBean bean = adminService.getBannerById(idx);
+	    bean.setBanner_name(name);
+	    bean.setBanner_link(link);
+	    bean.setBanner_order(order);
+	    
+	    // 새로 추가된 타이틀과 서브타이틀
+	    bean.setBanner_title(title);
+	    bean.setBanner_subtitle(subtitle);
+	    
+	    // boolean을 Y/N으로 변환
+	    bean.setIs_active(isActive != null && (isActive.equals("true") || isActive.equals("on") || isActive.equals("Y")) ? "Y" : "N");
+	    
+	    // 새 이미지가 업로드된 경우에만 처리
+	    if(imgFile != null && !imgFile.isEmpty()) {
+	        // 기존 이미지 파일 삭제
+	        deleteFile(bean.getBanner_img());
+	        
+	        // 새 이미지 파일 저장
+	        String fileName = saveUploadFile(imgFile, "banner");
+	        bean.setBanner_img(fileName);
+	    }
+	    
+	    adminService.updateBanner(bean);
+	    
+	    return "redirect:/admin/system?activeTab=" + (activeTab != null ? activeTab : "banner");
+	}
+	@GetMapping("/delete_banner")
+	public String deleteBanner(@RequestParam("idx") int idx,
+	                           @RequestParam(value = "activeTab", required = false) String activeTab) {
+	    BannerBean bean = adminService.getBannerById(idx);
+	    
+	    // 이미지 파일 삭제
+	    deleteFile(bean.getBanner_img());
+	    
+	    // 데이터베이스에서 삭제
+	    adminService.deleteBanner(idx);
+	    
+	    return "redirect:/admin/system?activeTab=" + (activeTab != null ? activeTab : "banner");
+	}
    
-   // 상품 관리 기능
-   @PostMapping("/add_product")
-   public String addProduct(@RequestParam("product_name") String name,
-                            @RequestParam("product_desc") String desc,
-                            @RequestParam("product_link") String link,
-                            @RequestParam("product_price") int price,
-                            @RequestParam("product_img") MultipartFile imgFile,
-                            @RequestParam("product_order") int order,
-                            HttpServletRequest request) {
-      
-      ProductBean bean = new ProductBean();
-      bean.setProduct_name(name);
-      bean.setProduct_desc(desc);
-      bean.setProduct_link(link);
-      bean.setProduct_price(price);
-      bean.setProduct_order(order);
-      bean.setIs_active("Y");
-      
-      // 이미지 파일 처리
-      String fileName = saveUploadFile(imgFile, "product");
-      bean.setProduct_img(fileName);
-      
-      adminService.addProduct(bean);
-      
-      return "redirect:/admin/system";
-   }
+	@PostMapping("/add_product")
+	public String addProduct(@RequestParam("product_name") String name,
+	                         @RequestParam("product_desc") String desc,
+	                         @RequestParam("product_link") String link,
+	                         @RequestParam("product_price") int price,
+	                         @RequestParam("product_img") MultipartFile imgFile,
+	                         @RequestParam("product_order") int order,
+	                         @RequestParam("category_type") int categoryType,
+	                         @RequestParam(value = "activeTab", required = false) String activeTab,
+	                         HttpServletRequest request) {
+	   
+	   ProductBean bean = new ProductBean();
+	   bean.setProduct_name(name);
+	   bean.setProduct_desc(desc);
+	   bean.setProduct_link(link);
+	   bean.setProduct_price(price);
+	   bean.setProduct_order(order);
+	   bean.setIs_active("Y");
+	   bean.setCategory_type(categoryType);
+	   
+	   // 이미지 파일 처리
+	   String fileName = saveUploadFile(imgFile, "product");
+	   bean.setProduct_img(fileName);
+	   
+	   adminService.addProduct(bean);
+	   
+	   return "redirect:/admin/system?activeTab=" + (activeTab != null ? activeTab : "product");
+	}
    
-   @PostMapping("/update_product")
-   public String updateProduct(@RequestParam("product_idx") int idx,
-                              @RequestParam("product_name") String name,
-                              @RequestParam("product_desc") String desc,
-                              @RequestParam("product_link") String link,
-                              @RequestParam("product_price") int price,
-                              @RequestParam(value = "product_img", required = false) MultipartFile imgFile,
-                              @RequestParam("product_order") int order,
-                              @RequestParam(value = "is_active", required = false, defaultValue = "N") String isActive,
-                              HttpServletRequest request) {
-       
-       ProductBean bean = adminService.getProductById(idx);
-       bean.setProduct_name(name);
-       bean.setProduct_desc(desc);
-       bean.setProduct_link(link);
-       bean.setProduct_price(price);
-       bean.setProduct_order(order);
-       
-       // boolean을 Y/N으로 변환
-       bean.setIs_active(isActive != null && (isActive.equals("true") || isActive.equals("on") || isActive.equals("Y")) ? "Y" : "N");
-       
-       // 새 이미지가 업로드된 경우에만 처리
-       if(imgFile != null && !imgFile.isEmpty()) {
-           // 기존 이미지 파일 삭제
-           deleteFile(bean.getProduct_img());
-           
-           // 새 이미지 파일 저장
-           String fileName = saveUploadFile(imgFile, "product");
-           bean.setProduct_img(fileName);
-       }
-       
-       adminService.updateProduct(bean);
-       
-       return "redirect:/admin/system";
-   }
+	@PostMapping("/update_product")
+	public String updateProduct(@RequestParam("product_idx") int idx,
+	                           @RequestParam("product_name") String name,
+	                           @RequestParam("product_desc") String desc,
+	                           @RequestParam("product_link") String link,
+	                           @RequestParam("product_price") int price,
+	                           @RequestParam(value = "product_img", required = false) MultipartFile imgFile,
+	                           @RequestParam("product_order") int order,
+	                           @RequestParam(value = "is_active", required = false, defaultValue = "N") String isActive,
+	                           @RequestParam("category_type") int categoryType,
+	                           @RequestParam(value = "activeTab", required = false) String activeTab,
+	                           HttpServletRequest request) {
+	    
+	    ProductBean bean = adminService.getProductById(idx);
+	    bean.setProduct_name(name);
+	    bean.setProduct_desc(desc);
+	    bean.setProduct_link(link);
+	    bean.setProduct_price(price);
+	    bean.setProduct_order(order);
+	    bean.setCategory_type(categoryType);
+	    
+	    // boolean을 Y/N으로 변환
+	    bean.setIs_active(isActive != null && (isActive.equals("true") || isActive.equals("on") || isActive.equals("Y")) ? "Y" : "N");
+	    
+	    // 새 이미지가 업로드된 경우에만 처리
+	    if(imgFile != null && !imgFile.isEmpty()) {
+	        // 기존 이미지 파일 삭제
+	        deleteFile(bean.getProduct_img());
+	        
+	        // 새 이미지 파일 저장
+	        String fileName = saveUploadFile(imgFile, "product");
+	        bean.setProduct_img(fileName);
+	    }
+	    
+	    adminService.updateProduct(bean);
+	    
+	    return "redirect:/admin/system?activeTab=" + (activeTab != null ? activeTab : "product");
+	}
    
-   @GetMapping("/delete_product")
-   public String deleteProduct(@RequestParam("idx") int idx) {
-      ProductBean bean = adminService.getProductById(idx);
-      
-      // 이미지 파일 삭제
-      deleteFile(bean.getProduct_img());
-      
-      // 데이터베이스에서 삭제
-      adminService.deleteProduct(idx);
-      
-      return "redirect:/admin/system";
-   }
-   
+	@GetMapping("/delete_product")
+	public String deleteProduct(@RequestParam("idx") int idx,
+	                            @RequestParam(value = "activeTab", required = false) String activeTab) {
+	    ProductBean bean = adminService.getProductById(idx);
+	    
+	    // 이미지 파일 삭제
+	    deleteFile(bean.getProduct_img());
+	    
+	    // 데이터베이스에서 삭제
+	    adminService.deleteProduct(idx);
+	    
+	    return "redirect:/admin/system?activeTab=" + (activeTab != null ? activeTab : "product");
+	}   
    // 파일 업로드 처리 유틸리티 메서드
    private String saveUploadFile(MultipartFile file, String prefix) {
       String fileName = "";

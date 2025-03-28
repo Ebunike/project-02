@@ -109,13 +109,16 @@ public class AdminService {
 		public List<SellerBean> getSeller(){
 			   return adminRepository.getSeller();
 		   }
-		   public List<SellerBean> getSellerAwaiter(){
+		public List<SellerBean> getSellerAwaiter(){
 			   return adminRepository.getSellerAwaiter();
 		   }
-		   public void approval(String id) {
+		public void approval(String id) {
 			   adminRepository.approval(id);
 		   }
-		   public void reject(String id) {
+		public void reject(String id) {
 			   adminRepository.reject(id);
 		   }
+		public List<ProductBean> getActiveProductsByCategory(int category_type) {
+			    return adminRepository.getActiveProductsByCategory(category_type);
+			}
 }

@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<c:set var="root" value="${pageContext.request.contextPath }" />
+<c:set var="root" value="${pageContext.request.contextPath }"/>
 <!DOCTYPE html>
-<html>  
+<html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -279,11 +279,6 @@
     font-weight: 500;
     text-align: center;
 	}
-	.address_detail {
-		
-	}
-	
-	
 /* 	th {
 		border-bottom: 2px solid black;
 	} */
@@ -321,9 +316,8 @@
                     </div>
                     <div class="form-group"> <!-- 기본 주소 입력 필드 -->
                         <label class="form-label">주소</label>
-                        <div>
+                        <div class="d-flex">
                             <input type="text" class="form-control" id="address" value="${loginUser.address}" readonly>
-                            <input type="text" id="address_detail">
                             <button class="address-btn" onclick="changeAddress()">주소변경</button> <!-- 주소 변경 버튼 -->
                             <button class="address-btn" onclick="findAddress()">주소검색</button> <!-- 주소 변경 버튼 -->
                         </div>
@@ -397,10 +391,6 @@
                 <div class="payment-method" onclick="selectPayment(this, 'toss')"> <!-- 토스 결제 방법 -->
                     <i class="fas fa-wallet"></i>
                     <div>토스</div>
-                </div>
-                <div class="payment-method" onclick="selectPayment(this, 'cash')"> <!-- 현금 결제 방법 -->
-                    <i class="fas fa-wallet"></i>
-                    <div>현금거래</div>
                 </div>
             </div>
         </div>
@@ -561,21 +551,17 @@ function processPayment() {
     
     // 선택된 결제 방식에 따라 다른 페이지로 이동
     const paymentMethod = document.getElementById('selectedPaymentMethod').value;
-    
+    // 이미 my_cart에서 저장된 items 문자열 활용
+    const urlParams = new URLSearchParams(window.location.search);
+	const items = urlParams.get('items');
+        
     if (paymentMethod === 'toss') {
         // 토스 결제 페이지로 이동
-        window.location.href = '${root}/payment/payments?totalPrice=${totalPrice}';
-        
+        window.location.href = '${root}/payment/forpayment?totalPrice=${totalPrice}&selectedItems=${items}';
     } else if (paymentMethod === 'kakaopay') {
         // 카카오페이 결제 페이지로 이동
-        window.location.href = '${root}/payment/kakao/kakaopay?totalPrice=${totalPrice}';
-        
-    } else if (paymentMethod === 'cash'){
-    	// 현금 결제 페이지로 이동
-    	window.location.href = '${root}/payment/cash/cash?totalPrice=${totalPrice}';
-    	
-    } 
-    else {
+        window.location.href = '${root}/payment/kakao/kakaopay?totalPrice=${totalPrice}&selectedItems=${items}';
+    } else {
         alert('결제 수단을 선택해주세요.');
         return;
     }
