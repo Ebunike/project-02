@@ -83,7 +83,7 @@ public class ManagerController {
     }
     
     @GetMapping("/manager_ask_fail")
-    public String manager_ask_fail(Model model) {
+    public String manager_ask_fail(Model model) { 
         model.addAttribute("loginUser", loginUser);
         return "manager/manager_ask_fail";
     }
