@@ -34,4 +34,8 @@ public class ManagerService {
      public void deleteKit(int productId) {
         managerRepository.deleteKit(productId);      
      }
+   //판매금액 보여줌
+     public int showSales(String id) {
+        return managerRepository.showSales(id);
+     }
 }

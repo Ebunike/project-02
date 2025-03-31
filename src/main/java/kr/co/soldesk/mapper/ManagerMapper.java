@@ -36,4 +36,8 @@ public interface ManagerMapper {
 
     @Delete("DELETE FROM Kit WHERE item_index = #{productId}")
     void deleteKit(int productId);
+    
+    //판매금액 보여줌
+    @Select("SELECT sales FROM Seller WHERE id = #{id}")
+    int showSales(String id);
 }

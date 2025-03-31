@@ -48,15 +48,14 @@ public class ManagerController {
         return "manager/manager_order_fail";
     }
     
-    @GetMapping("/manager_sales")
-    public String manager_sales(Model model) {
-        List<Map<String, Object>> weeklySales = managerService.getWeeklySales();
-        List<Map<String, Object>> monthlySales = managerService.getMonthlySales();
-        model.addAttribute("weeklySales", weeklySales);
-        model.addAttribute("monthlySales", monthlySales);
-        model.addAttribute("loginUser", loginUser);
-        return "manager/manager_sales";
-    }
+	/*
+	 * @GetMapping("/manager_sales") public String manager_sales(Model model) {
+	 * List<Map<String, Object>> weeklySales = managerService.getWeeklySales();
+	 * List<Map<String, Object>> monthlySales = managerService.getMonthlySales();
+	 * model.addAttribute("weeklySales", weeklySales);
+	 * model.addAttribute("monthlySales", monthlySales);
+	 * model.addAttribute("loginUser", loginUser); return "manager/manager_sales"; }
+	 */
     
     @GetMapping("/manager_sales_fail")
     public String manager_sales_fail(Model model) {
@@ -106,5 +105,14 @@ public class ManagerController {
         managerService.deleteKit(productId);
         managerService.deleteProduct(productId);
         return "manager/delete_success";
+    }
+  //판매금액
+    @GetMapping("/manager_sales")
+       public String showManager_sales(Model model) {
+       int sales = managerService.showSales(loginUser.getId());
+       model.addAttribute("sales",sales);
+       
+       return "manager/manager_sales";
+       
     }
 }

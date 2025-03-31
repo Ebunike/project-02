@@ -41,7 +41,7 @@
         }
         
         .card-header {
-            background-color: #e67e22;
+            background-color: #74b243;
             color: white;
             padding: 15px 20px;
             border-bottom: none;
@@ -70,7 +70,7 @@
         }
         
         .form-control:focus {
-            border-color: #e67e22;
+            border-color: #74b243;
             box-shadow: 0 0 0 0.2rem rgba(230, 126, 34, 0.25);
         }
         
@@ -107,13 +107,13 @@
         
         .step-header h5 {
             font-weight: 600;
-            color: #e67e22;
+            color: #74b243;
             margin: 0;
         }
         
         .step-number {
             display: inline-block;
-            background-color: #e67e22;
+            background-color: #74b243;
             color: white;
             width: 28px;
             height: 28px;
@@ -150,8 +150,8 @@
         
         /* 버튼 스타일 */
         .btn-primary {
-            background-color: #e67e22;
-            border-color: #e67e22;
+            background-color: #74b243;
+            border-color: #74b243;
             padding: 10px 25px;
             font-weight: 500;
             transition: all 0.3s;

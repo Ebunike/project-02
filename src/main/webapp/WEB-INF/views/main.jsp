@@ -108,9 +108,9 @@
                     </div>
                 </c:forEach>
             </div>
-            <div class="swiper-button-next"></div>
-            <div class="swiper-button-prev"></div>
-            <div class="swiper-pagination"></div>
+            <div class="swiper-button-next" style="caret-color: transparent;"></div>
+            <div class="swiper-button-prev" style="caret-color: transparent;"></div>
+            <div class="swiper-pagination" style="caret-color: transparent;"></div>
         </div>
     </div>
 
@@ -127,7 +127,7 @@
                     <c:when test="${not empty dailyProducts}">
                         <c:forEach var="product" items="${dailyProducts}">
                             <div class="swiper-slide">
-                                <div class="slide-content">
+                                <div class="slide-content" style="margin-top: 20px;">
                                     <a href="${product.product_link}">
                                         <img src="${root}/upload/${product.product_img}" alt="${product.product_name}">
                                     </a>
@@ -173,7 +173,7 @@
                     <c:when test="${not empty bestProducts}">
                         <c:forEach var="product" items="${bestProducts}">
                             <div class="swiper-slide">
-                                <div class="slide-content">
+                                <div class="slide-content"  style="margin-top: 20px;">
                                     <a href="${product.product_link}">
                                         <img src="${root}/upload/${product.product_img}" alt="${product.product_name}">
                                     </a>
@@ -219,7 +219,7 @@
                     <c:when test="${not empty newProducts}">
                         <c:forEach var="product" items="${newProducts}">
                             <div class="swiper-slide">
-                                <div class="slide-content">
+                                <div class="slide-content" style="margin-top: 20px;">
                                     <a href="${product.product_link}">
                                         <img src="${root}/upload/${product.product_img}" alt="${product.product_name}">
                                     </a>
@@ -265,7 +265,7 @@
                     <c:when test="${not empty saleProducts}">
                         <c:forEach var="product" items="${saleProducts}">
                             <div class="swiper-slide">
-                                <div class="slide-content">
+                                <div class="slide-content" style="margin-top: 20px;">
                                     <a href="${product.product_link}">
                                         <img src="${root}/upload/${product.product_img}" alt="${product.product_name}">
                                     </a>
@@ -310,7 +310,7 @@
                     <c:when test="${not empty seasonalProducts}">
                         <c:forEach var="product" items="${seasonalProducts}">
                             <div class="swiper-slide">
-                                <div class="slide-content">
+                                <div class="slide-content" style="margin-top: 20px;">
                                     <a href="${product.product_link}">
                                         <img src="${root}/upload/${product.product_img}" alt="${product.product_name}">
                                     </a>

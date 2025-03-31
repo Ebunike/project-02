@@ -52,7 +52,7 @@
                 <li><a href="${root}/admin/inquiry"><i class="fas fa-comments mr-2"></i><span>고객문의 관리</span></a></li>
 	        	<li><a href="${root}/admin/management"><i class="fas fa-users mr-2"></i><span>멤버 관리</span></a></li>
 	        	<li><a href="${root}/admin/notice"><i class="fas fa-bullhorn mr-2"></i><span>공지사항</span></a></li>
-	        	<li><a href="${root}/admin/benefit"><i class="fas fa-ticket-alt mr-2"></i><span>쿠폰 및 혜택</span></a></li>
+	        	<%-- <li><a href="${root}/admin/benefit"><i class="fas fa-ticket-alt mr-2"></i><span>쿠폰 및 혜택</span></a></li> --%>
 	        	<li><a href="${root}/admin/system"><i class="fas fa-ticket-alt mr-2"></i><span>배너 관리</span></a></li>
 	        	<li><a href="${root}/admin/salesapproval"><i class="fas fa-check-circle mr-2"></i><span>판매승인관리</span></a></li>
 	        	<li><a href="${root}/member/logout"><i class="fas fa-sign-out-alt mr-2"></i><span>로그아웃</span></a></li>
@@ -66,9 +66,10 @@
             <!-- 왼쪽 이미지 섹션 -->
             <div class="background_image2">
                 <div class="focus-in-contract-bck">
-                    <h1>우태쿤이 사주는</h1>
-                    <h2>힘이나는 </h2>
-                    <h2>커피생활</h2>
+                    <h1>DDuk Bae Gi</h1>
+                    <h2><span style="font-size: 1.5em; color: #FF6B6B;">뚝</span>딱 만들면서 </h2>
+    				<h2><span style="font-size: 1.5em; color: #FF6B6B;">배</span>우는</h2>
+    				<h2><span style="font-size: 1.5em; color: #FF6B6B;">기</span>술들</h2>
                 </div>
             </div>
             <!-- 오른쪽 이미지 그리드 -->
@@ -76,29 +77,29 @@
                 <!-- 위쪽 3개 박스 -->
                 <div class="top-boxes">
                     <div class="small-box1">
-                        <a href="">
+                        <a href="${root }/admin/inquiry">
                             <img src="${root}/pic/back2.jpg" alt="이미지1">
                             <div class="image-overlay">
-                                <h5>쿠폰 및 혜택</h5>
-                                <p>쿠폰 & 포인트</p>
+                                <h5>고객 문의 관련</h5>
+                                <p>고객 문의 및 피드백을 효율적으로 관리하세요</p>
                             </div>
                         </a>
                     </div>
                     <div class="small-box2">
-                        <a href="">
+                        <a href="${root }/admin/management">
                             <img src="${root}/pic/back3.png" alt="이미지2">
                             <div class="image-overlay">
-                                <h5>상품 관리</h5>
-                                <p>상품 정보 관리 및 재고 현황을 확인하세요</p>
+                                <h5>등록된 회원 관리</h5>
+                                <p>회원 정보 확인 및 계정 상태를 관리하세요</p>
                             </div>
                         </a>
                     </div>
                     <div class="small-box3">
-                        <a href="">
+                        <a href="${root }/admin/salesapproval">
                             <img src="${root}/pic/back4.jpg" alt="이미지3">
                             <div class="image-overlay">
-                                <h5>판매 보고서</h5>
-                                <p>매출 및 판매 현황을 분석하세요</p>
+                                <h5>판매자 승인 관리</h5>
+                                <p>판매자 신청 검토 및 승인 절차를 진행하세요</p>
                             </div>
                         </a>
                     </div>

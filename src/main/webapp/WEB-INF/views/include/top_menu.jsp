@@ -49,12 +49,6 @@
                     </a>
                 </li>
                 <li class="top-logo-item">
-                	<%-- 알람 아이콘 --%>
-                	<a href="">
-                    	<i class="fas fa-bell top-nav-icon"></i>
-                	</a>
-                </li>
-                <li class="top-logo-item">
                 	<%-- 장바구니 아이콘 --%>
                     <a href="${root }/cart/my_cart" >
                     	<i class="fas fa-shopping-cart top-nav-icon"></i>
@@ -159,11 +153,11 @@
 	</div>
 	<style>
 	.top-nav-menu {
-		background-color: #e67e22;
+		background-color: #ffeac5;
 		height: 73px;
 	}
 	.top-search-container {
-		background-color: #e67e22;
+		background-color: #ffeac5;
 	}
 	
 	/* 기본 스타일 */

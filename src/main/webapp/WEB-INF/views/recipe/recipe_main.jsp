@@ -110,6 +110,7 @@ body {
 }
 
 .recipe_list1 .badge {
+/* 변경 */
     background-color: #e67e22;
     color: white;
     font-size: 0.8rem;
@@ -137,6 +138,7 @@ body {
 }
 
 .btn-write {
+/* 변경  */
     background-color: #e67e22;
     color: white;
     border: none;
