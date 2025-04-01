@@ -62,7 +62,7 @@
     }
     
     .container_kit {
-        max-width: 800px;
+        max-width: 900px;
         margin: 0 auto;
         padding: 30px;
         background-color: #fff;
@@ -70,6 +70,7 @@
         box-shadow: 0 0 15px rgba(0,0,0,0.05);
     }
     
+    /* 기본 항목 스타일 */
     .item-box {
         background: #fff;
         border: 1px solid #eee;
@@ -135,6 +136,107 @@
         margin-right: 5px;
     }
     
+    /* 상세 설명 카드 */
+    .description-card {
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        padding: 25px;
+        margin-bottom: 30px;
+        border: 1px solid #eee;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.03);
+    }
+    
+    .description-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #eee;
+    }
+    
+    .description-header h3 {
+        font-size: 1.4rem;
+        font-weight: 600;
+        color: #e67e22;
+        margin: 0;
+    }
+    
+    /* 상세 설명 단계 스타일 */
+    .detail-item {
+        margin-bottom: 25px;
+        padding: 20px;
+        border: 1px solid #eee;
+        border-radius: 8px;
+        position: relative;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+        background-color: #fff;
+        transition: all 0.3s ease;
+    }
+    
+    .detail-item:hover {
+        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        transform: translateY(-2px);
+    }
+    
+    /* 단계 헤더 스타일 */
+    .detail-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #eee;
+    }
+    
+    .detail-header h5 {
+        font-weight: 600;
+        color: #e67e22;
+        margin: 0;
+    }
+    
+    .detail-number {
+        display: inline-block;
+        background-color: #e67e22;
+        color: white;
+        width: 28px;
+        height: 28px;
+        line-height: 28px;
+        text-align: center;
+        border-radius: 50%;
+        margin-left: 8px;
+        font-weight: normal;
+    }
+    
+    /* 삭제 버튼 스타일 */
+    .delete-detail-btn {
+        padding: 5px 10px;
+        font-size: 0.8em;
+        border-radius: 4px;
+        background-color: #ff6b6b;
+        border: none;
+        color: white;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    
+    .delete-detail-btn:hover {
+        background-color: #e74c3c;
+        transform: translateY(-2px);
+    }
+    
+    /* 이미지 미리보기 스타일 */
+    .image-preview {
+        max-width: 100%;
+        max-height: 200px;
+        margin-top: 10px;
+        display: none;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+    
+    /* 등록 및 단계 추가 버튼 */
     .insert_kit {
         background-color: #e67e22;
         color: white;
@@ -145,7 +247,7 @@
         font-weight: 500;
         font-size: 16px;
         transition: all 0.3s ease;
-        margin-top: 10px;
+        margin-top: 15px;
         display: inline-block;
     }
     
@@ -153,6 +255,44 @@
         background-color: #d35400;
         transform: translateY(-2px);
         box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+    }
+    
+    .add-detail-btn {
+        background-color: #74b243;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: 500;
+        font-size: 14px;
+        transition: all 0.3s ease;
+        display: inline-block;
+    }
+    
+    .add-detail-btn:hover {
+        background-color: #639a39;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+    }
+    
+    /* 텍스트 영역 스타일 */
+    .detail-textarea {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 14px;
+        min-height: 100px;
+        resize: vertical;
+        margin-bottom: 15px;
+        transition: all 0.3s ease;
+    }
+    
+    .detail-textarea:focus {
+        border-color: #e67e22;
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(230, 126, 34, 0.2);
     }
     
     /* 반응형 스타일 */
@@ -240,13 +380,41 @@
                 </div>
             </div>
             <div class="item-box">
-                <label for="kitPicture"><i class="fas fa-image"></i> 첨부 이미지</label>
-                <input type="file" id="kitPicture" name="kitPicture" accept="image/*"/>
+                <label for="kitPicture"><i class="fas fa-image"></i> 대표 이미지</label>
+                <input type="file" id="kitPicture" name="kitPicture" accept="image/*" onchange="previewMainImage(this)"/>
+                <!-- 메인 이미지 미리보기 영역 -->
+                <div class="mt-3 text-center" style="width: 100%;">
+                    <img id="mainImagePreview" class="image-preview" src="#" alt="대표 이미지 미리보기" />
+                </div>
             </div>
+            
+            <!-- 기본 제품 설명 -->
             <div class="item-box">
-                <label for="kitContent"><i class="fas fa-info-circle"></i> 제품 상세설명</label>
-                <input type="text" name="kitContent" id="kitContent" placeholder="제품에 대한 상세 설명을 입력하세요">
+                <label for="kitContent"><i class="fas fa-info-circle"></i> 제품 간단설명</label>
+                <input type="text" name="kitContent" id="kitContent" placeholder="제품에 대한 간단한 설명을 입력하세요">
             </div>
+            
+            <!-- 상세 설명 카드 -->
+            <div class="description-card">
+                <div class="description-header">
+                    <h3><i class="fas fa-clipboard-list"></i> 제품 상세 설명</h3>
+                    <button type="button" class="add-detail-btn" onclick="addDetail()">
+                        <i class="fas fa-plus-circle"></i> 상세설명 추가
+                    </button>
+                </div>
+                
+                <!-- 상세 설명 컨테이너 -->
+                <div id="detailsContainer">
+                    <!-- 여기에 상세 설명 항목들이 동적으로 추가됩니다 -->
+                </div>
+            </div>
+            
+            <!-- 숨겨진 필드들 -->
+            <div id="hiddenFields">
+                <!-- 여기에 상세 설명 데이터를 위한 숨겨진 필드들이 동적으로 추가됩니다 -->
+                <input type="hidden" id="detailCount" name="detailCount" value="0">
+            </div>
+            
             <button class="insert_kit" type="submit"><i class="fas fa-check"></i> 등록</button>
         </form>
     </div>
@@ -254,5 +422,174 @@
 
 <!-- 게시판 하단 부분 -->    
 <c:import url="/WEB-INF/views/include/bottom_info.jsp" />
+
+<script>
+    // 전역 변수 정의
+    let detailCount = 0; // 현재 표시된 상세 설명 수
+    
+    // 대표 이미지 미리보기 함수
+    function previewMainImage(input) {
+        const preview = document.getElementById('mainImagePreview');
+        
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+            };
+            
+            reader.readAsDataURL(input.files[0]);
+        } else {
+            preview.style.display = 'none';
+        }
+    }
+    
+    // 상세 설명 이미지 미리보기 함수
+    function previewDetailImage(input, detailIndex) {
+        const preview = document.getElementById('detailImagePreview_' + detailIndex);
+        
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+            };
+            
+            reader.readAsDataURL(input.files[0]);
+        } else {
+            preview.style.display = 'none';
+        }
+    }
+    
+    // 상세 설명 추가 함수
+    function addDetail() {
+        // 상세 설명 항목 최대 개수 제한 (필요시 조정)
+        if (detailCount >= 10) {
+            alert('최대 10개까지만 추가할 수 있습니다.');
+            return;
+        }
+        
+        const detailsContainer = document.getElementById('detailsContainer');
+        const detailIndex = detailCount; // 현재 인덱스
+        
+        // 상세 설명 항목 UI 생성
+        const detailItem = document.createElement('div');
+        detailItem.className = 'detail-item';
+        detailItem.id = 'detail_' + detailIndex;
+        
+        // 항목 헤더 생성
+        const detailHeader = document.createElement('div');
+        detailHeader.className = 'detail-header';
+        
+        // 헤더 제목 추가
+        const headerTitle = document.createElement('h5');
+        headerTitle.textContent = '상세 설명 ';
+        const detailNumber = document.createElement('span');
+        detailNumber.className = 'detail-number';
+        detailNumber.textContent = detailIndex + 1;
+        headerTitle.appendChild(detailNumber);
+        detailHeader.appendChild(headerTitle);
+        
+        // 삭제 버튼 추가
+        const deleteBtn = document.createElement('button');
+        deleteBtn.type = 'button';
+        deleteBtn.className = 'delete-detail-btn';
+        deleteBtn.innerHTML = '<i class="fas fa-trash"></i> 삭제';
+        deleteBtn.onclick = function() { deleteDetail(detailIndex); };
+        detailHeader.appendChild(deleteBtn);
+        
+        // 상세 설명 본문 컨테이너
+        const detailBody = document.createElement('div');
+        
+        // 설명 텍스트 영역
+        const textArea = document.createElement('textarea');
+        textArea.className = 'detail-textarea';
+        textArea.name = 'detailText_' + detailIndex;
+        textArea.placeholder = '상세 설명 내용을 입력하세요';
+        textArea.rows = 3;
+        detailBody.appendChild(textArea);
+        
+        // 이미지 업로드 영역
+        const imageGroup = document.createElement('div');
+        imageGroup.style.marginBottom = '15px';
+        
+        const imageLabel = document.createElement('label');
+        imageLabel.textContent = '관련 이미지:';
+        imageLabel.style.display = 'block';
+        imageLabel.style.marginBottom = '8px';
+        imageLabel.style.fontWeight = '500';
+        imageGroup.appendChild(imageLabel);
+        
+        const imageInput = document.createElement('input');
+        imageInput.type = 'file';
+        imageInput.name = 'detailImage_' + detailIndex;
+        imageInput.className = 'form-control';
+        imageInput.accept = 'image/*';
+        imageInput.onchange = function() { previewDetailImage(this, detailIndex); };
+        imageGroup.appendChild(imageInput);
+        
+        // 이미지 미리보기 영역
+        const previewDiv = document.createElement('div');
+        previewDiv.className = 'mt-3 text-center';
+        const previewImg = document.createElement('img');
+        previewImg.id = 'detailImagePreview_' + detailIndex;
+        previewImg.className = 'image-preview';
+        previewImg.src = '#';
+        previewImg.alt = '상세 설명 이미지 ' + (detailIndex + 1);
+        previewDiv.appendChild(previewImg);
+        imageGroup.appendChild(previewDiv);
+        
+        detailBody.appendChild(imageGroup);
+        
+        // 모든 요소 조합
+        detailItem.appendChild(detailHeader);
+        detailItem.appendChild(detailBody);
+        
+        detailsContainer.appendChild(detailItem);
+        
+        // 숨겨진 필드 업데이트
+        document.getElementById('detailCount').value = ++detailCount;
+        
+        // 새 항목으로 스크롤
+        detailItem.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    
+    // 상세 설명 삭제 함수
+    function deleteDetail(index) {
+        const detailElement = document.getElementById('detail_' + index);
+        if (!detailElement) return;
+        
+        // UI에서 항목 제거
+        detailElement.remove();
+        
+        // 항목 수 감소
+        detailCount--;
+        document.getElementById('detailCount').value = detailCount;
+        
+        // 번호 재정렬
+        updateDetailNumbers();
+    }
+    
+    // 상세 설명 번호 재정렬 함수
+    function updateDetailNumbers() {
+        const detailElements = document.querySelectorAll('.detail-item');
+        
+        detailElements.forEach(function(element, idx) {
+            const numberElement = element.querySelector('.detail-number');
+            if (numberElement) {
+                numberElement.textContent = idx + 1;
+            }
+        });
+    }
+    
+    // 페이지 로드 시 초기화
+    document.addEventListener('DOMContentLoaded', function() {
+        // 기본적으로 첫 번째 상세 설명 항목 추가 (선택적)
+        addDetail();
+    });
+</script>
+
 </body>
 </html>
