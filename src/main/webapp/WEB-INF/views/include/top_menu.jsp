@@ -121,11 +121,11 @@
 		    <c:when test="${loginUser.login=='sellerawaiter'}">
 		    	<div class="top-menu-items">
 			        <h3>운영 모드</h3>
-			        <a href="${root }/manager/manager_order_fail"><i class="fas fa-clipboard-list"></i> 주문 내역 확인</a>
-			        <a href="${root }/manager/manager_sales_fail"><i class="fas fa-chart-line"></i> 매출 관리</a>
-			        <a href="${root }/manager/manager_product_fail"><i class="fas fa-box"></i> 상품 관리</a>
-			        <a href="${root }/manager/manager_ask_fail"><i class="fas fa-question-circle"></i> 문의 관리</a>
-			        <a href="${root }/manager/manager_review_fail"><i class="fas fa-star"></i> 리뷰 관리</a> <br> <br>
+			        <a href="${root }/manager/manager_order"><i class="fas fa-clipboard-list"></i> 주문 내역 확인</a>
+			        <a href="${root }/manager/manager_sales"><i class="fas fa-chart-line"></i> 매출 관리</a>
+			        <a href="${root }/manager/manager_product"><i class="fas fa-box"></i> 상품 관리</a>
+			        <a href="${root }/manager/manager_ask"><i class="fas fa-question-circle"></i> 문의 관리</a>
+			        <a href="${root }/manager/manager_review"><i class="fas fa-star"></i> 리뷰 관리</a> <br> <br>
 			        <h3></h3>
 			        <a href="${root }/member/my_info"><i class="fas fa-user"></i> 내 정보</a>
 			        <a href="${root }/cart/my_cart"><i class="fas fa-shopping-cart"></i> 장바구니</a>
