@@ -56,6 +56,7 @@ public class PaymentController {
     	model.addAttribute("cartTotalPrice", totalPrice);
 		model.addAttribute("loginUser", loginMember);
 		return "payment/forpayment";
+
 	}
 	
 	//여기 종학님하고 다른데
@@ -81,6 +82,7 @@ public class PaymentController {
 			@RequestParam(name = "amount", required = true) int amount, Model model) {
 		
 		
+		System.out.println("#####################################################################################success");
 		System.out.println(orderId);
 		System.out.println(paymentKey);
 		System.out.println("success: " + paymentKey);
@@ -123,18 +125,15 @@ public class PaymentController {
 	    }
 
 		
-		//카트 아이템 삭제하기
 		cartService.resetCart(loginMember.getId());
 		
-		return "payment/success";
+		return "redirect:/payment/buyingList";
 	}
 
-	@GetMapping("/fail")
-	public String paymentFail(@RequestParam(name = "code") String code,
-			@RequestParam(name = "message") String message,
-			@RequestParam(name = "orderId") String orderId) {
+	@GetMapping("/payment/fail")
+	public String paymentFail() {
 
-		return "member/login";
+		return "payment/fail";
 	}
 	
 	
@@ -193,8 +192,8 @@ public class PaymentController {
 			paymentService.addRefund(refund);
 		}
 		
-		 return "payment/cancel_success"; 
-		 }
+		 return "redirect:/payment/buyingList"; 
+	}
 	
 	
 	@GetMapping("/account_finished_page")

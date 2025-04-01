@@ -235,12 +235,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <c:forEach var="report" items="${report_list}" varStatus="status">
+                   <c:forEach var="inquiry" items="${inquiry_list}" varStatus="status">
                         <tr>
                             <td>${status.count}</td>
                             <td>상품문의</td>
                             <td class="text-left">
-                                <a href="${root}/report/report_detail?report_id=${report.id}" class="table-link">
+                               <a href="${root}/manager/manager_reviewDetail?inquiry_idx=${inquiry_idx}" class="table-link">
                                     ${empty report.id ? '상품에 대한 문의드립니다.' : report.id}
                                 </a>
                             </td>

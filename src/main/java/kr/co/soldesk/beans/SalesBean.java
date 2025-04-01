@@ -1,4 +1,4 @@
-package kr.co.soldesk.beans;
+/*package kr.co.soldesk.beans;
 
 import java.util.Date;
 
@@ -40,3 +40,4 @@ public class SalesBean {
         this.totalAmount = totalAmount;
     }
 }
+*/

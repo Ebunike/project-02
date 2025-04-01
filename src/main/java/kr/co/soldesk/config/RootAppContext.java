@@ -15,10 +15,13 @@ import org.springframework.web.context.annotation.SessionScope;
 import kr.co.soldesk.beans.MemberBean;
 import kr.co.soldesk.beans.SellerBean;
 
+
+
+
 @Configuration
 @ComponentScan(basePackages = { "kr.co.soldesk.repository",
 								"kr.co.soldesk.service",
-								"kr.co.soldesk.beans" })
+								"kr.co.soldesk.beans"})
 @PropertySource("/WEB-INF/properties/db.properties")
 @MapperScan("kr.co.soldesk.mapper")
 public class RootAppContext {
@@ -46,6 +49,8 @@ public class RootAppContext {
 	public SellerBean sellerBean() {
 		return new SellerBean();
 	}
+	
+
 	@Bean
 	public BasicDataSource dataSource() {
 		BasicDataSource source = new BasicDataSource();

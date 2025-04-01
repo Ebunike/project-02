@@ -11,7 +11,7 @@ import kr.co.soldesk.repository.ReportRepository;
 public class ReportService {
 
     @Autowired
-    private ReportRepository reportRepository;
+    private ReportRepository reportRepository; 
 
     // 게시글 목록 조회
     public List<ReportBean> getReportList() {
@@ -29,4 +29,9 @@ public class ReportService {
     public void updateReport(ReportBean reportBean) {
         reportRepository.updateReport(reportBean);
     }
+    
+    public void deleteReport(int report_id) {
+    	reportRepository.deleteReport(report_id);
+    }
+    
 }

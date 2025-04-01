@@ -18,8 +18,8 @@ public class ProductBean {
 	public void setCategory_type(int category_type) {
 		this.category_type = category_type;
 	}
-
-	public int getProduct_idx() {
+    
+    public int getProduct_idx() {
         return product_idx;
     }
     

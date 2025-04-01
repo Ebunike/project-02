@@ -40,17 +40,21 @@ public class KitController {
    public String kitMain(Model model) {
       List<ItemBean> itemList = itemService.getAllKit();
       model.addAttribute("itemList", itemList);
+      model.addAttribute("loginUser", loginUser);
       
       return "item/kit/kitMain";
    }
    @GetMapping("/insert_kit")
-   public String insert_kit() {
+   public String insert_kit(Model model) {
 
-      if(loginUser.getLogin().equals("x") || loginUser.getLogin().equals("b")) {
-         return "item/kit/insert_kit_failure";
-      }
-      return "item/kit/insert_kit";
-   }
+	   if(loginUser.getLogin().equals("x") || loginUser.getLogin().equals("buyer")) {
+			return "item/kit/insert_kit_failure";
+		}else if(loginUser.getLogin().equals("sellerawaiter")) {
+			model.addAttribute("memberType","sellerawaiter");
+			return "item/kit/insert_kit_failure";
+		}else
+		return "item/kit/insert_kit";
+	}
    @PostMapping("/insert_kit_pro")
    public String insert_kit_pro(@Valid ItemDTO itemDTO, BindingResult result,@RequestParam("kitPicture") MultipartFile upload_file, HttpServletRequest request) {
       
@@ -87,7 +91,6 @@ public class KitController {
    
    @GetMapping("/kit_detail")
    public String kit_datail(@RequestParam("item_index") int item_index, Model model) {
-      System.out.println("@################################ : " +  item_index);
       ItemBean itemBean = itemService.getItem(item_index);
       String sellerName = itemService.getSellerName(itemBean.getSeller_index());
       model.addAttribute("item", itemBean);

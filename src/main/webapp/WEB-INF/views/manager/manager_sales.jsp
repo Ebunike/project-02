@@ -18,7 +18,6 @@
 ${sales}
 
 
-
 <!-- 게시판 하단 부분 -->
 <c:import url="/WEB-INF/views/include/bottom_info.jsp" />
 </body>

@@ -106,20 +106,22 @@ public class MemberService {
        return memberRepository.getPasswordById(id);
    }
    public boolean checkId(String id) {
-	      String id1 = memberRepository.checkId(id);
+	   String id1 = memberRepository.checkId(id);
 	      
 	      //반환하는게 아이디가 같으면 false, 다르면 true
-	      if(id1 == null) {
-	         return true;
-	      }else {
-	         return false;
-	      }
+	   if(id1 == null) {
+	      return true;
+	   } else {
+	      return false;
 	   }
-   public String findId(MemberBean memberBean) {
-	      return memberRepository.findId(memberBean);
-	   }
-	   public int findPw(MemberBean memberBean) {
-	      return memberRepository.findPw(memberBean);
-	   }
+	}
+	
+	public String findId(MemberBean memberBean) {
+	   return memberRepository.findId(memberBean);
+	}
+	public int findPw(MemberBean memberBean) {
+	   return memberRepository.findPw(memberBean);
+	}
+  
    
 }

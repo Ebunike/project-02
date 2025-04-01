@@ -350,6 +350,13 @@
         </div>
     </div>
 </div>
+<button id="copyLinkBtn" class="btn btn-secondary">🔗 공유하기</button>
+<!-- 버튼 -->
+	<a id="kakaotalk-sharing-btn" href="javascript:shareMessage()">
+	  <img src="https://developers.kakao.com/assets/img/about/logos/kakaotalksharing/kakaotalk_sharing_btn_medium.png"
+	    alt="카카오톡 공유 보내기 버튼" />
+	</a>
+
 
 <c:import url="/WEB-INF/views/include/bottom_info.jsp"/>
 
@@ -389,5 +396,59 @@ $(document).ready(function() {
     });
 });
 </script>
+
+		<!-- 공유하기 버튼 스크립트  -->
+					<script>
+					document.addEventListener("DOMContentLoaded", function () {
+					    // 버튼 요소 가져오기
+					    const copyLinkBtn = document.getElementById("copyLinkBtn");
+					
+					    copyLinkBtn.addEventListener("click", function () {
+					        // 현재 페이지의 URL 가져오기
+					        const pageUrl = window.location.href;
+					
+					        // 클립보드에 복사
+					        navigator.clipboard.writeText(pageUrl)
+					            .then(() => {
+					                alert("링크가 복사되었습니다! ✅");
+					            })
+					            .catch(err => {
+					                console.error("클립보드 복사 실패:", err);
+					                alert("클립보드 복사에 실패했습니다. 😢");
+					            });
+					    });
+					});
+					</script>
+	
+<!-- 카카오톡  공유하기 메시지 시작 -->	
+	<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.1.0/kakao.min.js"
+  integrity="sha384-dpu02ieKC6NUeKFoGMOKz6102CLEWi9+5RQjWSV0ikYSFFd8M3Wp2reIcquJOemx" crossorigin="anonymous"></script>
+	
+	<script>
+	  Kakao.init('fb9c39f52da6918d5d47283a1cf98395'); // 사용하려는 앱의 JavaScript 키 입력
+	</script>
+
+
+
+
+	<script>
+	
+	var titlemessage = `${readRecipeBean.openRecipe_title }`
+	var intro = `${readRecipeBean.openRecipe_intro }`
+	var finImage = `${root }/upload/${readRecipeBean.openRecipe_picture}`
+	var urlLink = `${root}/recipe/recipe_read?openRecipe_index=${readRecipeBean.openRecipe_index}`
+	
+	  function shareMessage() {
+	    Kakao.Share.sendCustom({
+	      templateId: 118871,
+	      templateArgs: {
+	    	THUMB: finImage, // 썸네일 주소 ${THUMB}
+	    	TITLE: titlemessage, // 제목 텍스트 ${TITLE}
+	    	DESC: intro, // 설명 텍스트 ${DESC}
+	    	forpath: urlLink,
+	      },
+	    });
+	  }
+	</script>
 </body>
 </html>

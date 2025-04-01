@@ -7,6 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>고객 문의 목록</title>
+    
     <!-- Bootstrap CDN -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -91,7 +92,7 @@
         }
         
         .card:hover {
-            /* transform: translateY(-5px); /* 호버 시 위로 살짝 이동 */ */
+            /*transform: translateY(-5px);*/ /* 호버 시 위로 살짝 이동 */
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); /* 호버 시 그림자 강화 */
         }
         
@@ -220,18 +221,27 @@
                     <c:set var="hasUnread" value="false" />
                     
                     <!-- 문의 목록을 순회하며 읽지 않은 문의만 표시 -->
-                    <c:forEach var="suggestion" items="${inquiry}">
-                        <c:if test="${suggestion.inquiry_read == '답변 대기중'}">
-                            <c:set var="hasUnread" value="true" />
-                            <li>
-                                <a href="${root}/admin/viewinquiry?idx=${suggestion.inquiry_idx}">
-                                    <i class="fas fa-envelope-open-text"></i> <!-- 문의 아이콘 -->
-                                    ${suggestion.inquiry_title} <!-- 문의 제목 -->
-                                    <span class="badge badge-unread">안읽음</span> <!-- 읽지 않음 표시 -->
-                                </a>
-                            </li>
-                        </c:if>
-                    </c:forEach>
+                     <c:forEach var="suggestion" items="${inquiry}">
+    		<c:if test="${suggestion.inquiry_read == '답변X'}">
+       		 <c:set var="hasUnread" value="true" />
+        		<li>
+           	 <a href="${root}/admin/viewinquiry?idx=${suggestion.inquiry_idx}">
+                <i class="fas fa-envelope-open-text"></i> <!-- 문의 아이콘 -->
+                <!-- 문의 제목 -->
+                <strong>${suggestion.inquiry_title}</strong> 
+
+                <!-- 문의 카테고리 추가 -->
+                <span class="badge badge-category">${suggestion.inquiry_category}</span> <!-- 카테고리 -->
+
+                <!-- 문의 ID 추가 -->
+                <span class="badge badge-id">${suggestion.id}</span> <!-- 사용자 ID -->
+
+                <!-- 읽지 않음 표시 -->
+                <span class="badge badge-unread">안읽음</span>
+            </a>
+        		</li>
+   			 </c:if>
+   			 </c:forEach>
                     
                     <!-- 읽지 않은 문의가 없는 경우 메시지 표시 -->
                     <c:if test="${!hasUnread}">
@@ -253,7 +263,7 @@
                     
                     <!-- 문의 목록을 순회하며 읽은 문의만 표시 -->
                     <c:forEach var="suggestion" items="${inquiry}">
-                        <c:if test="${suggestion.inquiry_read == '답변 완료'}">
+                        <c:if test="${suggestion.inquiry_read == '답변O'}">
                             <c:set var="hasRead" value="true" />
                             <li>
                                 <a href="${root}/admin/viewinquiry?idx=${suggestion.inquiry_idx}">

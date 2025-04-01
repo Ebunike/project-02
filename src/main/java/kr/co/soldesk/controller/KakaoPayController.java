@@ -80,8 +80,7 @@ public class KakaoPayController {
             session.setAttribute("partnerOrderId", kakaoPayReadyDTO.getPartnerOrderId());
             session.setAttribute("partnerUserId", kakaoPayReadyDTO.getPartnerUserId());
             session.setAttribute("itemName", itemName);
-            //findcount 다시 수정해야함
-            //session.setAttribute("quantity", cartService.findCount(loginUser.getId()));
+            session.setAttribute("quantity", cartService.findCount(loginUser.getId()));
             session.setAttribute("totalAmount", totalAmount);
             session.setAttribute("orderId", orderId);
             

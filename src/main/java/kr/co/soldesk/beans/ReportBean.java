@@ -7,8 +7,7 @@ public class ReportBean {
     private String id;                
     private String report_category;   
     private String report_title;    
-    private String report_content;  
-    private String report_reply;     
+    private String report_content;     
     private int report_views;      
     //private Date report_date;     
     private String report_date;     
@@ -65,13 +64,7 @@ public class ReportBean {
         this.report_content = report_content;
     }
 
-    public String getReport_reply() {
-        return report_reply;
-    }
-
-    public void setReport_reply(String report_reply) {
-        this.report_reply = report_reply;
-    }
+   
 
     
     /*

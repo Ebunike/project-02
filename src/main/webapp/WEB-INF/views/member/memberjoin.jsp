@@ -5,6 +5,11 @@
 <!DOCTYPE html>
 <html>
 <head>
+<c:if test="${not empty param.error}">
+        <div class="alert alert-danger">
+            <strong> ${param.error}</strong>
+        </div>
+    </c:if>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>미니 프로젝트</title>
@@ -116,6 +121,11 @@ window.onload = function() {
                      <form:errors path="pw" cssStyle="color:red"/>
                   </div>
                   <div class="form-group">
+                     <form:label path="pw">비밀번호 확인</form:label>
+                     <form:input type="password" id="pw2" path="pw2" class="form-control"/>
+                     <form:errors path="pw2" cssStyle="color:red"/>
+                  </div>
+                  <div class="form-group">
                      <form:label path="address">주소</form:label>
                      <form:input type="text" id="address" path="address" class="form-control" readonly="true"/>
                      <button type="button" class="btn" onclick="sample4_execDaumPostcode()">주소 검색</button>
@@ -144,7 +154,7 @@ window.onload = function() {
                   </div>
                   <div class="form-group">
                      <form:label path="keyword">관심 키워드를 선택하세요</form:label><br>
-                     <form:checkbox path="keyword" value="프로그래밍"/> 프로그래밍 <br>
+                     <form:checkbox path="keyword" value="패션"/> 패션 <br>
                      <form:checkbox path="keyword" value="디자인"/> 디자인 <br>
                      <form:checkbox path="keyword" value="마케팅"/> 마케팅 <br>
                      <form:checkbox path="keyword" value="공예"/> 공예 <br>

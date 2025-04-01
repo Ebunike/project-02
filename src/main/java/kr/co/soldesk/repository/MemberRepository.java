@@ -47,10 +47,11 @@ public class MemberRepository {
    public int isCommit(String id) {
 	   return memberMapper.isCommit(id);
    }
+   
    public String findId(MemberBean memberBean) {
-	      return memberMapper.findId(memberBean);
-	   }
+	   return memberMapper.findId(memberBean);
+   }
    public int findPw(MemberBean memberBean) {
-	      return memberMapper.findPw(memberBean);
-	   }
+	   return memberMapper.findPw(memberBean);
+   }
 }

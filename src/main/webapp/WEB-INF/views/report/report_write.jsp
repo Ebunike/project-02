@@ -20,101 +20,186 @@
 <style type="text/css">
     body {
         font-family: 'Noto Sans KR', sans-serif;
-        background-color: #f8f9fa;
+        background-color: #f9f9f9;
         color: #333;
         min-height: 100vh;
         padding: 0;
         margin: 0;
     }
+    
+    /* 상단 메뉴 스타일 */
+    .top_menu {
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        margin-bottom: 40px;
+        position: relative;
+        z-index: 10;
+    }
+    
+    /* 컨텐츠 래퍼 */
     .content-wrapper {
         display: flex;
         flex-direction: column;
         align-items: center;
         width: 100%;
-        max-width: 1200px;
-        margin: 2rem auto;
+        max-width: 900px;
+        margin: 0 auto 50px;
         padding: 0 20px;
     }
+    
+    /* 페이지 헤더 */
     .page-header {
         text-align: center;
-        margin-bottom: 2rem;
+        margin-bottom: 30px;
         width: 100%;
         position: relative;
     }
+    
     .page-title {
         font-weight: 700;
-        color: #343a40;
-        padding-bottom: 0.5rem;
-        border-bottom: 3px solid #28a745;
+        color: #333;
+        position: relative;
         display: inline-block;
+        font-size: 28px;
+        padding-bottom: 15px;
     }
+    
+    .page-title:after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60px;
+        height: 3px;
+        background: linear-gradient(90deg, #FF6347, #FF8C69);
+        border-radius: 3px;
+    }
+    
+    /* 작성 컨테이너 */
     .write-container {
         width: 100%;
-        max-width: 800px;
-        background: #ffffff;
-        padding: 2rem;
-        border-radius: 10px;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-        margin-bottom: 2rem;
-        border: 3px solid black;
+        background: white;
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 5px 30px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+        border: none;
     }
+    
+    /* 폼 그룹 스타일 */
     .form-group {
-    	border: 2px solid black;
+        margin-bottom: 25px;
+        border: none;
+        position: relative;
     }
+    
     .form-group label {
-        font-weight: 700;
-        color: #495057;
-        margin-bottom: 0.5rem;
-        font-size: 1rem;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 10px;
+        display: block;
+        font-size: 16px;
     }
-    .form-control:focus {
-        border-color: #28a745;
-        box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+    
+    .form-group label i {
+        margin-right: 8px;
+        color: #FF6347;
     }
+    
+    /* 입력 필드 스타일 */
     .form-control {
         border: 1px solid #e9ecef;
-        padding: 12px;
+        border-radius: 8px;
+        padding: 15px;
+        font-size: 16px;
         transition: all 0.3s ease;
+        box-shadow: none;
+        background-color: #f8f9fa;
     }
+    
+    .form-control:focus {
+        border-color: #FF6347;
+        box-shadow: 0 0 0 3px rgba(255, 99, 71, 0.2);
+        background-color: #fff;
+    }
+    
     textarea.form-control {
-        min-height: 200px;
+        min-height: 250px;
         resize: vertical;
+        line-height: 1.6;
     }
-    .btn-action {
-        padding: 10px 20px;
-        border-radius: 5px;
-        font-weight: 500;
-        transition: all 0.3s ease;
-        margin-right: 10px;
-    }
-    .btn-submit {
-        background-color: #28a745;
-        border-color: #28a745;
-        color: white;
-    }
-    .btn-submit:hover {
-        background-color: #218838;
-        border-color: #1e7e34;
-    }
-    .btn-back {
-        background-color: #6c757d;
-        border-color: #6c757d;
-        color: white;
-    }
-    .btn-back:hover {
-        background-color: #5a6268;
-        border-color: #545b62;
-    }
+    
+    /* 버튼 스타일 */
     .action-bar {
         display: flex;
         justify-content: center;
-        margin-top: 1.5rem;
+        margin-top: 30px;
+        gap: 15px;
     }
-    /* Responsive adjustments */
+    
+    .btn-action {
+        padding: 12px 25px;
+        border-radius: 8px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        font-size: 16px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .btn-submit {
+        background: linear-gradient(90deg, #FF6347, #FF8C69);
+        border: none;
+        color: white;
+    }
+    
+    .btn-submit:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(255, 99, 71, 0.3);
+        background: linear-gradient(90deg, #FF5847, #FF7C59);
+    }
+    
+    .btn-back {
+        background-color: #6c757d;
+        border: none;
+        color: white;
+    }
+    
+    .btn-back:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(108, 117, 125, 0.3);
+        background-color: #5a6268;
+    }
+    
+    /* 애니메이션 효과 */
+    .write-container:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 35px rgba(0, 0, 0, 0.07);
+    }
+    
+    /* 플레이스홀더 스타일 */
+    ::placeholder {
+        color: #adb5bd;
+        opacity: 0.7;
+    }
+    
+    /* 반응형 조정 */
     @media (max-width: 768px) {
         .write-container {
-            width: 100%;
-            padding: 1.5rem;
+            padding: 25px;
+        }
+        
+        .form-control {
+            padding: 12px;
+            font-size: 15px;
+        }
+        
+        .page-title {
+            font-size: 24px;
+        }
+        
+        .btn-action {
+            padding: 10px 20px;
+            font-size: 15px;
         }
     }
 </style>
@@ -144,10 +229,10 @@
                 
                 <div class="action-bar">
                     <button type="submit" class="btn btn-action btn-submit">
-                        <i class="fas fa-check"></i> 등록하기
+                        <i class="fas fa-check mr-2"></i> 등록하기
                     </button>
                     <a href="${root}/report/report_list" class="btn btn-action btn-back">
-                        <i class="fas fa-list"></i> 목록으로
+                        <i class="fas fa-list mr-2"></i> 목록으로
                     </a>
                 </div>
             </form>

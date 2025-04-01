@@ -20,6 +20,8 @@ public class PaymentReqDTO {
 	
 	public PaymentReqDTO() {
 	}
+	
+	
 	public PaymentReqDTO(String orderId, int amount, String successUrl, String failUrl, String paymentKey,
 			String pay_Method, String orderName, String customerEmail, String customerName,
 			String customerMobilePhone) {
@@ -34,7 +36,8 @@ public class PaymentReqDTO {
 		this.customerName = customerName;
 		this.customerMobilePhone = customerMobilePhone;
 	}
-	
+
+
 	public String getOrderId() {
 		return orderId;
 	}

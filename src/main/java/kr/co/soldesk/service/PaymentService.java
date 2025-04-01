@@ -57,8 +57,6 @@ public class PaymentService {
 		try {
 			//PaymentService payService = new PaymentService();
 			PaymentBean payment = new PaymentBean();
-			
-			
 			//payment = payService.toPaymentBean(paymentReq);
 			payment = toPaymentBean(paymentReq);
 			System.out.println("pay 일단 저장됨");

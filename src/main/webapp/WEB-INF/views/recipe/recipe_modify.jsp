@@ -136,7 +136,7 @@
                                 <form:button class='btn btn-primary'>
                                     <i class="bi bi-check-circle"></i> 수정완료
                                 </form:button>
-                                <a href="${root}/recipe/read?openRecipe_index=${modifyRecipe.openRecipe_index}" class="btn btn-info">취소</a>
+                                <a href="${root}/recipe/recipe_read?openRecipe_index=${modifyRecipe.openRecipe_index}" class="btn btn-info">취소</a>
                             </div>
                         </form:form>
                     </div>

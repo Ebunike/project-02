@@ -41,7 +41,7 @@ public class InquiryController {
 		 String errorMessage;
 		try {
 			errorMessage = URLEncoder.encode("로그인을 먼저 해주세요.", "UTF-8");
-			 return "redirect:/?error=" + errorMessage;
+			 return "redirect:/member/login?error=" + errorMessage;
 		} catch (UnsupportedEncodingException e) {
 			
 			e.printStackTrace();
