@@ -54,38 +54,38 @@
         </ul>
     </div>
     
-    <!-- 고정 사이드바 버튼 - 제품 카테고리 및 스크롤 top 버튼 -->
-    <div class="fixed-sidebar">
-        <!-- 패션 카테고리 버튼 -->
-        <div class="sidebar-btn" data-target="fashion-section">
-            <i class="fas fa-tshirt"></i>
-            <span class="sidebar-btn-text">Fashion | 2025 F/W</span>
-        </div>
-        <!-- 액세서리 카테고리 버튼 -->
-        <div class="sidebar-btn" data-target="accessories-section">
-            <i class="fas fa-gem"></i>
-            <span class="sidebar-btn-text">Accessories | new brand launching!</span>
-        </div>
-        <!-- 뷰티 카테고리 버튼 -->
-        <div class="sidebar-btn" data-target="beauty-section">
-            <i class="fa-solid fa-spray-can-sparkles"></i>
-            <span class="sidebar-btn-text">Beauty | perfume / cosmetics</span>
-        </div>
-        <!-- DIY 키트 카테고리 버튼 -->
-        <div class="sidebar-btn" data-target="diy-section">
-            <i class="fas fa-hammer"></i>
-            <span class="sidebar-btn-text">DIY kit |</span>
-        </div>
-        <!-- 밀키트 카테고리 버튼 -->
-        <div class="sidebar-btn" data-target="mealkit-section">
-            <i class="fas fa-utensils"></i>
-            <span class="sidebar-btn-text">Mealkit | ssi bal !</span>
-        </div>
-        <!-- 페이지 상단으로 스크롤 버튼 -->
-        <div class="sidebar-btn scroll-top-btn">
-            <i class="fas fa-arrow-up"></i>
-        </div>
+   <!-- 고정 사이드바 버튼 - 제품 카테고리 및 스크롤 top 버튼 -->
+<div class="quick-nav">
+    <!-- 패션 카테고리 버튼 -->
+    <div class="quick-btn" data-target="fashion-section">
+        <i class="fas fa-tshirt"></i>
+        <span class="quick-tooltip">Fashion | 2025 F/W</span>
     </div>
+    <!-- 액세서리 카테고리 버튼 -->
+    <div class="quick-btn" data-target="accessories-section">
+        <i class="fas fa-gem"></i>
+        <span class="quick-tooltip">Accessories | new brand launching!</span>
+    </div>
+    <!-- 뷰티 카테고리 버튼 -->
+    <div class="quick-btn" data-target="beauty-section">
+        <i class="fa-solid fa-spray-can-sparkles"></i>
+        <span class="quick-tooltip">Beauty | perfume / cosmetics</span>
+    </div>
+    <!-- DIY 키트 카테고리 버튼 -->
+    <div class="quick-btn" data-target="diy-section">
+        <i class="fas fa-hammer"></i>
+        <span class="quick-tooltip">DIY kit |</span>
+    </div>
+    <!-- 밀키트 카테고리 버튼 -->
+    <div class="quick-btn" data-target="mealkit-section">
+        <i class="fas fa-utensils"></i>
+        <span class="quick-tooltip">Mealkit | ssi bal !</span>
+    </div>
+    <!-- 페이지 상단으로 스크롤 버튼 -->
+    <div class="quick-btn scroll-top">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+</div>
 
     <!-- 메인 배너 슬라이더 - 페이드 효과가 적용된 메인 이미지 슬라이더 -->
     <div class="swiper-container">

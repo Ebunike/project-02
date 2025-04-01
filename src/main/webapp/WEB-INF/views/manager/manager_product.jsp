@@ -278,7 +278,6 @@
                             <th width="30%">상품 이름</th>
                             <th width="15%">재고량</th>
                             <th width="15%">판매 가격</th>
-                            <th width="18%">등록일</th>
                             <th width="15%">관리</th>
                         </tr>
                     </thead>
@@ -294,7 +293,6 @@
                                     </c:choose>
                                 </td>
                                 <td>${item.item_price}원</td>
-                                <td>-</td>
                                 <td>
                                     <a href="${root}/manager/edit_product?id=${item.item_index}" class="btn-edit">수정 </a>
 									<a href="javascript:void(0);" onclick="confirmDelete(${item.item_index})" class="btn-delete">삭제</a>
@@ -311,8 +309,6 @@
                             <a class="page-link" href="#"><i class="fas fa-angle-left"></i></a>
                         </li>
                         <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
                         <li class="page-item">
                             <a class="page-link" href="#"><i class="fas fa-angle-right"></i></a>
                         </li>

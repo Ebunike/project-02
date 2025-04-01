@@ -28,7 +28,7 @@
         <div class="background_image"></div>
         <div class="overlay"></div>
         <div class="tracking-in-contract">
-            <h1>DDuk Bae Gi</h1>
+            <h1>Makeable</h1>
             <h1>Admin</h1>
         </div>
         <!-- 스크롤 다운 표시 -->
@@ -66,10 +66,7 @@
             <!-- 왼쪽 이미지 섹션 -->
             <div class="background_image2">
                 <div class="focus-in-contract-bck">
-                    <h1>DDuk Bae Gi</h1>
-                    <h2><span style="font-size: 1.5em; color: #FF6B6B;">뚝</span>딱 만들면서 </h2>
-    				<h2><span style="font-size: 1.5em; color: #FF6B6B;">배</span>우는</h2>
-    				<h2><span style="font-size: 1.5em; color: #FF6B6B;">기</span>술들</h2>
+                    <h2><span style="font-size: 1.5em; color: #FF6B6B;">M</span>ake Able</h2>
                 </div>
             </div>
             <!-- 오른쪽 이미지 그리드 -->
