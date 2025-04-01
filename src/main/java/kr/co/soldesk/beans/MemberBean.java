@@ -18,6 +18,9 @@ public class MemberBean {
     @Size(min = 4, max = 20, message = "비밀번호는 4자 이상 20자 이하로 입력해주세요. ")
     @Pattern(regexp = "[A-Za-z0-9]*", message = "비밀번호는 영어와 숫자만 사용 가능합니다.")
     private String pw;
+	
+	@NotEmpty(message = "비밀번호 확인은 필수 사항입니다.")
+	private String pw2;
 
 	@NotEmpty(message = "이름은 필수 입력사항입니다.")
     @Size(min = 2, max = 5, message = "이름은 2글자 이상 5글자 이하로 입력해주세요.")
@@ -52,8 +55,22 @@ public class MemberBean {
     private String user;
     public String getUser() {
       return user;
+      
+      
    }
-   public void setUser(String user) {
+    
+    
+   public String getPw2() {
+		return pw2;
+	}
+
+
+	public void setPw2(String pw2) {
+		this.pw2 = pw2;
+	}
+
+
+public void setUser(String user) {
       this.user = user;
    }
    

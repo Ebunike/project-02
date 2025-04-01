@@ -19,7 +19,7 @@
 
 	  <h2>✏ 게시글 수정</h2>
 
-    <form action="edit_pro" method="post">
+    <form action="${root }/report/report_edit_pro" method="post">
         <input type="hidden" name="report_id" value="${report.report_id}">
 
         <label>제목:</label>
@@ -29,7 +29,7 @@
         <textarea name="report_content" rows="5" cols="50" required>${report.report_content}</textarea><br><br>
 
         <input type="submit" value="수정">
-        <a href="list">🔙 목록으로</a>
+        <a href="${root}/report/report_list">🔙 목록으로</a>
     </form>
     <!-- 게시판 하단 부분 -->
 <c:import url="/WEB-INF/views/include/bottom_info.jsp" />

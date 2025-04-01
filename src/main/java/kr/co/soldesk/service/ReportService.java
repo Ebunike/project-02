@@ -29,4 +29,9 @@ public class ReportService {
     public void updateReport(ReportBean reportBean) {
         reportRepository.updateReport(reportBean);
     }
+    
+    public void deleteReport(int report_id) {
+    	reportRepository.deleteReport(report_id);
+    }
+    
 }

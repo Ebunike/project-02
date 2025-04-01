@@ -1,5 +1,8 @@
 package kr.co.soldesk.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 import javax.annotation.Resource;
 import javax.validation.Valid;
 
@@ -57,18 +60,25 @@ public class MemberController {
 		return "member/sellerjoin";
 	}
 	@PostMapping("/sellerjoin_pro")
-	public String sellerjoin_pro(@Valid @ModelAttribute("sellerBean") SellerBean sellerBean,BindingResult result,Model model) {
-		
-		System.out.println(sellerBean.getId());
-		
-			if (result.hasErrors()) {
-				System.out.println(sellerBean.getId());
-		         return "member/sellerjoin";
-		      }
-			
-		memberService.sellerJoin(sellerBean);
-		model.addAttribute("memberType","seller");
-		return "member/join_success";
+	public String sellerjoin_pro(@Valid @ModelAttribute("sellerBean") SellerBean sellerBean, BindingResult result, Model model) {
+
+	    if (result.hasErrors()) {
+	        return "member/sellerjoin";
+	    }
+	    if (!sellerBean.getPw().equals(sellerBean.getPw2())) {
+	    	String errorMessage;
+	  		try {
+	  			errorMessage = URLEncoder.encode("비밀번호를 다시 확인해주세요.", "UTF-8");
+	  			 return "redirect:/member/sellerjoin?error=" + errorMessage;
+	  		} catch (UnsupportedEncodingException e) {
+	  			
+	  			e.printStackTrace();
+	  			return "redirect:/?error=알 수 없는 오류가 발생했습니다.";
+	  		}
+	    }
+	    memberService.sellerJoin(sellerBean);
+	    model.addAttribute("memberType", "seller");
+	    return "member/join_success"; 
 	}
 	@PostMapping("/memberjoin_pro")
 	public String memberjoin_pro(@Valid @ModelAttribute("memberBean") MemberBean memberBean,BindingResult result,Model model) {
@@ -77,6 +87,17 @@ public class MemberController {
 		if (result.hasErrors()) {
 			return "member/memberjoin";
 		}
+		if (!memberBean.getPw().equals(memberBean.getPw2())) {
+	    	String errorMessage;
+	  		try {
+	  			errorMessage = URLEncoder.encode("비밀번호를 다시 확인해주세요.", "UTF-8");
+	  			 return "redirect:/member/memberjoin?error=" + errorMessage;
+	  		} catch (UnsupportedEncodingException e) {
+	  			
+	  			e.printStackTrace();
+	  			return "redirect:/?error=알 수 없는 오류가 발생했습니다.";
+	  		}
+	    }
 		memberService.memberJoin(memberBean);
 		model.addAttribute("memberType","buyer");
 		return "member/join_success";

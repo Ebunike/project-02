@@ -30,4 +30,8 @@ public class ReportRepository {
     public void updateReport(ReportBean reportBean) {
         reportMapper.updateReport(reportBean);
     }
+    public void deleteReport(int report_id) {
+    	reportMapper.deleteReport(report_id);
+    }
+    
 }

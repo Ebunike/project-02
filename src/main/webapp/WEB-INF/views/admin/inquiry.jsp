@@ -221,18 +221,27 @@
                     <c:set var="hasUnread" value="false" />
                     
                     <!-- 문의 목록을 순회하며 읽지 않은 문의만 표시 -->
-                    <c:forEach var="suggestion" items="${inquiry}">
-                        <c:if test="${suggestion.inquiry_read == '답변X'}">
-                            <c:set var="hasUnread" value="true" />
-                            <li>
-                                <a href="${root}/admin/viewinquiry?idx=${suggestion.inquiry_idx}">
-                                    <i class="fas fa-envelope-open-text"></i> <!-- 문의 아이콘 -->
-                                    ${suggestion.inquiry_title} <!-- 문의 제목 -->
-                                    <span class="badge badge-unread">안읽음</span> <!-- 읽지 않음 표시 -->
-                                </a>
-                            </li>
-                        </c:if>
-                    </c:forEach>
+                     <c:forEach var="suggestion" items="${inquiry}">
+    		<c:if test="${suggestion.inquiry_read == '답변X'}">
+       		 <c:set var="hasUnread" value="true" />
+        		<li>
+           	 <a href="${root}/admin/viewinquiry?idx=${suggestion.inquiry_idx}">
+                <i class="fas fa-envelope-open-text"></i> <!-- 문의 아이콘 -->
+                <!-- 문의 제목 -->
+                <strong>${suggestion.inquiry_title}</strong> 
+
+                <!-- 문의 카테고리 추가 -->
+                <span class="badge badge-category">${suggestion.inquiry_category}</span> <!-- 카테고리 -->
+
+                <!-- 문의 ID 추가 -->
+                <span class="badge badge-id">${suggestion.id}</span> <!-- 사용자 ID -->
+
+                <!-- 읽지 않음 표시 -->
+                <span class="badge badge-unread">안읽음</span>
+            </a>
+        		</li>
+   			 </c:if>
+   			 </c:forEach>
                     
                     <!-- 읽지 않은 문의가 없는 경우 메시지 표시 -->
                     <c:if test="${!hasUnread}">
