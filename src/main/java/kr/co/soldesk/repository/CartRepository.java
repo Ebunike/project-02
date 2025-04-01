@@ -55,12 +55,12 @@ public class CartRepository {
     public List<CartBean> getCart(){
     	return cartMapper.getCart();
     }
-    
+    //Payment쪽 검증용 금액 가져오는거
     public int findAmount(String id) {
     	return cartMapper.findAmount(id);
     }
-	public int findCount(String id) {
-		// TODO Auto-generated method stub
-		return cartMapper.findCount(id);
-	}
+    //카트 리셋
+    public void resetCart(String id) {
+    	cartMapper.resetCart(id);
+    }
 }

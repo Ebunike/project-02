@@ -107,12 +107,12 @@ public class ManagerController {
     }
     
   //판매금액
-    @GetMapping("/manager_sales")
-       public String showManager_sales(Model model) {
-       int sales = managerService.showSales(loginUser.getId());
-       model.addAttribute(sales);
-       System.out.println(sales);
-       return "manager/manager_sales";
-       
-    }
+  	@GetMapping("/manager_sales")
+  		public String showManager_sales(Model model) {
+  		int sales = managerService.showSales(loginUser.getId());
+  		model.addAttribute(sales);
+  		
+  		return "manager/manager_sales";
+  		
+  	}
 }

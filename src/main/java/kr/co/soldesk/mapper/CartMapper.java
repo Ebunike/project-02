@@ -48,7 +48,6 @@ public interface CartMapper {
 	        "where cart.id = #{userId} AND cart.item_index IN (${itemIndexes})")
 	List<CartItemDTO> getSelectedCartItems(@Param("userId") String userId, @Param("itemIndexes") String itemIndexes);
 	
-	
 	@Select("select cart_totalAmount from cart")
 	List<Integer> getAllTotalAmount();
 	
@@ -59,6 +58,8 @@ public interface CartMapper {
 	@Select("SELECT SUM(cart_totalAmount) FROM Cart WHERE id = #{id}")
 	int findAmount(@Param("id") String id);
 	
-	@Select("SELECT SUM(cart_quantity) FROM Cart WHERE id = #{id}")
-	int findCount(String id);
+	//카트 리셋
+	@Delete("DELETE FROM cart WHERE id = #{id}")
+	void resetCart(String id);
+	
 }
