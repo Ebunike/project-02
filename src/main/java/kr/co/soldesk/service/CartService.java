@@ -61,4 +61,7 @@ public class CartService {
     public int findAmount(String id) {
     	return cartRepository.findAmount(id);
     }
+    public int findCount(String id) {
+    	return cartRepository.findCount(id);
+    }
 }

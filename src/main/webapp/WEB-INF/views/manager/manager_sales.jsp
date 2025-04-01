@@ -12,12 +12,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 
-	<div class="side">
-        <c:import url="/WEB-INF/views/include/manager_side.jsp" />
-    </div>
+<!-- 네이버 폰트 -->
 
 총 판매금액:
 ${sales}
+
 
 
 <!-- 게시판 하단 부분 -->

@@ -1,5 +1,9 @@
 package kr.co.soldesk.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +20,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 import kr.co.soldesk.beans.ItemBean;
 import kr.co.soldesk.beans.ItemDTO;
@@ -47,15 +55,6 @@ public class ManagerController {
         model.addAttribute("loginUser", loginUser);
         return "manager/manager_order_fail";
     }
-    
-	/*
-	 * @GetMapping("/manager_sales") public String manager_sales(Model model) {
-	 * List<Map<String, Object>> weeklySales = managerService.getWeeklySales();
-	 * List<Map<String, Object>> monthlySales = managerService.getMonthlySales();
-	 * model.addAttribute("weeklySales", weeklySales);
-	 * model.addAttribute("monthlySales", monthlySales);
-	 * model.addAttribute("loginUser", loginUser); return "manager/manager_sales"; }
-	 */
     
     @GetMapping("/manager_sales_fail")
     public String manager_sales_fail(Model model) {
@@ -106,12 +105,13 @@ public class ManagerController {
         managerService.deleteProduct(productId);
         return "manager/delete_success";
     }
+    
   //판매금액
     @GetMapping("/manager_sales")
        public String showManager_sales(Model model) {
        int sales = managerService.showSales(loginUser.getId());
-       model.addAttribute("sales",sales);
-       
+       model.addAttribute(sales);
+       System.out.println(sales);
        return "manager/manager_sales";
        
     }

@@ -32,19 +32,13 @@ import kr.co.soldesk.service.PaymentService;
 public class PaymentController {
 
 	private String secretKey = "";
-	
-	
 	@Autowired
 	private PaymentService paymentService;
 	@Autowired
 	private CartService cartService;
 	
-	
 	@Resource(name="loginMemberBean")
 	private MemberBean loginMember;
-	
-	
-
 	// 임시 메서드. 결제할 정보 보내주는거.
 	// 이후 결제하기 누르면 Order거쳐서 @ModelAttribute에 PaymentReqDTO paymetReq로하게 바꿔야함.
 	// *장바구니에서 결제하기누르면 POST해주기
@@ -61,7 +55,6 @@ public class PaymentController {
 	//여기 종학님하고 다른데
 	@PostMapping("/forpayment_pro")
 	public String forpayment_pro(@ModelAttribute("paymentReq") PaymentReqDTO paymentReq, Model model) throws Exception {
-		
 		
 		PaymentResDTO paymentRes = paymentService.requestPayments(paymentReq);
 		model.addAttribute("paymentRes", paymentRes);
@@ -102,6 +95,7 @@ public class PaymentController {
 			
 	        model.addAttribute("paymentKey", paymentKey);
 	        model.addAttribute("result", result);
+	        
 	        //판매자 sales를 amount만큼 올려주기. 관리자 or 판매자 매출처리
 	        try {
 	            paymentService.updateSales(orderId);
@@ -110,24 +104,17 @@ public class PaymentController {
 	        	System.out.println("매출이 안감");
 	            e.printStackTrace();
 	        }
-	        
-	        
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	        return "payment/forpayment";
 	    }
-
-
 		return "payment/success";
 	}
-
 	@GetMapping("/payment/fail")
 	public String paymentFail() {
 
 		return "payment/fail";
 	}
-	
-	
 	//환불1. 환불 이유까지 채우는 페이지
 	@GetMapping("/refund")
     public String refund(@RequestParam("paymentKey") String paymentKey,
@@ -144,17 +131,13 @@ public class PaymentController {
 		model.addAttribute("cancelAmount",cancelAmount);
 		model.addAttribute("order_detail_index",order_detail_index);
 		return "payment/refund";
-	
 	}
-	
-	
 	//환불2. 환불 요청하는 페이지
 	@GetMapping("/cancel")
 	public String Tosscancel() {
 		
 		return "payment/cancel";
 	}
-	
 	@PostMapping("/cancel") 
 	public String paymentcancel(@RequestParam(name="paymentKey", required = true) String paymentKey,
 				@RequestParam(name="cancelReason", required = true) String cancelReason,
@@ -162,8 +145,6 @@ public class PaymentController {
 				@RequestParam(name="cancelAmount") int cancelAmount, Model model) {
 		
 		System.out.println("서비스쪽 " + paymentKey);
-		
-			
 		//환불요청
 		String cancelReq_result = paymentService.requestPaymentCancel(paymentKey, cancelReason, cancelAmount);
 		
@@ -176,7 +157,6 @@ public class PaymentController {
 			refund.setRefund_reason(cancelReason);
 			refund.setOrder_detail_index(order_detail_index);
 			
-			
 			//order_detail테이블에서 refund_check를 refund로 업뎃해주기ㅎ
 			paymentService.updaterefund(order_detail_index);
 			
@@ -184,8 +164,7 @@ public class PaymentController {
 		}
 		
 		 return "payment/cancel_success"; 
-		 }
-	
+	}
 	
 	@GetMapping("/account_finished_page")
 	public String account_finished_page(Model model) {
@@ -228,6 +207,7 @@ public class PaymentController {
         if (loginMember == null) {
             return "login/google_join";//이거 로그인 페이지로 보내고싶은데 로그인 페이지 어딨지
         }
+        
         
         List<BuyingListDTO> orderHistory = paymentService.getBuyingList(loginMember.getId());
         model.addAttribute("orderHistory", orderHistory);

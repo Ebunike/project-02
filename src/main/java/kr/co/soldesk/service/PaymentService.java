@@ -81,15 +81,8 @@ public class PaymentService {
 		paymentRes.setPaymentKey(null);
 		paymentRes.setPaySuccessYn("Y");
 		
-		
 		return paymentRes;
-		
-		
-	
-		
-		
 	}
-	
 	
 	//PaymentReqDTO를 PaymentBean으로 바꾸는거. DB저장까지.
 	public PaymentBean toPaymentBean(PaymentReqDTO paymentReq) {
@@ -122,9 +115,7 @@ public class PaymentService {
 	    
 	    paymentRepository.addPayment(payment);
 	    return payment;
-		
 	}
-	
 	//PaymentRes받고 토스 최종 승인 전에 검증하는 메서드. 이거는 cart에서 제대로 끌고와서 하던가 해야할듯. 
 	public void verifyRequest(String paymentKey, String orderId, int amount) throws Exception {
 	  
@@ -135,9 +126,6 @@ public class PaymentService {
 		    throw new RuntimeException("금액이 일치하지 않습니다");
 		}
 	}
-		
-		
-	
 	//토스에 최종 승인 요청
 	public String requestFinalPayment(String paymentKey, String orderId, int amount) {
 	    try {
@@ -173,14 +161,11 @@ public class PaymentService {
 	        throw new RuntimeException("토스 결제 승인 요청 중 오류 발생", e);
 	    }
 	}
-    
     //DB에 paymentKey도 저장
     public void savepaymentKey(String paymentKey,String orderId) {
     	paymentRepository.savepaymentKey(paymentKey,orderId);
     	
     }
-    
-  
     //환불요청
     public String requestPaymentCancel(String paymentKey, String cancelReason, int cancelAmount) {
         try {
@@ -198,7 +183,6 @@ public class PaymentService {
             HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
             System.out.println(response.body());
             
-            
             return response.body();
             
         } catch (Exception e) {
@@ -206,13 +190,11 @@ public class PaymentService {
             return "ㅠㅠ";
         }
     }
-    
 	/*
 	 * //어떤물품 환불할지 알수있게 order_detail_index꺼내오기 
 	 * public String getOrderDetail() {
 	 * paymentRepository.getOrderDetail() }
 	 */
-    
     
     //판매자 sales를 amount만큼 올려주기. 관리자 or 판매자 매출처리
     public void updateSales(String orderId) {
@@ -229,16 +211,11 @@ public class PaymentService {
             paymentRepository.addSales(seller_index, order_detail_finalPrice);
         }
     }
-    
-    
-    
     //환불 정보 저장
     public void addRefund(RefundBean refund) {
     	paymentRepository.addRefund(refund);
     	
     }
-
-    
     
     //구매목록 가져오기. orderId목록 리스트안의 item_index리스트잇음
 	public List<BuyingListDTO> getBuyingList(String id) {
@@ -258,8 +235,6 @@ public class PaymentService {
 			  List<OrderDetailDTO> itemDetails = new ArrayList<OrderDetailDTO>();
 			  //orderId같은애들 detail들 가져온거 = itemDetails
 			  itemDetails = paymentRepository.findItemIndex(mainOrder.getOrder_id());
-			  
-			  
 			  
 			  List<OrderDetailDTO> processedDetails = new ArrayList<>();
 			  for(OrderDetailDTO itemDetail : itemDetails) {
@@ -283,9 +258,6 @@ public class PaymentService {
 
 			  // 그 다음 수정된 리스트를 DTO에 설정
 			  buyingDTO.setOrderDetails(processedDetails);
-			  
-			  
-			  
 				/*
 				 * //진짜 쓸거 = detailDTO for(OrderDetailDTO itemDetail : itemDetails) {
 				 * OrderDetailDTO detailDTO = new OrderDetailDTO();
@@ -319,24 +291,13 @@ public class PaymentService {
 			  else {
 				  System.out.println("결제안됨 큰일남 이거 처리 어케하지");
 			  }
-			  
 			  result.add(buyingDTO);
-			  
 			  }
-			  
-			  
 		 return result;
 	}
-
 
 	public void updaterefund(int order_detail_index) {
 		paymentRepository.updaterefund(order_detail_index);
 		
 	}
-    
-    
-    
-    
-    
-    
 }

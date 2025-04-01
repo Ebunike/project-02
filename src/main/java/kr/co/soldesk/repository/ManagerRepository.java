@@ -15,13 +15,14 @@ public class ManagerRepository {
     @Autowired
     private ManagerMapper managerMapper;
 
-    public List<Map<String, Object>> getWeeklySales() {
-        return managerMapper.getWeeklySales();
-    }
-
-    public List<Map<String, Object>> getMonthlySales() {
-        return managerMapper.getMonthlySales();
-    }
+	/*
+	 * public List<Map<String, Object>> getWeeklySales() { return
+	 * managerMapper.getWeeklySales(); }
+	 * 
+	 * public List<Map<String, Object>> getMonthlySales() { return
+	 * managerMapper.getMonthlySales();}
+	 */
+    
     
     public List<ItemBean> getKitList(String userId) {
         return managerMapper.getKitList(userId);
@@ -40,4 +41,6 @@ public class ManagerRepository {
      public int showSales(String id) {
         return managerMapper.showSales(id);
      }
+ 
+
 }

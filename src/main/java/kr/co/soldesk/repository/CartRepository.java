@@ -59,4 +59,8 @@ public class CartRepository {
     public int findAmount(String id) {
     	return cartMapper.findAmount(id);
     }
+	public int findCount(String id) {
+		// TODO Auto-generated method stub
+		return cartMapper.findCount(id);
+	}
 }

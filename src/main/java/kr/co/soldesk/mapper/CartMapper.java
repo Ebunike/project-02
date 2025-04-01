@@ -59,4 +59,6 @@ public interface CartMapper {
 	@Select("SELECT SUM(cart_totalAmount) FROM Cart WHERE id = #{id}")
 	int findAmount(@Param("id") String id);
 	
+	@Select("SELECT SUM(cart_quantity) FROM Cart WHERE id = #{id}")
+	int findCount(String id);
 }

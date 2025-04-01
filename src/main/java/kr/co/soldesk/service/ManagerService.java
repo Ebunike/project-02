@@ -15,13 +15,13 @@ public class ManagerService {
     @Autowired
     private ManagerRepository managerRepository;
 
-    public List<Map<String, Object>> getWeeklySales() {
-        return managerRepository.getWeeklySales();
-    }
-
-    public List<Map<String, Object>> getMonthlySales() {
-        return managerRepository.getMonthlySales();
-    }
+	/*
+	 * public List<Map<String, Object>> getWeeklySales() { return
+	 * managerRepository.getWeeklySales(); }
+	 * 
+	 * public List<Map<String, Object>> getMonthlySales() { return
+	 * managerRepository.getMonthlySales(); }
+	 */
     
     public List<ItemBean> getKitList(String userId) {
         return managerRepository.getKitList(userId);
@@ -38,4 +38,6 @@ public class ManagerService {
      public int showSales(String id) {
         return managerRepository.showSales(id);
      }
+     
+
 }

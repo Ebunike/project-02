@@ -107,6 +107,7 @@
 			        <h3></h3>
 			        <a href="${root }/member/my_info"><i class="fas fa-user"></i> 내 정보</a>
 			        <a href="${root }/cart/my_cart"><i class="fas fa-shopping-cart"></i> 장바구니</a>
+					<a href="${root }/payment/buyingList"><i class="fas fa-comments"></i> 내 구매 목록</a>
 			        <a href="${root }/inquiry/inquiry_list?id=${loginUser.id}"><i class="fas fa-question"></i> 내 문의 사항</a>
 			        <a href="${root }/chating/main"><i class="fas fa-comments"></i> 채팅</a>
 			        <a href="${root }/member/logout"><i class="fas fa-sign-out-alt"></i> 로그아웃</a>
@@ -139,6 +140,7 @@
 			        <a href="${root }/member/my_info"><i class="fas fa-user"></i> 내 정보</a>
 			        <a href="${root }/cart/my_cart"><i class="fas fa-shopping-cart"></i> 장바구니</a>
 			        <a href="${root }/inquiry/inquiry_list?id=${loginUser.id}"><i class="fas fa-question"></i> 내 문의 사항</a>
+			        <a href="${root }/payment/buyingList"><i class="fas fa-comments"></i> 내 구매 목록</a>
 			        <a href="${root }/chating/main"><i class="fas fa-comments"></i> 채팅</a>
 			        <a href="${root }/member/logout"><i class="fas fa-sign-out-alt"></i> 로그아웃</a>
 			    </div>
