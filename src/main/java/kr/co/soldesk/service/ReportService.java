@@ -11,7 +11,7 @@ import kr.co.soldesk.repository.ReportRepository;
 public class ReportService {
 
     @Autowired
-    private ReportRepository reportRepository;
+    private ReportRepository reportRepository; 
 
     // 게시글 목록 조회
     public List<ReportBean> getReportList() {
