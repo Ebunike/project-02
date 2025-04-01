@@ -63,4 +63,9 @@ public class CartRepository {
 		// TODO Auto-generated method stub
 		return cartMapper.findCount(id);
 	}
+	
+	   //카트 리셋
+    public void resetCart(String id) {
+    	cartMapper.resetCart(id);
+    }
 }

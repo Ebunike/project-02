@@ -58,4 +58,9 @@ public class OrderDetailRepository {
     public int updateOrderDetailStatus(int orderDetailIndex, String status) {
         return orderDetailMapper.updateOrderDetailStatus(orderDetailIndex, status);
     }
+    
+    public void deleteOrderDetail(String orderId) {
+		orderDetailMapper.deleteOrderDetail(orderId);
+		
+	}
 }

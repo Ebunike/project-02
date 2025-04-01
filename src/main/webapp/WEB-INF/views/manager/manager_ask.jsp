@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="root" value="${pageContext.request.contextPath }" />
 <!DOCTYPE html>
 <html>
@@ -289,48 +290,29 @@
                             <th width="10%">상태</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>5</td>
-                            <td>상품문의</td>
-                            <td><a href="#">상품 배송일 관련 문의드립니다</a></td>
-                            <td>user123</td>
-                            <td>2023-08-15</td>
-                            <td><span class="status-badge status-pending">답변대기중</span></td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>결제문의</td>
-                            <td><a href="#">결제 취소 요청드립니다</a></td>
-                            <td>customer99</td>
-                            <td>2023-08-14</td>
-                            <td><span class="status-badge status-completed">답변완료</span></td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>배송문의</td>
-                            <td><a href="#">배송지 변경 가능한가요?</a></td>
-                            <td>shopper22</td>
-                            <td>2023-08-12</td>
-                            <td><span class="status-badge status-completed">답변완료</span></td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>교환/반품</td>
-                            <td><a href="#">사이즈 교환 관련 문의</a></td>
-                            <td>member456</td>
-                            <td>2023-08-10</td>
-                            <td><span class="status-badge status-completed">답변완료</span></td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>기타문의</td>
-                            <td><a href="#">회원 정보 수정 관련 문의</a></td>
-                            <td>newuser1</td>
-                            <td>2023-08-09</td>
-                            <td><span class="status-badge status-completed">답변완료</span></td>
-                        </tr>
-                    </tbody>
+                   <tbody>
+				    <c:forEach var="inquiry" items="${inquiryList}" varStatus="status">
+				        <tr>
+				            <td>${status.count}</td>
+				            <td>${inquiry.inquiry_category}</td>
+				            
+				            <td> <a href="${root}/manager/viewInquiry?idx=${inquiry.inquiry_idx}">${inquiry.inquiry_title}</a></td>
+				            <td>${inquiry.id}</td>
+				            <td>${inquiry.inquiry_date}</td> <!-- 여기서 fmt 제거하고 문자열 그대로 출력 -->
+				            <td>
+				                <c:choose>
+				                    <c:when test="${empty inquiry.inquiry_reply}">
+				                        <span class="status-badge status-pending">답변대기중</span>
+				                    </c:when>
+				                    <c:otherwise>
+				                        <span class="status-badge status-completed">답변완료</span>
+				                    </c:otherwise>
+				                </c:choose>
+				            </td>
+				        </tr>
+				    </c:forEach>
+				</tbody>
+
                 </table>
             </div>
             <div class="card-footer">

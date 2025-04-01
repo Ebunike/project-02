@@ -4,6 +4,7 @@ import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
+import kr.co.soldesk.beans.InquiryBean;
 import kr.co.soldesk.beans.ItemBean;
 
 import java.util.List;
@@ -36,4 +37,11 @@ public interface ManagerMapper {
 
     @Delete("DELETE FROM Kit WHERE item_index = #{productId}")
     void deleteKit(int productId);
+    //판매금액 보여줌
+    @Select("SELECT sales FROM Seller WHERE id = #{id}")
+    int showSales(String id);
+    
+   //고객문의
+    @Select("SELECT * FROM Inquiry WHERE inquiry_category = 'order'")
+    List<InquiryBean> getInquiryList();
 }

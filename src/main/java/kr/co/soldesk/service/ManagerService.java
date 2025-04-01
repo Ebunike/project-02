@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kr.co.soldesk.beans.InquiryBean;
 import kr.co.soldesk.beans.ItemBean;
 import kr.co.soldesk.repository.ManagerRepository;
 
@@ -33,5 +34,15 @@ public class ManagerService {
 
      public void deleteKit(int productId) {
         managerRepository.deleteKit(productId);      
+     }
+
+     //판매금액 보여줌
+     public int showSales(String id) {
+    	 return managerRepository.showSales(id);
+     }
+     
+     //고객문의
+     public List<InquiryBean> getInquiryList(){
+    	 return managerRepository.getInquiryList();
      }
 }

@@ -62,4 +62,8 @@ public interface CartMapper {
 	@Select("SELECT SUM(cart_quantity) FROM Cart WHERE id = #{id}")
 	int findCount(String id);
 	
+	//카트 리셋
+	@Delete("DELETE FROM cart WHERE id = #{id}")
+	void resetCart(String id);
+	
 }
