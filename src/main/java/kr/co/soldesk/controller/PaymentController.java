@@ -82,6 +82,7 @@ public class PaymentController {
 			@RequestParam(name = "amount", required = true) int amount, Model model) {
 		
 		
+		System.out.println("#####################################################################################success");
 		System.out.println(orderId);
 		System.out.println(paymentKey);
 		System.out.println("success: " + paymentKey);
@@ -123,8 +124,10 @@ public class PaymentController {
 	        return "payment/forpayment";
 	    }
 
-
-		return "payment/success";
+		
+		cartService.resetCart(loginMember.getId());
+		
+		return "redirect:/payment/buyingList";
 	}
 
 	@GetMapping("/payment/fail")
@@ -189,7 +192,7 @@ public class PaymentController {
 			paymentService.addRefund(refund);
 		}
 		
-		 return "payment/cancel_success"; 
+		 return "redirect:/payment/buyingList"; 
 	}
 	
 	

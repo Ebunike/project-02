@@ -176,6 +176,7 @@ img {
     height: 40px !important;
     border-radius: 50%; /* 원형 버튼 */
     transition: all 0.3s ease;
+    caret-color: transparent;
 }
 
 .swiper-button-next:hover, .swiper-button-prev:hover {
@@ -192,6 +193,7 @@ img {
     height: 10px;
     opacity: 0.7;
     background-color: #fff;
+    caret-color: transparent;
 }
 
 .swiper-pagination-bullet-active {
@@ -285,10 +287,12 @@ img {
     object-fit: cover;
     transition: transform 0.5s ease; /* 이미지 확대 효과 애니메이션 */
     border-radius: 10px;
+    margin-top: 20px;
 }
 
 .swiper2 .swiper-slide:hover img {
     transform: scale(1.05); /* 호버 시 이미지 확대 */
+    border-radius: 10px;	
 }
 
 .slide-info {
@@ -356,10 +360,7 @@ img {
     transform: translateY(50px); /* 초기 위치는 아래쪽으로 이동 */
     transition: opacity 1s ease-out, transform 1s ease-out; /* 등장 애니메이션 */
     padding: 30px;
-    background-color: rgba(0, 0, 0, 0.5); /* 반투명 배경 */
     border-radius: 10px;
-    backdrop-filter: blur(5px); /* 배경 블러 효과 */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 .animated-text h2 {

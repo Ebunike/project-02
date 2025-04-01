@@ -7,227 +7,598 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>제품 상세페이지</title>
 <!-- Bootstrap & jQuery -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+<!-- Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
-    /* 전체 컨테이너 스타일 */
+    /* Base Styles - 기본 스타일 */
+    body {
+        font-family: 'Noto Sans KR', sans-serif; /* 한글 지원 폰트 */
+        background-color: #f8f9fa; /* 연한 회색 배경 */
+        color: #343a40; /* 기본 텍스트 색상 */
+        line-height: 1.6; /* 줄 간격 */
+    }
+    
+    /* Container Styles - 전체 컨테이너 스타일 */
     .product-container {
-        max-width: 1200px;
-        margin: 30px auto;
-        padding: 0 20px;
+        max-width: 1200px; /* 최대 너비 */
+        margin: 40px auto; /* 상하 여백 및 중앙 정렬 */
+        padding: 0 20px; /* 좌우 여백 */
+        background-color: #fff; /* 흰색 배경 */
+        border-radius: 12px; /* 둥근 모서리 */
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); /* 입체감을 주는 그림자 효과 */
+        overflow: hidden; /* 내용이 넘치면 숨김 처리 */
     }
     
-    /* 상품 정보 상단 영역 */
+    /* Product Header Area - 상품 상단 영역 */
     .product-header {
-        display: flex;
-        flex-wrap: wrap;
-        margin-bottom: 40px;
+        display: flex; /* 플렉스 레이아웃 */
+        flex-wrap: wrap; /* 화면 크기에 따라 줄바꿈 */
+        margin: 0;
+        padding: 40px; /* 안쪽 여백 */
+        background: linear-gradient(to right, #f8f9fa, #fff); /* 왼쪽에서 오른쪽으로 그라데이션 배경 */
+        border-bottom: 1px solid #eee; /* 하단 경계선 */
     }
     
-    /* 상품 이미지 영역 */
+    /* Product Image Area - 상품 이미지 영역 */
     .product-image {
-        flex: 0 0 40%;
-        padding-right: 30px;
+        flex: 0 0 42%; /* 너비 42% 고정 */
+        padding-right: 40px; /* 오른쪽 여백 */
+        position: relative;
     }
     
     .product-image img {
-        width: 100%;
-        height: auto;
-        border-radius: 8px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        width: 100%; /* 너비 100% */
+        height: 500px; /* 높이 자동 조정 */
+        border-radius: 10px; /* 둥근 모서리 */
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+        transition: transform 0.3s ease; /* 호버 시 애니메이션 효과 */
     }
     
-    /* 상품 기본 정보 영역 */
+    .product-image img:hover {
+        transform: scale(1.02); /* 마우스 오버 시 이미지 확대 효과 */
+    }
+    
+    /* Product Info Area - 상품 정보 영역 */
     .product-info {
-        flex: 0 0 60%;
-        padding-left: 20px;
+        flex: 0 0 58%; /* 너비 58% 고정 */
+        padding-left: 30px; /* 왼쪽 여백 */
+        display: flex;
+        flex-direction: column; /* 세로 방향 정렬 */
+        justify-content: space-between; /* 콘텐츠 사이 공간 균등 분배 */
     }
     
     .product-title {
-        font-size: 28px;
+        font-size: 32px;
         font-weight: 700;
         margin-bottom: 15px;
-        color: #333;
+        color: #212529;
+        letter-spacing: -0.5px;
+        line-height: 1.3;
     }
     
     .product-seller {
-        margin-bottom: 15px;
-        color: #666;
+        margin-bottom: 20px;
+        color: #495057;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+    }
+    
+    .product-seller a {
+        color: #3D5AFE;
+        transition: color 0.2s;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+    }
+    
+    .product-seller a:hover {
+        color: #304FFE;
+        text-decoration: none;
+    }
+    
+    .product-seller a:after {
+        content: "\f105";
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        margin-left: 5px;
+        transition: transform 0.2s;
+    }
+    
+    .product-seller a:hover:after {
+        transform: translateX(3px);
     }
     
     .product-price {
-        font-size: 24px;
-        font-weight: 600;
-        color: #e53935;
-        margin-bottom: 20px;
+        font-size: 30px;
+        font-weight: 700;
+        color: #F44336;
+        margin-bottom: 25px;
+        display: flex;
+        align-items: baseline;
+    }
+    
+    .product-price:after {
+        content: "원";
+        font-size: 20px;
+        margin-left: 5px;
+        font-weight: 500;
     }
     
     .product-quantity {
-        margin-bottom: 20px;
-        color: #555;
+        margin-bottom: 30px;
+        color: #495057;
+        font-size: 16px;
+        padding: 15px;
+        background-color: #f1f3f5;
+        border-radius: 8px;
+        display: inline-block;
     }
     
-    /* 구매 버튼 */
+    .product-quantity:before {
+        content: "\f49e";
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        margin-right: 8px;
+        color: #6c757d;
+    }
+    
+    /* Button Group */
+    .button-group {
+        display: flex;
+        margin-top: 20px;
+        gap: 15px;
+    }
+    
+    /* Buy Button - 구매하기 버튼 */
     .buy-button {
-        background-color: #4CAF50;
-        color: white;
+        background: linear-gradient(135deg, #4CAF50, #2E7D32); /* 녹색 그라데이션 배경 */
+        color: white; /* 흰색 텍스트 */
         border: none;
-        padding: 12px 24px;
-        font-size: 16px;
-        border-radius: 4px;
-        cursor: pointer;
-        margin-right: 10px;
-        transition: background-color 0.3s;
+        padding: 14px 28px; /* 안쪽 여백 */
+        font-size: 16px; /* 글자 크기 */
+        font-weight: 500; /* 글자 두께 */
+        border-radius: 8px; /* 둥근 모서리 */
+        cursor: pointer; /* 마우스 커서 변경 */
+        transition: all 0.3s; /* 애니메이션 효과 */
+        display: flex;
+        align-items: center; /* 세로 중앙 정렬 */
+        justify-content: center; /* 가로 중앙 정렬 */
+        box-shadow: 0 4px 12px rgba(46, 125, 50, 0.3); /* 그림자 효과 */
+        flex: 1; /* 남은 공간 균등 배분 */
     }
     
     .buy-button:hover {
-        background-color: #388E3C;
+        background: linear-gradient(135deg, #43A047, #2E7D32);
+        box-shadow: 0 6px 15px rgba(46, 125, 50, 0.4);
+        transform: translateY(-2px);
     }
     
-    /* 장바구니 버튼 */
+    .buy-button:active {
+        transform: translateY(0);
+    }
+    
+    .buy-button:before {
+        content: "\f07a";
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        margin-right: 10px;
+    }
+    
+    /* Cart Button - 장바구니 버튼 */
     .cart-button {
-        background-color: #2196F3;
-        color: white;
+        background: linear-gradient(135deg, #2196F3, #1565C0); /* 파란색 그라데이션 배경 */
+        color: white; /* 흰색 텍스트 */
         border: none;
-        padding: 12px 24px;
-        font-size: 16px;
-        border-radius: 4px;
-        cursor: pointer;
-        transition: background-color 0.3s;
+        padding: 14px 28px; /* 안쪽 여백 */
+        font-size: 16px; /* 글자 크기 */
+        font-weight: 500; /* 글자 두께 */
+        border-radius: 8px; /* 둥근 모서리 */
+        cursor: pointer; /* 마우스 커서 변경 */
+        transition: all 0.3s; /* 애니메이션 효과 */
+        display: flex;
+        align-items: center; /* 세로 중앙 정렬 */
+        justify-content: center; /* 가로 중앙 정렬 */
+        box-shadow: 0 4px 12px rgba(21, 101, 192, 0.3); /* 그림자 효과 */
+        flex: 1; /* 남은 공간 균등 배분 */
     }
     
     .cart-button:hover {
-        background-color: #1976D2;
+        background: linear-gradient(135deg, #1E88E5, #1565C0);
+        box-shadow: 0 6px 15px rgba(21, 101, 192, 0.4);
+        transform: translateY(-2px);
     }
     
-    /* 탭 메뉴 스타일 */
+    .cart-button:active {
+        transform: translateY(0);
+    }
+    
+    .cart-button:before {
+        content: "\f217";
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        margin-right: 10px;
+    }
+    
+    /* Tab Navigation Styles - 탭 메뉴 스타일 */
     .product-tabs {
-        margin-top: 50px;
+        margin-top: 0;
+        padding: 0 40px 40px; /* 좌우, 하단 여백 */
+    }
+    
+    .nav-tabs {
+        border-bottom: 1px solid #e9ecef; /* 하단 경계선 */
+        padding: 0;
+        margin-bottom: 30px; /* 아래 여백 */
+    }
+    
+    .nav-tabs .nav-item {
+        margin-right: 5px;
     }
     
     .nav-tabs .nav-link {
-        color: #555;
-        font-weight: 500;
-        padding: 12px 20px;
-        font-size: 16px;
+        color: #6c757d; /* 탭 텍스트 색상 */
+        font-weight: 500; /* 글자 두께 */
+        padding: 16px 25px; /* 안쪽 여백 */
+        font-size: 16px; /* 글자 크기 */
+        border: none;
+        border-bottom: 3px solid transparent; /* 투명한 하단 테두리 */
+        transition: all 0.2s ease; /* 애니메이션 효과 */
+        border-radius: 8px 8px 0 0; /* 상단 모서리만 둥글게 */
+    }
+    
+    .nav-tabs .nav-link:hover {
+        color: #3D5AFE;
+        background-color: rgba(61, 90, 254, 0.05);
+        border-bottom: 3px solid rgba(61, 90, 254, 0.3);
     }
     
     .nav-tabs .nav-link.active {
         font-weight: 700;
-        color: #2196F3;
-        border-bottom: 3px solid #2196F3;
+        color: #3D5AFE;
+        background-color: rgba(61, 90, 254, 0.08);
+        border-bottom: 3px solid #3D5AFE;
     }
     
     .tab-content {
         padding: 30px;
         background-color: #fff;
-        border: 1px solid #ddd;
-        border-top: none;
+        border-radius: 10px;
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.03);
         min-height: 300px;
     }
     
-    /* 리뷰 스타일 */
+    .tab-pane h3 {
+        margin-bottom: 25px;
+        font-weight: 700;
+        color: #212529;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #e9ecef;
+    }
+    
+    /* Review Styles - 리뷰 스타일 */
     .review-item {
-        border-bottom: 1px solid #eee;
-        padding: 20px 0;
+        border-bottom: 1px solid #e9ecef; /* 하단 경계선 */
+        padding: 25px 0; /* 상하 여백 */
+        transition: background-color 0.2s; /* 배경색 변화 애니메이션 */
+    }
+    
+    .review-item:hover {
+        background-color: #f8f9fa;
     }
     
     .review-header {
         display: flex;
         justify-content: space-between;
-        margin-bottom: 10px;
+        margin-bottom: 12px;
+        align-items: center;
     }
     
     .review-author {
         font-weight: 600;
+        color: #343a40;
+        display: flex;
+        align-items: center;
+    }
+    
+    .review-author:before {
+        content: "\f007";
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        margin-right: 8px;
+        color: #6c757d;
     }
     
     .review-rating {
-        color: #FFB900;
+        color: #FFC107;
+        font-size: 18px;
+        letter-spacing: 2px;
     }
     
     .review-date {
-        color: #999;
+        color: #adb5bd;
         font-size: 14px;
+        margin-top: 5px;
     }
     
-    /* Q&A 스타일 */
+    .review-date:before {
+        content: "\f073";
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        margin-right: 8px;
+    }
+    
+    .review-content {
+        line-height: 1.7;
+        color: #495057;
+    }
+    
+    /* Q&A Styles - 문의 스타일 */
     .qna-item {
-        border-bottom: 1px solid #eee;
-        padding: 20px 0;
+        border-bottom: 1px solid #e9ecef; /* 하단 경계선 */
+        padding: 25px 0; /* 상하 여백 */
+        transition: background-color 0.2s; /* 배경색 변화 애니메이션 */
+    }
+    
+    .qna-item:hover {
+        background-color: #f8f9fa;
     }
     
     .question {
-        margin-bottom: 15px;
+        margin-bottom: 20px;
     }
     
     .question-header {
         display: flex;
         justify-content: space-between;
-        margin-bottom: 10px;
+        margin-bottom: 12px;
+        align-items: center;
     }
     
     .question-author {
         font-weight: 600;
+        color: #343a40;
+        display: flex;
+        align-items: center;
+    }
+    
+    .question-author:before {
+        content: "\f059";
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        margin-right: 8px;
+        color: #6c757d;
     }
     
     .question-date {
-        color: #999;
+        color: #adb5bd;
         font-size: 14px;
     }
     
+    .question-date:before {
+        content: "\f073";
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        margin-right: 8px;
+    }
+    
+    .question-content {
+        line-height: 1.7;
+        color: #495057;
+    }
+    
     .answer {
-        background-color: #f9f9f9;
-        padding: 15px;
-        border-radius: 4px;
-        margin-left: 20px;
+        background-color: #f1f3f5; /* 답변 배경색 */
+        padding: 20px; /* 안쪽 여백 */
+        border-radius: 8px; /* 둥근 모서리 */
+        margin-left: 25px; /* 왼쪽 들여쓰기 */
+        position: relative; /* 상대적 위치 지정 */
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* 그림자 효과 */
+    }
+    
+    .answer:before {
+        content: "";
+        position: absolute;
+        top: -10px;
+        left: 20px;
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+        border-bottom: 10px solid #f1f3f5;
     }
     
     .answer-header {
         display: flex;
         justify-content: space-between;
-        margin-bottom: 10px;
+        margin-bottom: 12px;
+        align-items: center;
     }
     
     .answer-author {
         font-weight: 600;
-        color: #2196F3;
+        color: #3D5AFE;
+        display: flex;
+        align-items: center;
+    }
+    
+    .answer-author:before {
+        content: "\f4ad";
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        margin-right: 8px;
     }
     
     .answer-date {
-        color: #999;
+        color: #adb5bd;
         font-size: 14px;
     }
     
-    /* 문의 작성 버튼 */
-    .write-question-btn {
+    .answer-date:before {
+        content: "\f073";
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        margin-right: 8px;
+    }
+    
+    .answer-content {
+        line-height: 1.7;
+        color: #495057;
+    }
+    
+    /* Action Buttons */
+    .btn-primary, .btn-warning {
+        padding: 10px 20px;
+        font-weight: 500;
+        border-radius: 6px;
+        transition: all 0.3s;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .btn-primary {
+        background-color: #3D5AFE;
+        border-color: #3D5AFE;
+    }
+    
+    .btn-primary:hover {
+        background-color: #304FFE;
+        border-color: #304FFE;
+        box-shadow: 0 4px 12px rgba(48, 79, 254, 0.3);
+        transform: translateY(-2px);
+    }
+    
+    .btn-warning {
         background-color: #FF9800;
-        color: white;
-        border: none;
-        padding: 8px 16px;
-        font-size: 14px;
-        border-radius: 4px;
-        cursor: pointer;
-        margin-top: 20px;
-        transition: background-color 0.3s;
+        border-color: #FF9800;
     }
     
-    .write-question-btn:hover {
+    .btn-warning:hover {
         background-color: #F57C00;
+        border-color: #F57C00;
+        box-shadow: 0 4px 12px rgba(245, 124, 0, 0.3);
+        transform: translateY(-2px);
     }
     
-    /* 모달 스타일 */
+    /* Modal Styles - 모달 스타일 */
+    .modal-content {
+        border: none;
+        border-radius: 12px; /* 둥근 모서리 */
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+        overflow: hidden; /* 내용이 넘치면 숨김 처리 */
+    }
+    
     .modal-header {
-        background-color: #f8f9fa;
-        border-bottom: 1px solid #eee;
+        background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        padding: 20px 25px;
+        border-bottom: 1px solid #e9ecef;
     }
     
     .modal-title {
-        font-weight: 600;
+        font-weight: 700;
+        color: #343a40;
+    }
+    
+    .modal-body {
+        padding: 25px;
+    }
+    
+    .modal-footer {
+        border-top: 1px solid #e9ecef;
+        padding: 20px 25px;
+    }
+    
+    .close {
+        color: #adb5bd;
+        opacity: 1;
+        transition: color 0.2s;
+    }
+    
+    .close:hover {
+        color: #495057;
+    }
+    
+    /* Form Controls - 폼 컨트롤 스타일 */
+    .form-control {
+        border-radius: 6px; /* 둥근 모서리 */
+        border: 1px solid #ced4da; /* 테두리 */
+        padding: 12px; /* 안쪽 여백 */
+        transition: all 0.3s; /* 애니메이션 효과 */
+    }
+    
+    .form-control:focus {
+        border-color: #3D5AFE;
+        box-shadow: 0 0 0 3px rgba(61, 90, 254, 0.15);
+    }
+    
+    .form-group label {
+        font-weight: 500;
+        color: #495057;
+        margin-bottom: 8px;
+    }
+    
+    .form-check-label {
+        color: #6c757d;
+    }
+    
+    .form-control-file {
+        padding: 8px 0;
+    }
+    
+    /* Responsive Adjustments - 반응형 스타일 조정 */
+    @media (max-width: 991px) {
+        /* 태블릿 크기 화면에서의 조정 */
+        .product-header {
+            flex-direction: column; /* 세로 배치로 변경 */
+            padding: 30px;
+        }
+        
+        .product-image, .product-info {
+            flex: 0 0 100%; /* 너비 100%로 조정 */
+            padding: 0;
+        }
+        
+        .product-image {
+            margin-bottom: 30px; /* 아래 여백 추가 */
+        }
+        
+        .product-tabs {
+            padding: 0 30px 30px;
+        }
+    }
+    
+    @media (max-width: 767px) {
+        /* 모바일 크기 화면에서의 조정 */
+        .button-group {
+            flex-direction: column; /* 버튼 세로 배치 */
+        }
+        
+        .buy-button, .cart-button {
+            width: 100%; /* 너비 100% */
+            margin-bottom: 10px; /* 아래 여백 */
+        }
+        
+        .product-title {
+            font-size: 24px; /* 제목 글자 크기 축소 */
+        }
+        
+        .product-price {
+            font-size: 24px; /* 가격 글자 크기 축소 */
+        }
+        
+        .nav-tabs .nav-link {
+            padding: 12px 15px; /* 탭 패딩 축소 */
+        }
+        
+        .tab-content {
+            padding: 20px; /* 탭 콘텐츠 여백 축소 */
+        }
     }
 </style>
 <script>
@@ -310,26 +681,27 @@
         
         <!-- 상품 기본 정보 -->
         <div class="product-info">
-            <h1 class="product-title">${item.item_name}</h1>
-            <p class="product-seller">판매자: 
-                <c:choose>
-                    <c:when test="${loginUser.login.equals('buyer')}">
-                        <a href="#" data-toggle="modal" data-target="#unifiedModal">${sellerName}</a>
-                    </c:when>
-                    <c:otherwise>
-                        <span>${sellerName}</span>
-                    </c:otherwise>
-                </c:choose>
-            </p>
-            <p class="product-price">${item.item_price}원</p>
-            <p class="product-quantity">재고 수량: ${item.item_quantity}개</p>
+            <div>
+                <h1 class="product-title">${item.item_name}</h1>
+                <p class="product-seller">
+                    <c:choose>
+                        <c:when test="${loginUser.login.equals('buyer')}">
+                            <a href="#" data-toggle="modal" data-target="#unifiedModal">${sellerName}</a>
+                        </c:when>
+                        <c:otherwise>
+                            <span>${sellerName}</span>
+                        </c:otherwise>
+                    </c:choose>
+                </p>
+                <p class="product-price">${item.item_price}</p>
+                <p class="product-quantity">재고 수량: ${item.item_quantity}개</p>
+            </div>
             
             <!-- 구매 버튼 영역 -->
             <div class="button-group">
                 <button class="buy-button">구매하기</button>
-                <button class="cart-button" onclick="addToCart('${item.item_index}', this)">
-	                <i class="fas fa-shopping-cart"></i>장바구니 추가
-	            </button>
+                <!-- 장바구니 버튼 -->
+                <button class="cart-button" onclick="addToCart('${item.item_index}', this)">장바구니 추가</button>
             </div>
         </div>
     </div>
@@ -344,7 +716,7 @@
                 <a class="nav-link" id="review-tab" data-toggle="tab" href="#review" role="tab" aria-controls="review" aria-selected="false">리뷰</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="qna-tab" data-toggle="tab" href="#qna" role="tab" aria-controls="qna" aria-selected="false"> Q&A </a>
+                <a class="nav-link" id="qna-tab" data-toggle="tab" href="#qna" role="tab" aria-controls="qna" aria-selected="false">Q&A</a>
             </li>
         </ul>
         <div class="tab-content" id="productTabsContent">
@@ -369,7 +741,7 @@
                         <span class="review-rating">★★★★★</span>
                     </div>
                     <div class="review-date">2023-05-15</div>
-                    <div class="review-content mt-2">
+                    <div class="review-content mt-3">
                         상품이 생각보다 너무 좋네요! 배송도 빠르고 품질도 훌륭합니다. 다음에도 구매할 의향이 있습니다.
                     </div>
                 </div>
@@ -380,7 +752,7 @@
                         <span class="review-rating">★★★★☆</span>
                     </div>
                     <div class="review-date">2023-05-10</div>
-                    <div class="review-content mt-2">
+                    <div class="review-content mt-3">
                         전반적으로 만족스럽습니다. 다만 배송이 조금 늦었네요. 상품 자체는 좋습니다.
                     </div>
                 </div>
@@ -400,7 +772,7 @@
                             <span class="question-author">이영희</span>
                             <span class="question-date">2023-05-18</span>
                         </div>
-                        <div class="question-content mt-2">
+                        <div class="question-content mt-3">
                             이 상품은 세탁기에 돌려도 되나요? 세탁 방법이 궁금합니다.
                         </div>
                     </div>
@@ -409,7 +781,7 @@
                             <span class="answer-author">판매자</span>
                             <span class="answer-date">2023-05-19</span>
                         </div>
-                        <div class="answer-content mt-2">
+                        <div class="answer-content mt-3">
                             안녕하세요, 고객님. 해당 상품은 세탁기 사용이 가능합니다. 단, 찬물로 세탁하시고 건조기 사용은 피해주세요.
                         </div>
                     </div>
@@ -421,7 +793,7 @@
                             <span class="question-author">박민수</span>
                             <span class="question-date">2023-05-16</span>
                         </div>
-                        <div class="question-content mt-2">
+                        <div class="question-content mt-3">
                             색상이 사진과 실제 제품이 차이가 많이 나나요?
                         </div>
                     </div>
@@ -430,7 +802,7 @@
                             <span class="answer-author">판매자</span>
                             <span class="answer-date">2023-05-17</span>
                         </div>
-                        <div class="answer-content mt-2">
+                        <div class="answer-content mt-3">
                             안녕하세요, 고객님. 모니터 설정에 따라 약간의 색상 차이가 있을 수 있으나, 최대한 실제 색상과 유사하게 촬영하였습니다.
                         </div>
                     </div>
@@ -451,7 +823,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <h6>판매자: ${sellerName}</h6>
+                <h6 class="mb-3">판매자: ${sellerName}</h6>
                 <p>판매자에게 문의하시려면 아래 버튼을 눌러주세요.</p>
                 <!-- 채팅방 제목 설정 -->
                 <form id="chatRoomForm" method="post">
@@ -580,8 +952,8 @@ function addToCart(item_index, button) {
 	           }, 1000);   
 	    });
 	}
-</script> <!-- 추후 정상동작 확인 필요 -->
+</script>
 <!-- 하단 정보 -->
-<c:import url="/WEB-INF/views/include/bottom_info.jsp" />	
+<c:import url="/WEB-INF/views/include/bottom_info.jsp" />
 </body>
 </html>

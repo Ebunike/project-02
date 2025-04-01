@@ -265,7 +265,7 @@
                     <c:when test="${not empty saleProducts}">
                         <c:forEach var="product" items="${saleProducts}">
                             <div class="swiper-slide">
-                                <div class="slide-content">
+                                <div class="slide-content" style="margin-top: 20px;">
                                     <a href="${product.product_link}">
                                         <img src="${root}/upload/${product.product_img}" alt="${product.product_name}">
                                     </a>

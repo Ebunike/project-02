@@ -39,8 +39,8 @@
         //orderId: "t4pAul9BsB4fLnKl_cYjL", // 고유 주문번호 
         orderId: `${paymentRes.orderId}`, 
         orderName: `${paymentRes.orderName}`, 
-        successUrl: window.location.origin + "/Project_hoon//payment/buyingList", // 결제 요청이 성공하면 리다이렉트되는 URL 
-        failUrl: window.location.origin + "/Project_hoon/payment/forpayment", // 결제 요청이 실패하면 리다이렉트되는 URL 
+        successUrl: window.location.origin + "/Project_hoon/payment/success", // 결제 요청이 성공하면 리다이렉트되는 URL 
+        failUrl: window.location.origin + "/Project_hoon/payment/fail", // 결제 요청이 실패하면 리다이렉트되는 URL 
         customerEmail: `${paymentRes.customerEmail}`, 
         customerName: `${paymentRes.customerName}`, 
         customerMobilePhone: "01012341234", 
