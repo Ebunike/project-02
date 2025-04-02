@@ -107,6 +107,14 @@
     </style>
 </head>
 <body>
+
+
+	<!-- 상단 메뉴 부분 - include로 불러옴 -->
+	<div class="top">
+		<c:import url="/WEB-INF/views/include/top_menu.jsp" /> 
+	</div>
+	
+
     <div class="container mt-5">
         <h2>주문 내역</h2>
         
@@ -190,5 +198,9 @@
             // 예: location.href = '/orders/history?period=' + period;
         });
     </script>
+    
+        <!-- 하단 정보 - include로 불러옴 -->
+    <c:import url="/WEB-INF/views/include/bottom_info.jsp" />
+    
 </body>
 </html>
