@@ -20,13 +20,14 @@
         left: 0;
         top: 40px;
         width: 200px;
-        height: 550px;
+        height: 440px;
         background-color: #ffffff;
         box-shadow: 3px 0 15px rgba(0, 0, 0, 0.1);
         padding: 30px 0;
         transition: all 0.3s ease;
         border: 1px solid #e0e0e0;
         border-radius: 0 15px 15px 0;
+        z-index: 500;
     }
     .sidebar-header {
         text-align: center;

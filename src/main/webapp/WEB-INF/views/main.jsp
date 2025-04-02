@@ -47,7 +47,7 @@
     <div class="category-menu">
         <ul>
             <li><a href="recipe/recipe_main?theme_index=1"><i class="fas fa-utensils fa-fw"></i> 레시피</a></li>
-            <li><a href="oneday/list"><i class="fas fa-chalkboard-teacher fa-fw"></i> 원데이클라스</a></li>
+            <li><a href="oneday/list"><i class="fas fa-chalkboard-teacher fa-fw"></i> 원데이클래스</a></li>
             <li><a href="item/kit/kitMain"><i class="fas fa-box-open fa-fw"></i> 키트 메인</a></li>
             <li><a href="report/report_list"><i class="fas fa-comments fa-fw"></i> 자유게시판</a></li>
             <li><a href="inquiry/inquiry_main"><i class="fa-solid fa-headset"></i> 고객문의</a></li>
@@ -79,7 +79,7 @@
     <!-- 밀키트 카테고리 버튼 -->
     <div class="quick-btn" data-target="mealkit-section">
         <i class="fas fa-utensils"></i>
-        <span class="quick-tooltip">Mealkit | ssi bal !</span>
+        <span class="quick-tooltip">Mealkit | </span>
     </div>
     <!-- 페이지 상단으로 스크롤 버튼 -->
     <div class="quick-btn scroll-top">
@@ -302,7 +302,7 @@
     <!-- 밀키트 섹션 -->
     <div id="mealkit-section" class="section">
         <div class="item_title">
-            <h3>Mealkit | </h3> <h5 style="color:red;">ssi bal !</h5>
+            <h3>Mealkit | </h3> <h5 style="color:red;"></h5>
         </div>	
         <div class="swiper swiper2 myItemSwiper5">
             <div class="swiper-wrapper">

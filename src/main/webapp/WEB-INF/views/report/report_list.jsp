@@ -78,6 +78,7 @@
         max-width: 1200px;
         margin: 0 auto;
         transition: all 0.3s ease;
+        margin-bottom: 50px;
     }
 
     /* 게시판 제목 */
