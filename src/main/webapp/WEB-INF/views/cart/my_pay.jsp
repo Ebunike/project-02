@@ -390,7 +390,7 @@
                 </div>
                 <div class="payment-method" onclick="selectPayment(this, 'toss')"> <!-- 토스 결제 방법 -->
                     <i class="fas fa-wallet"></i>
-                    <div>토스</div>
+                    <div>토스/카드결제</div>
                 </div>
             </div>
         </div>

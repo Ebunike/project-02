@@ -28,7 +28,7 @@
 <link rel="stylesheet" href="${root}/css/main.css" />
 
 <style>
-/* 레시피 페이지 스타일 */
+/* 레시피 페이지 기본 스타일 */
 body {
     font-family: 'Noto Sans KR', sans-serif;
     background-color: #f9f9f9;
@@ -40,6 +40,7 @@ body {
     padding: 0 15px;
 }
 
+/* 기존 카테고리 네비게이션 스타일은 그대로 */
 .category-nav {
     display: flex;
     justify-content: center;
@@ -73,107 +74,75 @@ body {
     font-family: 'NanumGaRamYeonGgoc', cursive;
 }
 
-.recipe-list {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-}
-
-.recipe_list1 {
-    margin-bottom: 15px;
-    padding: 15px;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+/* 그리드 레이아웃: 기존의 리스트 대신 사용 */
+.recipe-grid {
     display: flex;
-    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    padding: 15px;
 }
 
-.recipe_list1 img {
-    width: 120px;
-    height: 120px;
+.recipe-item {
+    /* 한 행에 5개씩 배치 (반응형 필요 시 조정) */
+    flex: 0 0 calc(20% - 15px);
+    box-sizing: border-box;
+}
+
+/* 이미지 영역: 정사각형 비율 유지 */
+.recipe-item .image-wrapper {
+    position: relative;
+    width: 100%;
+    padding-top: 100%; /* 1:1 비율 */
+}
+
+.recipe-item .image-wrapper a img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
     border-radius: 8px;
-    margin-right: 15px;
 }
 
-.recipe_list1 a.recipe_read-link {
+/* 하단 정보 영역 (제목, 조회수, 좋아요) */
+.recipe-item .info {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.recipe-item .info a.recipe_read-link {
     color: #333;
     text-decoration: none;
     font-weight: 500;
     transition: color 0.2s;
-    margin-right: 10px;
 }
 
-.recipe_list1 a.recipe_read-link:hover {
+.recipe-item .info a.recipe_read-link:hover {
     color: #e67e22;
 }
 
-.recipe_list1 .badge {
-    background-color: #e67e22;
-    color: white;
+.recipe-item .info .badge {
     font-size: 0.8rem;
     padding: 5px 8px;
     border-radius: 4px;
+    margin-top: 5px;
 }
 
-.pagination {
-    margin: 30px 0;
-}
-
-.pagination .page-link {
-    color: #555;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    margin: 0 3px;
-    border-radius: 4px;
-    transition: all 0.3s ease;
-}
-
-.pagination .page-link:hover {
+/* 좋아요 배지는 기본 테마색(#e67e22)와 다르게 설정 */
+.badge-primary {
     background-color: #e67e22;
     color: white;
-    border-color: #e67e22;
-}
-
-.btn-write {
-    background-color: #e67e22;
-    color: white;
-    border: none;
-    padding: 8px 20px;
-    border-radius: 5px;
-    margin-top: 20px;
-    transition: all 0.3s ease;
-    float: right;
-}
-
-.btn-write:hover {
-    background-color: #d35400;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-
-@media (max-width: 768px) {
-    .recipe_list1 {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-    
-    .recipe_list1 img {
-        width: 100%;
-        height: 180px;
-        margin-right: 0;
-        margin-bottom: 10px;
-    }
 }
 </style>
 </head>
 <body>
-<!-- 상단 메뉴 부분 -->
+<!-- 상단 메뉴 부분 (건드리지 않음) -->
 <c:import url="/WEB-INF/views/include/top_menu.jsp" />
 
 <!-- 레시피 메인 컨테이너 -->
 <div class="recipe-container">
-    <!-- 카테고리 네비게이션 -->
+    <!-- 카테고리 네비게이션 (건드리지 않음) -->
     <div class="category-nav">
         <a href="${root}/recipe/recipe_main?theme_index=1" class="${theme_index eq '1' ? 'active' : ''}">
             <i class="fas fa-utensils"></i> 푸드
@@ -196,81 +165,162 @@ body {
     <c:choose>
         <c:when test="${theme_index eq '1'}">
             <h2 class="category-title">푸드 카테고리</h2>
-            <ul class="recipe-list">
+            <div class="recipe-grid">
                 <c:forEach var="obj" items="${openRecipeList}">
-                <li class="recipe_list1">
-                    <a href="${root}/recipe/recipe_read?openRecipe_index=${obj.openRecipe_index}" class="recipe_read-link">
-                        <img src="${root}/upload/${obj.openRecipe_picture}" alt="${obj.openRecipe_title}" />
-                    </a>
-                    <div>
-                        <a href="${root}/recipe/recipe_read?openRecipe_index=${obj.openRecipe_index}" class="recipe_read-link">${obj.openRecipe_title}</a>
-                        <!-- 조회수 출력 -->
-                        <span class="badge badge-secondary">
-                            <i class="fas fa-eye"></i> 조회수: ${recipeViewCounts[obj.openRecipe_index] != null ? recipeViewCounts[obj.openRecipe_index] : 0}
-                        </span>
+                    <div class="recipe-item">
+                        <div class="image-wrapper">
+                            <a href="${root}/recipe/recipe_read?openRecipe_index=${obj.openRecipe_index}" class="recipe_read-link">
+                                <img src="${root}/upload/${obj.openRecipe_picture}" alt="${obj.openRecipe_title}" class="img-thumbnail" />
+                            </a>
+                        </div>
+                        <div class="info">
+                            <a href="${root}/recipe/recipe_read?openRecipe_index=${obj.openRecipe_index}" class="recipe_read-link">${obj.openRecipe_title}</a>
+                            <div>
+                                <span class="badge badge-secondary">
+                                    <i class="fas fa-eye"></i> 조회수: ${recipeViewCounts[obj.openRecipe_index] != null ? recipeViewCounts[obj.openRecipe_index] : 0}
+                                </span>
+                                <span class="badge badge-primary ml-2">
+                                    좋아요: ${obj.openRecipe_like}
+                                </span>
+                            </div>
+                        </div>
                     </div>
-                </li>
                 </c:forEach>
-            </ul>
+            </div>
         </c:when>
                 
         <c:when test="${theme_index eq '2'}">
             <h2 class="category-title">뷰티 카테고리</h2>
-            <ul class="recipe-list">
+            <div class="recipe-grid">
                 <c:forEach var="obj" items="${openRecipeList}">
-                <li class="recipe_list1">
-                    <a href="${root}/recipe/recipe_read?openRecipe_index=${obj.openRecipe_index}" class="recipe_read-link">${obj.openRecipe_title}</a>
-                </li>
+                    <div class="recipe-item">
+                        <div class="image-wrapper">
+                            <a href="${root}/recipe/recipe_read?openRecipe_index=${obj.openRecipe_index}" class="recipe_read-link">
+                                <img src="${root}/upload/${obj.openRecipe_picture}" alt="${obj.openRecipe_title}" class="img-thumbnail" />
+                            </a>
+                        </div>
+                        <div class="info">
+                            <a href="${root}/recipe/recipe_read?openRecipe_index=${obj.openRecipe_index}" class="recipe_read-link">${obj.openRecipe_title}</a>
+                            <div>
+                                <span class="badge badge-secondary">
+                                    <i class="fas fa-eye"></i> 조회수: ${recipeViewCounts[obj.openRecipe_index] != null ? recipeViewCounts[obj.openRecipe_index] : 0}
+                                </span>
+                                <span class="badge badge-primary ml-2">
+                                    좋아요: ${obj.openRecipe_like}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
                 </c:forEach>
-            </ul>
+            </div>
         </c:when>
             
         <c:when test="${theme_index eq '3'}">
             <h2 class="category-title">문구 카테고리</h2>
-            <ul class="recipe-list">
+            <div class="recipe-grid">
                 <c:forEach var="obj" items="${openRecipeList}">
-                <li class="recipe_list1">
-                    <a href="${root}/recipe/recipe_read?openRecipe_index=${obj.openRecipe_index}" class="recipe_read-link">${obj.openRecipe_title}</a>
-                </li>
+                    <div class="recipe-item">
+                        <div class="image-wrapper">
+                            <a href="${root}/recipe/recipe_read?openRecipe_index=${obj.openRecipe_index}" class="recipe_read-link">
+                                <img src="${root}/upload/${obj.openRecipe_picture}" alt="${obj.openRecipe_title}" class="img-thumbnail" />
+                            </a>
+                        </div>
+                        <div class="info">
+                            <a href="${root}/recipe/recipe_read?openRecipe_index=${obj.openRecipe_index}" class="recipe_read-link">${obj.openRecipe_title}</a>
+                            <div>
+                                <span class="badge badge-secondary">
+                                    <i class="fas fa-eye"></i> 조회수: ${recipeViewCounts[obj.openRecipe_index] != null ? recipeViewCounts[obj.openRecipe_index] : 0}
+                                </span>
+                                <span class="badge badge-primary ml-2">
+                                    좋아요: ${obj.openRecipe_like}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
                 </c:forEach>
-            </ul>
+            </div>
         </c:when>
         
         <c:when test="${theme_index eq '4'}">
             <h2 class="category-title">리빙 카테고리</h2>
-            <ul class="recipe-list">
+            <div class="recipe-grid">
                 <c:forEach var="obj" items="${openRecipeList}">
-                <li class="recipe_list1">
-                    <a href="${root}/recipe/recipe_read?openRecipe_index=${obj.openRecipe_index}" class="recipe_read-link">${obj.openRecipe_title}</a>
-                </li>
+                    <div class="recipe-item">
+                        <div class="image-wrapper">
+                            <a href="${root}/recipe/recipe_read?openRecipe_index=${obj.openRecipe_index}" class="recipe_read-link">
+                                <img src="${root}/upload/${obj.openRecipe_picture}" alt="${obj.openRecipe_title}" class="img-thumbnail" />
+                            </a>
+                        </div>
+                        <div class="info">
+                            <a href="${root}/recipe/recipe_read?openRecipe_index=${obj.openRecipe_index}" class="recipe_read-link">${obj.openRecipe_title}</a>
+                            <div>
+                                <span class="badge badge-secondary">
+                                    <i class="fas fa-eye"></i> 조회수: ${recipeViewCounts[obj.openRecipe_index] != null ? recipeViewCounts[obj.openRecipe_index] : 0}
+                                </span>
+                                <span class="badge badge-primary ml-2">
+                                    좋아요: ${obj.openRecipe_like}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
                 </c:forEach>
-            </ul>
+            </div>
         </c:when>
         
         <c:when test="${theme_index eq '5'}">
             <h2 class="category-title">패션 카테고리</h2>
-            <ul class="recipe-list">
+            <div class="recipe-grid">
                 <c:forEach var="obj" items="${openRecipeList}">
-                <li class="recipe_list1">
-                    <a href="${root}/recipe/recipe_read?openRecipe_index=${obj.openRecipe_index}" class="recipe_read-link">${obj.openRecipe_title}</a>
-                </li>
+                    <div class="recipe-item">
+                        <div class="image-wrapper">
+                            <a href="${root}/recipe/recipe_read?openRecipe_index=${obj.openRecipe_index}" class="recipe_read-link">
+                                <img src="${root}/upload/${obj.openRecipe_picture}" alt="${obj.openRecipe_title}" class="img-thumbnail" />
+                            </a>
+                        </div>
+                        <div class="info">
+                            <a href="${root}/recipe/recipe_read?openRecipe_index=${obj.openRecipe_index}" class="recipe_read-link">${obj.openRecipe_title}</a>
+                            <div>
+                                <span class="badge badge-secondary">
+                                    <i class="fas fa-eye"></i> 조회수: ${recipeViewCounts[obj.openRecipe_index] != null ? recipeViewCounts[obj.openRecipe_index] : 0}
+                                </span>
+                                <span class="badge badge-primary ml-2">
+                                    좋아요: ${obj.openRecipe_like}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
                 </c:forEach>
-            </ul>
+            </div>
         </c:when>
                         
         <c:otherwise>
             <h2 class="category-title">모든 항목 최고 좋아요 카테고리</h2>
-            <ul class="recipe-list">
+            <div class="recipe-grid">
                 <c:forEach var="obj" items="${allRecipeList}">
-                <li class="recipe_list1">
-                    <a href="${root}/recipe/recipe_read?openRecipe_index=${obj.openRecipe_index}" class="recipe_read-link">${obj.openRecipe_title}</a>
-                </li>
+                    <div class="recipe-item">
+                        <div class="image-wrapper">
+                            <a href="${root}/recipe/recipe_read?openRecipe_index=${obj.openRecipe_index}" class="recipe_read-link">
+                                <img src="${root}/upload/${obj.openRecipe_picture}" alt="${obj.openRecipe_title}" class="img-thumbnail" />
+                            </a>
+                        </div>
+                        <div class="info">
+                            <a href="${root}/recipe/recipe_read?openRecipe_index=${obj.openRecipe_index}" class="recipe_read-link">${obj.openRecipe_title}</a>
+                            <div>
+                                <span class="badge badge-secondary">
+                                    <i class="fas fa-eye"></i> 조회수: ${recipeViewCounts[obj.openRecipe_index] != null ? recipeViewCounts[obj.openRecipe_index] : 0}
+                                </span>
+                                <span class="badge badge-primary ml-2">
+                                    좋아요: ${obj.openRecipe_like}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
                 </c:forEach>
-            </ul>
+            </div>
         </c:otherwise>
     </c:choose>
 
-    <!-- 페이지네이션 - PC 버전 -->
+    <!-- 페이지네이션 - PC 버전 (건드리지 않음) -->
     <div class="d-none d-md-block">
         <ul class="pagination justify-content-center">
             <c:choose>
@@ -310,7 +360,7 @@ body {
         </ul>
     </div>
     
-    <!-- 페이지네이션 - 모바일 버전 -->
+    <!-- 페이지네이션 - 모바일 버전 (건드리지 않음) -->
     <div class="d-block d-md-none">
         <ul class="pagination justify-content-center">
             <c:choose>
@@ -343,7 +393,7 @@ body {
         </ul>
     </div>
 
-    <!-- 글쓰기 버튼 -->
+    <!-- 글쓰기 버튼 (건드리지 않음) -->
     <a href="${root}/recipe/recipe_write" class="btn btn-write">
         <i class="fas fa-pencil-alt"></i> 글쓰기
     </a>
@@ -351,7 +401,7 @@ body {
     <div style="clear: both;"></div>
 </div>
 
-<!-- 게시판 하단 부분 -->
+<!-- 게시판 하단 부분 (건드리지 않음) -->
 <c:import url="/WEB-INF/views/include/bottom_info.jsp" />
 
 <script>

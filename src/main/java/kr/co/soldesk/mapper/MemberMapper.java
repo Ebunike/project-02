@@ -55,4 +55,7 @@ public interface MemberMapper {
    
    @Select("SELECT seller_index FROM seller WHERE id = #{sellerId}")
    int getSellerIndex(String sellerId);
+   
+   @Select("SELECT name FROM member WHERE id = #{id, jdbcType=VARCHAR}")
+   String getMemberName(@Param("id") String id);
 }   

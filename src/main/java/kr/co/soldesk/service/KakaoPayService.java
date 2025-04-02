@@ -112,6 +112,61 @@ public class KakaoPayService {
         }
     }
     
+    // KakaoPayService.java 메서드 수정
+    public KakaoPayReadyDTO kakaoPayReady(String orderId, String itemName, int quantity, int totalAmount, int taxFreeAmount,
+            String approvalUrl, String cancelUrl, String failUrl) {
+        logger.info("카카오페이 결제 준비 - 주문ID: {}, 상품명: {}, 수량: {}, 금액: {}", orderId, itemName, quantity, totalAmount);
+        
+        RestTemplate restTemplate = new RestTemplate();
+        
+        // 서버로 요청할 Header
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Authorization", "SECRET_KEY " + adminKey);
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        
+        logger.debug("Authorization 헤더: {}", headers.get("Authorization"));
+        
+        // JSON 요청 본문 생성
+        Map<String, Object> requestBody = new HashMap<>();
+        String partnerOrderId = (orderId != null && !orderId.isEmpty()) ? 
+                               orderId : "PARTNER_ORDER_" + System.currentTimeMillis();
+        String partnerUserId = "PARTNER_USER_" + System.currentTimeMillis();
+        
+        requestBody.put("cid", CID);
+        requestBody.put("partner_order_id", partnerOrderId);
+        requestBody.put("partner_user_id", partnerUserId);
+        requestBody.put("item_name", itemName);
+        requestBody.put("quantity", quantity);
+        requestBody.put("total_amount", totalAmount);
+        requestBody.put("tax_free_amount", taxFreeAmount);
+        
+        // 커스텀 URL 설정 (파라미터로 전달받은 URL 사용)
+        requestBody.put("approval_url", approvalUrl);
+        requestBody.put("cancel_url", cancelUrl);
+        requestBody.put("fail_url", failUrl);
+        
+        logger.debug("요청 본문: {}", requestBody);
+        
+        HttpEntity<Map<String, Object>> entity = new HttpEntity<>(requestBody, headers);
+        
+        try {
+            String url = HOST + "/online/v1/payment/ready";
+            logger.debug("요청 URL: {}", url);
+            
+            KakaoPayReadyDTO response = restTemplate.postForObject(url, entity, KakaoPayReadyDTO.class);
+            logger.info("카카오페이 결제 준비 성공 - TID: {}", response.getTid());
+            
+            // 세션에 저장할 정보 반환
+            response.setPartnerOrderId(partnerOrderId);
+            response.setPartnerUserId(partnerUserId);
+            
+            return response;
+        } catch (Exception e) {
+            logger.error("카카오페이 결제 준비 실패: {}", e.getMessage(), e);
+            throw e;
+        }
+    }
+    
     // 결제 상태 조회
     public Object getPaymentInfo(String tid) {
         logger.info("카카오페이 결제 정보 조회 - TID: {}", tid);
