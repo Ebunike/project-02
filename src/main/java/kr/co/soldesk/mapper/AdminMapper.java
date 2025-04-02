@@ -41,7 +41,7 @@ public interface AdminMapper {
 	   @Update("update inquiry set inquiry_reply = null where inquiry_idx = #{idx}")
 	   public void deleteReply(int idx);
 	   
-	   @Update("update inquiry set inquiry_read ='답변O' where inquiry_idx = #{idx}")
+	   @Update("update inquiry set inquiry_read ='답변 완료' where inquiry_idx = #{idx}")
 	   public void read(int idx);
 	   
 	   @Delete("delete from seller where id=#{id}")
@@ -50,7 +50,7 @@ public interface AdminMapper {
 	   @Delete("delete from member where id=#{id} and pw=#{pw}")
 	   public void delete(MemberBean memberBean);
 	   
-	// 배너 관리 기능
+	   	// 배너 관리 기능
 		@Select("SELECT * FROM banner_table ORDER BY banner_order ASC")
 		List<BannerBean> getAllBanners();
 		
