@@ -28,6 +28,7 @@ import kr.co.soldesk.beans.PaymentResDTO;
 import kr.co.soldesk.beans.RefundBean;
 import kr.co.soldesk.repository.CartRepository;
 import kr.co.soldesk.repository.ItemRepository;
+import kr.co.soldesk.repository.OrderDetailRepository;
 import kr.co.soldesk.repository.PaymentRepository;
 
 @Service
@@ -44,6 +45,9 @@ public class PaymentService {
 	
 	@Autowired
 	private ItemRepository itemRepository;
+	
+	@Autowired
+	private OrderDetailRepository orderDetailRepository;
 	
 	//토스에 결제요청보내기 전에 한번 확인하는거
 	public PaymentResDTO requestPayments(PaymentReqDTO paymentReq) throws Exception {
@@ -212,6 +216,14 @@ public class PaymentService {
 	 * public String getOrderDetail() {
 	 * paymentRepository.getOrderDetail() }
 	 */
+    
+    ////환불 금액 sales 빼기
+    public void removeSales(int cancelAmount, int order_detail_index) {
+    	
+    	int seller_index = orderDetailRepository.getSeller(order_detail_index);
+    	paymentRepository.removeSales(seller_index, cancelAmount);
+    	
+    }
     
     
     //판매자 sales를 amount만큼 올려주기. 관리자 or 판매자 매출처리

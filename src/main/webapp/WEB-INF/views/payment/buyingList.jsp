@@ -118,13 +118,6 @@
     <div class="container mt-5">
         <h2>주문 내역</h2>
         
-        <!-- 기간 선택 탭 -->
-        <div class="period-tabs">
-            <div class="period-tab" data-period="3m">3개월</div>
-            <div class="period-tab" data-period="6m">6개월</div>
-            <div class="period-tab" data-period="1y">1년</div>
-            <div class="period-tab active" data-period="all">3년</div>
-        </div>
         
         <!-- 주문 목록 -->
         <c:forEach var="order" items="${orderHistory}">
@@ -187,17 +180,7 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script>
-        // 기간 탭 선택
-        $('.period-tab').on('click', function() {
-            $('.period-tab').removeClass('active');
-            $(this).addClass('active');
-            
-            const period = $(this).data('period');
-            // 여기에 선택된 기간에 따라 주문 내역을 필터링하는 로직 추가
-            // 예: location.href = '/orders/history?period=' + period;
-        });
-    </script>
+
     
         <!-- 하단 정보 - include로 불러옴 -->
     <c:import url="/WEB-INF/views/include/bottom_info.jsp" />
