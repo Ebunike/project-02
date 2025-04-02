@@ -70,4 +70,11 @@ public interface OrderDetailMapper {
     @Delete("delete from order_detail where order_id = #{orderId}")
 	void deleteOrderDetail(String orderId);
 
+    // seller index찾아오기
+    @Select("SELECT i.seller_index " +
+            "FROM Order_detail od " +
+            "JOIN Item i ON od.item_index = i.item_index " +
+            "WHERE od.order_detail_index = #{order_detail_index}")
+    int getSeller(@Param("order_detail_index") int order_detail_index);
+    
 }

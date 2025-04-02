@@ -63,4 +63,9 @@ public class OrderDetailRepository {
 		orderDetailMapper.deleteOrderDetail(orderId);
 		
 	}
+    //환불을 위한 seller 찾아오기
+    public int getSeller(int order_detail_index) {
+    	return orderDetailMapper.getSeller(order_detail_index);
+    }
+    
 }
