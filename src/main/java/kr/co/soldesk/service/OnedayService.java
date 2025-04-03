@@ -120,11 +120,15 @@ public class OnedayService {
 
     @Transactional
     public OnedayDTO registerOneday(OnedayDTO oneday, String accessToken) {
-        logger.info("원데이 클래스 등록 시작 - 이름: {}, 판매자: {}", oneday.getOneday_name(), oneday.getSeller_index());
+    	logger.info("원데이 클래스 등록 시작 - 이름: {}, 판매자: {}", oneday.getOneday_name(), oneday.getSeller_index());
 
         try {
             // 네이버 캘린더 이벤트 생성
-            NaverCalendarEventDTO event = new NaverCalendarEventDTO();
+        	if (oneday.getOneday_max_participants() <= 0 && oneday.getOneday_personnel() > 0) {
+                oneday.setOneday_max_participants(oneday.getOneday_personnel());
+                logger.info("정원 설정: personnel({})값을 max_participants에 복사", oneday.getOneday_personnel());
+            }
+        	NaverCalendarEventDTO event = new NaverCalendarEventDTO();
             event.setCalendarId("primary");
             event.setTitle("[원데이클래스] " + oneday.getOneday_name());
             event.setDescription(oneday.getOneday_description());

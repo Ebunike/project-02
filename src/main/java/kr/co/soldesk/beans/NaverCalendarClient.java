@@ -262,7 +262,7 @@ public class NaverCalendarClient {
      * @return JSON 형태의 응답 (캘린더 목록)
      */
     public String getCalendars(String accessToken) {
-        HttpURLConnection conn = null;
+        HttpURLConnection conn = null; 
         StringBuilder response = new StringBuilder();
         
         try {
@@ -312,45 +312,62 @@ public class NaverCalendarClient {
      */
     public boolean validateToken(String accessToken) {
         if (accessToken == null || accessToken.isEmpty()) {
+            logger.warn("빈 액세스 토큰");
             return false;
         }
         
+        HttpURLConnection conn = null;
         try {
-            // 네이버 프로필 API를 통해 토큰 유효성 검사 (캘린더 API보다 더 안정적)
-            HttpURLConnection conn = null;
-            StringBuilder response = new StringBuilder();
+            URL url = new URL("https://openapi.naver.com/v1/nid/me");
+            conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            conn.setRequestProperty("Authorization", "Bearer " + accessToken);
             
-            try {
-                URL url = new URL("https://openapi.naver.com/v1/nid/me");
-                conn = (HttpURLConnection) url.openConnection();
-                conn.setRequestMethod("GET");
-                conn.setRequestProperty("Authorization", "Bearer " + accessToken);
+            int responseCode = conn.getResponseCode();
+            logger.info("네이버 프로필 조회 응답 코드: {}", responseCode);
+            
+            // 응답 본문 읽기
+            BufferedReader reader;
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                reader = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+            } else {
+                reader = new BufferedReader(new InputStreamReader(conn.getErrorStream(), "UTF-8"));
+            }
+            
+            StringBuilder response = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                response.append(line);
+            }
+            reader.close();
+            
+            // 응답 본문 로깅
+            logger.info("프로필 응답 내용: {}", response.toString());
+            
+            // 특정 조건에서는 토큰이 유효할 수 있음
+            // 예: 네이버 OAuth 오류 응답이지만 토큰 자체는 유효할 수 있음
+            if (responseCode == HttpURLConnection.HTTP_UNAUTHORIZED) {
+                JSONObject jsonResponse = new JSONObject(response.toString());
+                String resultCode = jsonResponse.optString("resultcode", "");
+                String message = jsonResponse.optString("message", "");
                 
-                int responseCode = conn.getResponseCode();
-                logger.info("네이버 프로필 조회 응답 코드: " + responseCode);
+                logger.warn("인증 실패 - 결과 코드: {}, 메시지: {}", resultCode, message);
                 
-                if (responseCode == 200) {
-                    return true;
-                }
-                
-                // 오류 응답 확인
-                BufferedReader br = new BufferedReader(new InputStreamReader(conn.getErrorStream(), "utf-8"));
-                String line;
-                while ((line = br.readLine()) != null) {
-                    response.append(line);
-                }
-                br.close();
-                
-                logger.warn("토큰 유효성 검사 실패: " + response.toString());
-                return false;
-            } finally {
-                if (conn != null) {
-                    conn.disconnect();
+                // 특정 조건에서 토큰 유효성 판단 (예시)
+                if ("024".equals(resultCode)) {
+                    // 토큰 만료 또는 무효화된 토큰으로 간주
+                    return false;
                 }
             }
+            
+            return responseCode == HttpURLConnection.HTTP_OK;
         } catch (Exception e) {
-            logger.warn("토큰 유효성 검사 중 오류 발생", e);
+            logger.error("토큰 검증 중 예외 발생", e);
             return false;
+        } finally {
+            if (conn != null) {
+                conn.disconnect();
+            }
         }
     }
 }

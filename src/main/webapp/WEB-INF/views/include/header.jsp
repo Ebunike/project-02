@@ -241,7 +241,7 @@
                     
                     <c:choose>
                         <c:when test="${not empty loginMemberBean.id}">
-                            <li><a href="${pageContext.request.contextPath}/member/modify">정보수정</a></li>
+                            <li><a href="${pageContext.request.contextPath}/">홈</a></li>
                             <li><a href="${pageContext.request.contextPath}/member/logout">로그아웃</a></li>
                             
                             <!-- 알림 아이콘 -->
@@ -261,10 +261,6 @@
                                 </div>
                             </li>
                         </c:when>
-                        <c:otherwise>
-                            <li><a href="${pageContext.request.contextPath}/member/login">로그인</a></li>
-                            <li><a href="${pageContext.request.contextPath}/member/join">회원가입</a></li>
-                        </c:otherwise>
                     </c:choose>
                 </ul>
             </nav>

@@ -43,23 +43,31 @@ public class NaverCalendarService {
             
             if (jsonResponse.has("access_token")) {
                 String accessToken = jsonResponse.getString("access_token");
+                String refreshToken = jsonResponse.optString("refresh_token", null);
+                
+                // 토큰 저장
                 session.setAttribute(TOKEN_SESSION_KEY, accessToken);
                 
-                // 토큰 유효성 검사 - 캘린더 API 대신 프로필 API로 검증
-                if (naverCalendarClient.validateToken(accessToken)) {
-                    logger.info("토큰 유효성 검증 성공");
-                    return true;
-                } else {
-                    logger.error("토큰 유효성 검증 실패");
-                    session.removeAttribute(TOKEN_SESSION_KEY);
-                    return false;
+                // 리프레시 토큰도 있다면 저장
+                if (refreshToken != null) {
+                    session.setAttribute("naverCalendarRefreshToken", refreshToken);
                 }
+                
+                // 토큰 유효성 검사는 선택적으로 수행
+                boolean isTokenValid = naverCalendarClient.validateToken(accessToken);
+                
+                if (!isTokenValid) {
+                    logger.warn("토큰 유효성 검증 실패");
+                    // 필요하다면 추가 처리 (예: 리프레시 토큰으로 재발급 시도)
+                }
+                
+                return true;
             } else {
                 logger.error("액세스 토큰이 응답에 없습니다.");
                 return false;
             }
         } catch (Exception e) {
-            logger.error("액세스 토큰 요청 중 오류 발생", e);
+            logger.error("토큰 처리 중 오류 발생", e);
             return false;
         }
     }

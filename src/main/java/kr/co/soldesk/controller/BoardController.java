@@ -135,7 +135,7 @@ public class BoardController {
     }
     
     // 게시글 상세 페이지
-    @GetMapping("/read")
+    @GetMapping(value = "/read", produces = "text/html; charset=UTF-8")
     public String read(@RequestParam("id") int id, Model model, HttpServletRequest request) throws UnsupportedEncodingException {
         // 게시글 정보 조회
     	request.setCharacterEncoding("UTF-8");

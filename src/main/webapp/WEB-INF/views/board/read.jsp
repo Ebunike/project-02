@@ -588,8 +588,11 @@
                                 </c:if>
                             </div>
                             <div class="comment-time">
-                                <fmt:formatDate value="${comment.regdate}" pattern="yyyy-MM-dd HH:mm"/>
-                            </div>
+						    <c:if test="${not empty comment.comment_Date}">
+						        <fmt:parseDate value="${comment.comment_Date}" pattern="yyyy-MM-dd HH:mm:ss" var="parsedDate" />
+						        <fmt:formatDate value="${parsedDate}" pattern="yyyy-MM-dd HH:mm"/>
+						    </c:if>
+						</div>
                         </div>
                         
                         <div class="comment-body">

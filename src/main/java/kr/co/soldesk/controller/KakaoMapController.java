@@ -36,6 +36,7 @@ public class KakaoMapController {
     @GetMapping("/main")
     public String kakaoMapMain(Model model) {
         model.addAttribute("loginMember", loginMemberBean);
+        model.addAttribute("loginMemberBean", loginMemberBean);
         return "kakaomap/kakaomap_info";
     }
     

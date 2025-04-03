@@ -150,7 +150,8 @@
                 <div class="actions text-center mt-4">
                     <c:if test="${sellerIndex > 0}">
                         <a href="<c:url value='/oneday/register'/>" class="btn btn-primary">클래스 등록하기</a>
-                        <a href="<c:url value='/oneday/my-classes'/>" class="btn btn-secondary ml-2">내 클래스 관리</a>
+                        <a href="<c:url value='/oneday/my-classes'/>" class="btn btn-secondary ml-2">예약 관리</a>
+                        <a href="<c:url value='/kakaomap/main'/>" class="btn btn-secondary ml-2">커뮤니티 이동</a>
                     </c:if>
                 </div>
             </div>
