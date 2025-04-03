@@ -241,24 +241,26 @@
                     </thead>
                     <tbody>
                         <!-- 회원 정보가 있는지 확인하는 변수 -->
-                        <c:set var="hasMembers" value="false" />
-                        
                         <!-- 회원 목록을 순회하며 표시 -->
-                        <c:forEach var="member" items="${allMember}">
-                            <c:set var="hasMembers" value="true" />
-                            <tr>
-                            	<td>${member.name}</td>
-                                <td>
-                                    <a href="${root}/admin/memberinfo?id=${member.id}" class="member-link">
-                                        ${member.id}
-                                    </a>
-                                </td>
-                                <td>${member.address}</td>
-                                <td>${member.tel}</td>
-                                <td>${member.gender}</td>
-                                <td>${member.email}</td>
-                            </tr>
-                        </c:forEach>
+<c:set var="hasMembers" value="false" />
+<c:forEach var="member" items="${allMember}">
+    <!-- 'admin' 아이디를 가진 회원은 제외 -->
+    <c:if test="${member.id != 'admin'}">
+        <c:set var="hasMembers" value="true" />
+        <tr>
+            <td>${member.name}</td>
+            <td>
+                <a href="${root}/admin/memberinfo?id=${member.id}" class="member-link">
+                    ${member.id}
+                </a>
+            </td>
+            <td>${member.address}</td>
+            <td>${member.tel}</td>
+            <td>${member.gender}</td>
+            <td>${member.email}</td>
+        </tr>
+    </c:if>
+</c:forEach>
                         
                         <!-- 회원 정보가 없는 경우 메시지 표시 -->
                         <c:if test="${!hasMembers}">

@@ -16,9 +16,11 @@
 </head>
 <body>
 <nav class="navbar navbar-expand-md fixed-top shadow-lg top-nav-menu">
-    <a class="top-logo-item" href="${root }/" title="홈으로 이동">
-    	<i class="fa-solid fa-house-chimney top-nav-icon"></i>
-    </a>
+    <div class="top_main_logo">
+	    <a class="top-logo-item" href="${root }/" title="홈으로 이동">
+			<img  src="${root }/resources/logo/main_logo.png">
+	    </a>
+    </div>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navMenu">
         <span class="navbar-toggler-icon"></span>        
     </button>
@@ -457,6 +459,11 @@
 	        width: 85%;
 	    }
 	}
+	.top_main_logo img {
+	width: 80px;
+	height: 70px;
+	
+}
 	</style>
 	<script>
 	    function toggleTopMenu() {

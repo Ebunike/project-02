@@ -395,25 +395,25 @@
             </div>
             
             <!-- 상세 설명 카드 -->
-            <div class="description-card">
+            <!-- <div class="description-card">
                 <div class="description-header">
                     <h3><i class="fas fa-clipboard-list"></i> 제품 상세 설명</h3>
                     <button type="button" class="add-detail-btn" onclick="addDetail()">
                         <i class="fas fa-plus-circle"></i> 상세설명 추가
                     </button>
-                </div>
+                </div> -->
                 
                 <!-- 상세 설명 컨테이너 -->
-                <div id="detailsContainer">
-                    <!-- 여기에 상세 설명 항목들이 동적으로 추가됩니다 -->
+                <!-- <div id="detailsContainer">
+                    여기에 상세 설명 항목들이 동적으로 추가됩니다
                 </div>
-            </div>
+            </div> -->
             
             <!-- 숨겨진 필드들 -->
-            <div id="hiddenFields">
-                <!-- 여기에 상세 설명 데이터를 위한 숨겨진 필드들이 동적으로 추가됩니다 -->
+            <!-- <div id="hiddenFields">
+                여기에 상세 설명 데이터를 위한 숨겨진 필드들이 동적으로 추가됩니다
                 <input type="hidden" id="detailCount" name="detailCount" value="0">
-            </div>
+            </div> -->
             
             <button class="insert_kit" type="submit"><i class="fas fa-check"></i> 등록</button>
         </form>

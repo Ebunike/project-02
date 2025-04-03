@@ -130,23 +130,23 @@
         // 현재 sales 값 가져오기
         const currentSales = ${sales};
         
-         // 일주일치 데이터 생성 (3월 27일 ~ 4월 2일)
+         // 일주일치 데이터 생성 (3월 29일 ~ 4월 4일)
         // 실제 데이터가 아닌 예시 데이터로, 필요에 따라 수정
         const dailyData = [
             ['날짜', '매출액(원)', { role: 'style' }],
-            ['3월 29일', Math.round(currentSales * 0.7), '#76A7FA'],  // 월요일
-            ['3월 30일', Math.round(currentSales * 0.8), '#76A7FA'],  // 화요일
-            ['3월 31일', Math.round(currentSales * 0.9), '#76A7FA'],  // 수요일
-            ['4월 1일', Math.round(currentSales * 0.75), '#76A7FA'], // 목요일
-            ['4월 2일', Math.round(currentSales * 1.1), '#76A7FA'],  // 금요일
-            ['4월 3일', Math.round(currentSales * 1.2), '#76A7FA'],   // 토요일
+            ['3월 29일', Math.round(currentSales * 0), '#76A7FA'],  // 월요일
+            ['3월 30일', Math.round(currentSales * 0), '#76A7FA'],  // 화요일
+            ['3월 31일', Math.round(currentSales * 0), '#76A7FA'],  // 수요일
+            ['4월 1일', Math.round(currentSales * 0), '#76A7FA'], // 목요일
+            ['4월 2일', Math.round(currentSales * 0), '#76A7FA'],  // 금요일
+            ['4월 3일', Math.round(currentSales * 0), '#76A7FA'],   // 토요일
             ['4월 4일', currentSales, '#3366CC']                      // 일요일 (오늘)
         ];
 
         var data = google.visualization.arrayToDataTable(dailyData);
 
         var options = {
-            title: '일일 매출 현황 (3월 27일 ~ 4월 2일)',
+            title: '일일 매출 현황 (3월 29일 ~ 4월 4일)',
             titleTextStyle: {
                 color: '#333',
                 fontSize: 18,
@@ -224,7 +224,7 @@
 <div class="sales-container">
     <div class="sales-header">
         <h2>하루 매출 현황</h2>
-        <p><span class="sales-date">2025년 4월 2일</span> 기준 매출 데이터</p>
+        <p><span class="sales-date">2025년 4월 4일</span> 기준 매출 데이터</p>
     </div>
     
     <div class="sales-summary">

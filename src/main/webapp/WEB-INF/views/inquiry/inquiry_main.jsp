@@ -237,6 +237,9 @@
                 padding: 20px;
             }
         }
+        select.form-control:not([size]):not([multiple]) {
+          height: calc(2.25rem + 10px);
+      }
     </style>
 </head>
 <body>
