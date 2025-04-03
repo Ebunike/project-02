@@ -43,7 +43,7 @@ public class KakaoMapController {
     /**
      * 장소 저장 API
      */
-    @PostMapping("/savePlace")
+    @PostMapping("/savePlace") 
     @ResponseBody
     public ResponseEntity<?> savePlace(@RequestBody KakaoMapBean placeInfo) {
         try {
