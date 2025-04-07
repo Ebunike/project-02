@@ -297,12 +297,11 @@
                                 </div>
                             </div>
 
-
                             <!-- 컨트롤러에 필요한 숨겨진 필드들 -->
                             <div id="hiddenFields">
-                                <!-- 여기에 스텝 데이터를 위한 숨겨진 필드들이 동적으로 추가됩니다 -->
+                                <!-- 변경: 기본값을 0으로 설정 (빈 문자열 대신 숫자 0 전송) -->
                                 <c:forEach var="i" begin="0" end="19">
-                                    <form:hidden path="stepBeanList[${i}].stepNumber" id="stepNumber_${i}" />
+                                    <form:hidden path="stepBeanList[${i}].stepNumber" id="stepNumber_${i}" value="0" />
                                     <form:hidden path="stepBeanList[${i}].stepText" id="stepText_${i}" />
                                 </c:forEach>
                             </div>
@@ -327,7 +326,7 @@
     let stepCount = 0;       // 현재 표시된 스텝 수
     let visibleSteps = [];   // 현재 보이는 스텝의 실제 인덱스들
     
-   // 페이지 로드 시 초기화
+    // 페이지 로드 시 초기화
     document.addEventListener('DOMContentLoaded', function() {
         // 첫 번째 스텝 자동 추가
         addStep();
@@ -466,8 +465,8 @@
         // 추적 배열에서 제거
         visibleSteps.splice(positionInArray, 1);
         
-        // 숨겨진 입력 필드 초기화
-        document.getElementById('stepNumber_' + index).value = '';
+        // 변경: 숨겨진 입력 필드 초기화 시 stepNumber를 빈 문자열 대신 0으로 설정
+        document.getElementById('stepNumber_' + index).value = 0;
         document.getElementById('stepText_' + index).value = '';
         
         // 총 스텝 수 감소

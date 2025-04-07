@@ -49,14 +49,11 @@
         <div class="menu-items">
             <h1>관리자 페이지</h1>
             <ul>
-                <li><a href="${root}/admin/inquiry"><i class="fas fa-comments mr-2"></i><span>고객문의 관리</span></a></li>
+                  <li><a href="${root}/admin/inquiry"><i class="fas fa-comments mr-2"></i><span>고객문의 관리</span></a></li>
+                <li><a href="${root}/admin/salesapproval"><i class="fas fa-check-circle mr-2"></i><span>판매승인관리</span></a></li>
               <li><a href="${root}/admin/management"><i class="fas fa-users mr-2"></i><span>멤버 관리</span></a></li>
-              <li><a href="${root}/report/report_list"><i class="fas fa-bullhorn mr-2"></i><span>자유게시판 관리</span></a></li>
-              <%-- <li><a href="${root}/admin/benefit"><i class="fas fa-ticket-alt mr-2"></i><span>쿠폰 및 혜택</span></a></li> --%>
               <li><a href="${root}/admin/system"><i class="fas fa-ticket-alt mr-2"></i><span>배너 관리</span></a></li>
-              <li><a href="${root}/admin/salesapproval"><i class="fas fa-check-circle mr-2"></i><span>판매승인관리</span></a></li>
-              <li><a href="${root}/member/logout"><i class="fas fa-sign-out-alt mr-2"></i><span>로그아웃</span></a></li>
-            </ul>
+              <li><a href="${root}/member/logout"><i class="fas fa-sign-out-alt mr-2"></i><span>로그아웃</span></a></li></ul>
         </div>
     </div>
     <!-- 콘텐츠 섹션 -->

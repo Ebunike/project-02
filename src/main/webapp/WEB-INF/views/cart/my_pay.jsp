@@ -353,7 +353,7 @@
     <div class="header">
         <div class="container">
             <h1 class="text-center">
-                <a href="${root}/" class="text-dark text-decoration-none">tlqkf쇼핑몰</a>
+                <a href="${root}/" class="text-dark text-decoration-none">Makeable</a>
             </h1>
         </div>
     </div>

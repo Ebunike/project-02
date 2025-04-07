@@ -254,10 +254,10 @@
         <div class="inquiry-card">
             <!-- 헤더 섹션 -->
             <div class="inquiry-header">
-                <h2>뚝배기 고객센터 문의</h2>
+                <h2>Makeable 고객센터 문의</h2>
                 <div class="description">
-                    <p>뚝배기를 이용하면서 느끼신 불편사항이나 바라는 점을 알려주세요.</p>
-                    <p>고객님의 <span class="highlight">소중한 의견</span>으로 한 뼘 더 자라는 뚝배기가 되겠습니다.</p>
+                    <p>Makeable을 이용하면서 느끼신 불편사항이나 바라는 점을 알려주세요.</p>
+                    <p>고객님의 <span class="highlight">소중한 의견</span>으로 한 뼘 더 자라는 Makeable이 되겠습니다.</p>
                     <p><i class="fas fa-info-circle"></i> 문의량이 많아 답변은 24시간 이상 소요될 수 있습니다.</p>
                 </div>
             </div>
@@ -275,7 +275,7 @@
                             <option value="delivery">배송 관련 문의</option>
                             <option value="payment">결제 관련 문의</option>
                             <option value="system">시스템 개선 의견</option>
-                            <option value="service">뚝배기 서비스 불편/제안</option>
+                            <option value="service">Makeable 서비스 불편/제안</option>
                         </form:select>
                     </div>
                     
