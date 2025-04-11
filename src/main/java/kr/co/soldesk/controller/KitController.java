@@ -56,13 +56,12 @@ public class KitController {
 		return "item/kit/insert_kit";
 	}
    @PostMapping("/insert_kit_pro")
-   public String insert_kit_pro(@Valid ItemDTO itemDTO, BindingResult result,@RequestParam("kitPicture") MultipartFile upload_file, HttpServletRequest request) {
-      
+   public String insert_kit_pro(@Valid ItemDTO itemDTO, BindingResult result,@RequestParam("kitPicture")
+   								MultipartFile upload_file, HttpServletRequest request) {
       
       ThemeBean themeBean = new ThemeBean();
       ItemBean itemBean = new ItemBean();
       KitBean kitBean = new KitBean();
-      
       
       if(result.hasErrors()) {
          return "item/kit/insert_kit";
@@ -70,7 +69,6 @@ public class KitController {
       try {
          themeBean.setTheme_name(request.getParameter("kitTheme"));
          String name = request.getParameter("kitName");
-         System.out.println("테스트: " + name);
            itemBean.setItem_name(name);
            itemBean.setItem_price(Integer.parseInt(request.getParameter("kitPrice")));
            itemBean.setItem_quantity(Integer.parseInt(request.getParameter("kitQuantity")));

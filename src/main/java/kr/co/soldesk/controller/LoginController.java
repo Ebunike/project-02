@@ -29,8 +29,8 @@ public class LoginController {
     @Resource(name = "naverInfo")
     private SellerBean sellerBean1;
 
-    private final String CLIENT_ID = "_7r1lFqIcHDabyPs6PkX"; 
-    private final String CLIENT_SECRET = "nMjyfsnSqk"; 
+    private final String CLIENT_ID = ""; 
+    private final String CLIENT_SECRET = ""; 
     private final String REDIRECT_URI = "http://localhost:9091/Project_hoon/login/naver"; 
 
     // 네이버 로그인

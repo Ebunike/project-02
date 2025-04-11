@@ -14,7 +14,8 @@ import kr.co.soldesk.beans.ThemeBean;
 @Mapper
 public interface ItemMapper {
 
-	@Insert("INSERT INTO Item (item_index, theme_index, seller_index, item_name, item_price, item_quantity, item_picture, item_info)\r\n"
+	@Insert("INSERT INTO Item (item_index, theme_index, seller_index, item_name, item_price,"
+			+ " item_quantity, item_picture, item_info)\r\n"
 			+ "VALUES (Item_seq.NEXTVAL, \r\n"
 			+ "        #{itemBean.theme_index}, \r\n"
 			+ "        (select seller_index from seller where id = #{id}), \r\n"
