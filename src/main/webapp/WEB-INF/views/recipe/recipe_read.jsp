@@ -598,10 +598,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
 <!-- 카카오톡 공유하기 메시지 시작 -->	
 <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.1.0/kakao.min.js"
-  integrity="sha384-dpu02ieKC6NUeKFoGMOKz6102CLEWi9+5RQjWSV0ikYSFFd8M3Wp2reIcquJOemx" crossorigin="anonymous"></script>
+  integrity="" crossorigin=""></script>
 
 <script>
-  Kakao.init('fb9c39f52da6918d5d47283a1cf98395'); // 사용하려는 앱의 JavaScript 키 입력
+  Kakao.init(''); // 사용하려는 앱의 JavaScript 키 입력
 </script>
 
 <script>
