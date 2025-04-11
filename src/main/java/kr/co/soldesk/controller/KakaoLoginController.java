@@ -39,8 +39,8 @@ public class KakaoLoginController {
 	@Autowired
 	private MemberService memberService;
 	
-	private final String kakaoApiKey = "9a17de118b1675247f3cd0e91ab90456";
-	private final String kakaoRedirectUri = "http://localhost:9091/Project_hoon/login/kakao";
+	private final String kakaoApiKey = "";
+	private final String kakaoRedirectUri = "";
 	
 	@RequestMapping("/kakao")
 	public String kakaoLogin(@RequestParam("code") String code, Model model) {

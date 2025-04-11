@@ -23,10 +23,10 @@ public class KakaoPayService {
     private static final String HOST = "https://open-api.kakaopay.com";
     
     // 테스트용 cid - 단건결제용
-    private static final String CID = "TC0ONETIME";
+    private static final String CID = "";
     
     // 테스트 시크릿 키 - 개발자 사이트에서 발급받아야 함
-    private String adminKey = "DEV1F1FFD8CAD2BDD0D068AEE560DEF8A6CB3531";
+    private String adminKey = "";
     
     public KakaoPayReadyDTO kakaoPayReady(String orderId, String itemName, int quantity, int totalAmount, int taxFreeAmount) {
         logger.info("카카오페이 결제 준비 - 주문ID: {}, 상품명: {}, 수량: {}, 금액: {}", orderId, itemName, quantity, totalAmount);

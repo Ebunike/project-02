@@ -28,8 +28,8 @@ public class GoogleLoginController {
     @Autowired
     private MemberService memberService;
 
-    private final String CLIENT_ID = "698222345372-4bdaro205t56cs6r3lfvq1ia8u0lsvr8.apps.googleusercontent.com"; 
-    private final String CLIENT_SECRET = "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"; 
+    private final String CLIENT_ID = ""; 
+    private final String CLIENT_SECRET = ""; 
     private final String REDIRECT_URI = "http://localhost:9091/Project_hoon/login/google"; 
 
     // 구글 로그인 후 액세스 토큰을 가져오는 메서드

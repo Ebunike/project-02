@@ -16,7 +16,7 @@ import kr.co.soldesk.beans.NaverCalendarClient;
 public class NaverCalendarService {
     
     private static final Logger logger = LoggerFactory.getLogger(NaverCalendarService.class);
-    private static final String TOKEN_SESSION_KEY = "naverCalendarAccessToken";
+    private static final String TOKEN_SESSION_KEY = "";
     
     @Autowired
     private NaverCalendarClient naverCalendarClient;
