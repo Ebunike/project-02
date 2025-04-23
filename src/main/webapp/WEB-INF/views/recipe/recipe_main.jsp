@@ -207,7 +207,6 @@ body {
                                 </span>
                                 <span class="badge badge-primary ml-2">
                                     좋아요: ${obj.openRecipe_like}
-                                    
                                 </span>
                             </div>
                         </div>

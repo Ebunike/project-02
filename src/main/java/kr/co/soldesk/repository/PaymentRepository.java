@@ -70,9 +70,11 @@ public class PaymentRepository {
 		}
 		
 		//환불금액 없애기
-		public void removeSales(int seller_index, int cancelAmount) {
-			paymentMapper.removeSales(seller_index, cancelAmount);
-		}
+ 		public void removeSales(int seller_index, int cancelAmount) {
+ 			paymentMapper.removeSales(seller_index, cancelAmount);
+ 		}
+		
+		
 	
 
 

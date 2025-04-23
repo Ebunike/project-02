@@ -30,7 +30,7 @@ public class ItemService {
 				+FilenameUtils.getBaseName(upload_file.getOriginalFilename())+"."
 				+FilenameUtils.getExtension(upload_file.getOriginalFilename());
 	      try {
-	          upload_file.transferTo(new File("C:/Users/soldesk/git/project-02/src/main/webapp/upload/"
+	          upload_file.transferTo(new File("C:/Users/illum/git/project-02/src/main/webapp/upload/"
 	                                  +file_name));
 	       } catch (Exception e) {
 	          e.printStackTrace();

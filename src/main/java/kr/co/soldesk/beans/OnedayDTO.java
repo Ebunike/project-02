@@ -21,6 +21,12 @@ public class OnedayDTO {
     private int oneday_personnel;   // 최대 인원
     private String oneday_imageUrl;
     private String oneday_location;
+    private String oneday_status;
+    private String oneday_description;
+    private String oneday_materials;
+    private int oneday_duration;
+    private int oneday_max_participants;
+    private String naver_calendar_id;
     
     // 추가 필드
     //private String sellerName;     // 판매자명
@@ -29,7 +35,60 @@ public class OnedayDTO {
     private int current_participants; // 현재 예약 인원
     private boolean available;    // 예약 가능 여부
 
-    public int getOneday_index() {
+    
+    
+    
+    public String getOneday_status() {
+		return oneday_status;
+	}
+
+	public void setOneday_status(String oneday_status) {
+		this.oneday_status = oneday_status;
+	}
+
+	public String getOneday_description() {
+		return oneday_description;
+	}
+
+	public void setOneday_description(String oneday_description) {
+		this.oneday_description = oneday_description;
+	}
+
+	
+
+	public String getOneday_materials() {
+		return oneday_materials;
+	}
+
+	public void setOneday_materials(String oneday_materials) {
+		this.oneday_materials = oneday_materials;
+	}
+
+	public int getOneday_duration() {
+		return oneday_duration;
+	}
+
+	public void setOneday_duration(int oneday_duration) {
+		this.oneday_duration = oneday_duration;
+	}
+
+	public int getOneday_max_participants() {
+		return oneday_max_participants;
+	}
+
+	public void setOneday_max_participants(int oneday_max_participants) {
+		this.oneday_max_participants = oneday_max_participants;
+	}
+
+	public String getNaver_calendar_id() {
+		return naver_calendar_id;
+	}
+
+	public void setNaver_calendar_id(String naver_calendar_id) {
+		this.naver_calendar_id = naver_calendar_id;
+	}
+
+	public int getOneday_index() {
 		return oneday_index;
 	}
 

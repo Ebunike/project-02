@@ -47,7 +47,7 @@ public class PaymentService {
 	private ItemRepository itemRepository;
 	
 	@Autowired
-	private OrderDetailRepository orderDetailRepository;
+ 	private OrderDetailRepository orderDetailRepository;
 	
 	//토스에 결제요청보내기 전에 한번 확인하는거
 	public PaymentResDTO requestPayments(PaymentReqDTO paymentReq) throws Exception {
@@ -94,6 +94,13 @@ public class PaymentService {
 		
 	}
 	
+	 ////환불 금액 sales 빼기
+    public void removeSales(int cancelAmount, int order_detail_index) {
+    	
+    	int seller_index = orderDetailRepository.getSeller(order_detail_index);
+    	paymentRepository.removeSales(seller_index, cancelAmount);
+    	
+    }
 	
 	//PaymentReqDTO를 PaymentBean으로 바꾸는거. DB저장까지.
 	public PaymentBean toPaymentBean(PaymentReqDTO paymentReq) {
@@ -216,14 +223,6 @@ public class PaymentService {
 	 * public String getOrderDetail() {
 	 * paymentRepository.getOrderDetail() }
 	 */
-    
-    ////환불 금액 sales 빼기
-    public void removeSales(int cancelAmount, int order_detail_index) {
-    	
-    	int seller_index = orderDetailRepository.getSeller(order_detail_index);
-    	paymentRepository.removeSales(seller_index, cancelAmount);
-    	
-    }
     
     
     //판매자 sales를 amount만큼 올려주기. 관리자 or 판매자 매출처리

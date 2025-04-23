@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.UUID;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -163,9 +164,9 @@ public class OnedayController {
     public String register(@ModelAttribute OnedayDTO oneday,
                           @RequestParam("imageFile") MultipartFile imageFile,
     					  HttpSession session,
-                          RedirectAttributes rttr) {
+                          RedirectAttributes rttr,
+                          HttpServletRequest request) {
         
-    	
     	
         if (loginMember == null) {
             return "redirect:/member/login";
@@ -185,17 +186,20 @@ public class OnedayController {
                 String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
                 String newFilename = UUID.randomUUID().toString() + extension;
                 
+                // 웹 애플리케이션 실제 경로 가져오기
+                String realPath = request.getServletContext().getRealPath("/upload");
+                
                 // 폴더가 없으면 생성
-                File uploadDir = new File("D:/soldesk3/workspace/Project_hoon/src/main/webapp" + "/oneday");
+                File uploadDir = new File(realPath);
                 if (!uploadDir.exists()) {
                     uploadDir.mkdirs();
                 }
                 
                 // 파일 저장
-                File destFile = new File("D:/soldesk3/workspace/Project_hoon/src/main/webapp" + "/oneday/" + newFilename);
+                File destFile = new File(realPath + File.separator + newFilename);
                 imageFile.transferTo(destFile);
                 
-                // 이미지 URL 설정
+                // 이미지 URL 설정 - /upload 디렉토리에 직접 저장하므로 하위 경로 없음
                 oneday.setOneday_imageUrl(newFilename);
                 
             } catch (Exception e) {

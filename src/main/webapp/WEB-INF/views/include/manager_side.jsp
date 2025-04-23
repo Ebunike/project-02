@@ -21,7 +21,7 @@
         left: 0;
         top: 0;
         width: 200px;
-        height: 550px;
+        height: 380px;
         background-color: #ffffff;
         box-shadow: 3px 0 15px rgba(0, 0, 0, 0.1);
         padding: 30px 0;
@@ -202,11 +202,10 @@
             <h3></h3>
         </div>
         <ul>
-            <li><a href="${root}/manager/manager_order"><i class="fas fa-shopping-cart"></i><span>주문 내역 확인</span></a></li>
             <li><a href="${root}/manager/manager_sales"><i class="fas fa-chart-line"></i><span>내 판매 현황</span></a></li>
             <li><a href="${root}/manager/manager_product"><i class="fas fa-box"></i><span>상품 관리</span></a></li>
             <li><a href="${root}/manager/manager_ask"><i class="fas fa-question-circle"></i><span>문의 관리</span></a></li>
-            <li><a href="${root}/manager/manager_review"><i class="fas fa-star"></i><span>리뷰 관리</span></a></li>
+            <li><a href="${root}/member/logout"><i class="fas fa-sign-out-alt mr-2"></i><span>로그아웃</span></a></li>
         </ul>
         <div class="sidebar-footer">
             <a href="${root}/"><i class="fas fa-home"></i><span>홈 화면</span></a>

@@ -95,31 +95,35 @@
                                 </td>
                                 <td>${oneday.oneday_location}</td>
                                 <td>${oneday.current_participants} / ${oneday.oneday_personnel}명</td>
-                                <td>
-                                    <c:set var="now" value="<%= new java.util.Date() %>" />
-                                    <c:choose>
-                                        <c:when test="${oneday.oneday_date gt now}">
-                                            <c:choose>
-                                                <c:when test="${oneday.available}">
-                                                    <span class="status upcoming">예약가능</span>
-                                                </c:when>
-                                                <c:otherwise>
-                                                    <span class="status full">마감</span>
-                                                </c:otherwise>
-                                            </c:choose>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <c:choose>
-                                                <c:when test="${now lt endDateTime}">
-                                                    <span class="status ongoing">진행중</span>
-                                                </c:when>
-                                                <c:otherwise>
-                                                    <span class="status completed">종료</span>
-                                                </c:otherwise>
-                                            </c:choose>
-                                        </c:otherwise>
-                                    </c:choose>
-                                </td>
+								<td>
+								    <c:set var="now" value="<%= new java.util.Date() %>" />
+								    <c:choose>
+								        <c:when test="${oneday.oneday_date gt now}">
+								            <c:choose>
+								                <c:when test="${oneday.available}">
+								                    <span class="status upcoming">예약가능</span>
+								                </c:when>
+								                <c:otherwise>
+								                    <span class="status full">마감</span>
+								                </c:otherwise>
+								            </c:choose>
+								        </c:when>
+								        <c:otherwise>
+								            <%-- endDateTime 변수 대신 oneday 객체의 속성을 사용 --%>
+								            <c:set var="endTime" value="${oneday.oneday_end}" />
+								            <c:set var="onedayDate" value="${oneday.oneday_date}" />
+								            
+								            <c:choose>
+								                <c:when test="${now.time lt onedayDate.time}">
+								                    <span class="status ongoing">진행중</span>
+								                </c:when>
+								                <c:otherwise>
+								                    <span class="status completed">종료</span>
+								                </c:otherwise>
+								            </c:choose>
+								        </c:otherwise>
+								    </c:choose>
+								</td>
                                 <td>
                                     <div class="class-actions">
                                         <a href="<c:url value='/oneday/edit/${oneday.oneday_index}'/>" class="btn btn-sm">수정</a>

@@ -176,8 +176,10 @@ public class PaymentController {
 		//환불요청
 		String cancelReq_result = paymentService.requestPaymentCancel(paymentKey, cancelReason, cancelAmount);
 		
-		////환불 금액 판매자 매출에서 빼기
-		paymentService.removeSales(cancelAmount, order_detail_index);
+		//환불 금액 판매자 매출에서 빼기
+ 		paymentService.removeSales(cancelAmount, order_detail_index);
+ 		
+		
 		
 		model.addAttribute("a",cancelReq_result);
 		
