@@ -10,6 +10,7 @@ import javax.annotation.Resource;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,6 +22,7 @@ import kr.co.soldesk.service.MemberService;
 
 @Controller
 @RequestMapping("/login")
+@PropertySource("/WEB-INF/properties/naver_login.properties")
 public class LoginController {
 
     @Autowired
@@ -29,9 +31,9 @@ public class LoginController {
     @Resource(name = "naverInfo")
     private SellerBean sellerBean1;
 
-    private final String CLIENT_ID = ""; 
-    private final String CLIENT_SECRET = ""; 
-    private final String REDIRECT_URI = "http://localhost:9091/Project_hoon/login/naver"; 
+    private final String CLIENT_ID = "${naver.login.client_id}"; 
+    private final String CLIENT_SECRET = "${naver.login.client_secret}"; 
+    private final String REDIRECT_URI = "${naver.login.redirect_uri}"; 
 
     // 네이버 로그인
     @RequestMapping("/naver")

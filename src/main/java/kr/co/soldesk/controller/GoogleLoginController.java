@@ -8,6 +8,7 @@ import java.nio.charset.StandardCharsets;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -20,6 +21,7 @@ import kr.co.soldesk.service.MemberService;
 
 @Controller
 @RequestMapping("/login")
+@PropertySource("/WEB-INF/properties/google_login.properties")
 public class GoogleLoginController {
 
     @Autowired
@@ -28,9 +30,9 @@ public class GoogleLoginController {
     @Autowired
     private MemberService memberService;
 
-    private final String CLIENT_ID = ""; 
-    private final String CLIENT_SECRET = ""; 
-    private final String REDIRECT_URI = "http://localhost:9091/Project_hoon/login/google"; 
+    private final String CLIENT_ID = "${google.login.client_id}"; 
+    private final String CLIENT_SECRET = "${google.login.client_secret}"; 
+    private final String REDIRECT_URI = "${google.login.redirect_uri}"; 
 
     // 구글 로그인 후 액세스 토큰을 가져오는 메서드
     @RequestMapping("/google")
