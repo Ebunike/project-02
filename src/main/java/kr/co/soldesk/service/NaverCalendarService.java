@@ -1,128 +1,106 @@
 package kr.co.soldesk.service;
 
+import javax.servlet.http.HttpSession;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 
 import kr.co.soldesk.beans.NaverCalendarClient;
 
-import javax.servlet.http.HttpSession;
-import java.util.HashMap;
-import java.util.Map;
-
-/**
- * 네이버 캘린더 API 연동을 관리하는 서비스 클래스
- */
 @Service
+@PropertySource("/WEB-INF/properties/naver_calendar.properties")
 public class NaverCalendarService {
     
     private static final Logger logger = LoggerFactory.getLogger(NaverCalendarService.class);
+    private static final String TOKEN_SESSION_KEY = "";
     
     @Autowired
     private NaverCalendarClient naverCalendarClient;
     
-    @Value("naverCalendarToken")
-    private String sessionKey;
+    @Value("${naver.calendar.api.default_calendar_id}")
+    private String defaultCalendarId;
     
     /**
-     * 네이버 인증 URL을 반환하는 메서드
-     * 
-     * @return 네이버 인증 URL
+     * 네이버 캘린더 인증 URL을 가져오는 메서드
      */
     public String getAuthorizationUrl() {
         return naverCalendarClient.getAuthorizationUrl();
     }
     
     /**
-     * 인증 코드로 액세스 토큰을 획득하는 메서드
-     * 
-     * @param code 인증 코드
-     * @param session HTTP 세션
-     * @return 성공 여부
+     * 인증 코드로 액세스 토큰을 요청하고 세션에 저장하는 메서드
      */
     public boolean getAccessToken(String code, HttpSession session) {
         try {
-            // 액세스 토큰 요청
-            String response = naverCalendarClient.getAccessToken(code);
+            String tokenResponse = naverCalendarClient.getAccessToken(code);
+            logger.info("토큰 응답: {}", tokenResponse);
             
-            // JSON 응답 파싱
-            JSONObject jsonResponse = new JSONObject(response);
+            JSONObject jsonResponse = new JSONObject(tokenResponse);
             
             if (jsonResponse.has("access_token")) {
                 String accessToken = jsonResponse.getString("access_token");
-                String refreshToken = jsonResponse.getString("refresh_token");
-                String tokenType = jsonResponse.getString("token_type");
-                long expiresIn = jsonResponse.getLong("expires_in");
+                String refreshToken = jsonResponse.optString("refresh_token", null);
                 
-                // 토큰 정보를 세션에 저장
-                Map<String, Object> tokenInfo = new HashMap<>();
-                tokenInfo.put("accessToken", accessToken);
-                tokenInfo.put("refreshToken", refreshToken);
-                tokenInfo.put("tokenType", tokenType);
-                tokenInfo.put("expiresIn", expiresIn);
-                tokenInfo.put("issuedAt", System.currentTimeMillis());
+                // 토큰 저장
+                session.setAttribute(TOKEN_SESSION_KEY, accessToken);
                 
-                session.setAttribute(sessionKey, tokenInfo);
+                // 리프레시 토큰도 있다면 저장
+                if (refreshToken != null) {
+                    session.setAttribute("naverCalendarRefreshToken", refreshToken);
+                }
                 
-                logger.info("네이버 캘린더 액세스 토큰 획득 성공");
+                // 토큰 유효성 검사는 선택적으로 수행
+                boolean isTokenValid = naverCalendarClient.validateToken(accessToken);
+                
+                if (!isTokenValid) {
+                    logger.warn("토큰 유효성 검증 실패");
+                    // 필요하다면 추가 처리 (예: 리프레시 토큰으로 재발급 시도)
+                }
+                
                 return true;
             } else {
-                logger.error("네이버 캘린더 액세스 토큰 획득 실패: " + response);
+                logger.error("액세스 토큰이 응답에 없습니다.");
                 return false;
             }
         } catch (Exception e) {
-            logger.error("네이버 캘린더 액세스 토큰 획득 중 오류 발생", e);
+            logger.error("토큰 처리 중 오류 발생", e);
             return false;
         }
     }
     
     /**
      * 세션에서 액세스 토큰을 가져오는 메서드
-     * 
-     * @param session HTTP 세션
-     * @return 액세스 토큰 (없으면 null)
      */
-    public String getAccessTokenFromSession(HttpSession session) {
-        @SuppressWarnings("unchecked")
-        Map<String, Object> tokenInfo = (Map<String, Object>) session.getAttribute(sessionKey);
-        
-        if (tokenInfo != null && tokenInfo.containsKey("accessToken")) {
-            // 토큰 만료 여부 확인
-            long issuedAt = (long) tokenInfo.get("issuedAt");
-            long expiresIn = (long) tokenInfo.get("expiresIn") * 1000; // 초 -> 밀리초
-            long now = System.currentTimeMillis();
-            
-            if (now < issuedAt + expiresIn) {
-                return (String) tokenInfo.get("accessToken");
-            } else {
-                logger.info("네이버 캘린더 액세스 토큰 만료됨");
-                // TODO: 리프레시 토큰으로 액세스 토큰 갱신 로직 필요
-                return null;
-            }
-        }
-        
-        return null;
+    public String getAccessTokenFromSession(HttpSession session) { 
+        return (String) session.getAttribute(TOKEN_SESSION_KEY);
     }
     
     /**
-     * 세션에서 토큰 정보를 제거하는 메서드 (로그아웃)
-     * 
-     * @param session HTTP 세션
+     * 세션에서 토큰 정보를 제거하는 메서드
      */
     public void removeTokenFromSession(HttpSession session) {
-        session.removeAttribute(sessionKey);
+        session.removeAttribute(TOKEN_SESSION_KEY);
     }
     
     /**
-     * 네이버 캘린더 캘린더 목록을 조회하는 메서드
-     * 
-     * @param accessToken 액세스 토큰
-     * @return 캘린더 목록 (JSON 문자열)
+     * 기본 캘린더 ID를 가져오는 메서드
      */
-    public String getCalendars(String accessToken) {
-        return naverCalendarClient.getCalendars(accessToken);
+    public String getDefaultCalendarId() {
+        return defaultCalendarId != null ? defaultCalendarId : "primary";
+    }
+    
+    /**
+     * 액세스 토큰의 유효성을 검사하는 메서드
+     */
+    public boolean isValidToken(String accessToken) {
+        if (accessToken == null || accessToken.isEmpty()) {
+            return false;
+        }
+        
+        return naverCalendarClient.validateToken(accessToken);
     }
 }

@@ -40,6 +40,7 @@
             margin-bottom: 40px; /* 하단 여백 */
             max-width: 900px; /* 최대 너비 제한 */
             margin: auto;
+            margin-bottom: 50px;
         }
         
         /* 페이지 헤더 스타일 */

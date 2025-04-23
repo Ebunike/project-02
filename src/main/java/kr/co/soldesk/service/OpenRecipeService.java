@@ -86,7 +86,7 @@ public class OpenRecipeService {
 				FilenameUtils.getBaseName(upload_picture.getOriginalFilename())+ "." +
 				FilenameUtils.getExtension(upload_picture.getOriginalFilename());
 		try {
-			upload_picture.transferTo(new File("C:/Users/soldesk/git/project-02/src/main/webapp/upload/" + file_name));
+			upload_picture.transferTo(new File("C:/Users/illum/git/project-02/src/main/webapp/upload/" + file_name));
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("파일이 안들어옴");

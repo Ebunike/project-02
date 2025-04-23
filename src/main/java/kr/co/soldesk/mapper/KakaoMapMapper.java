@@ -13,25 +13,45 @@ import kr.co.soldesk.beans.KakaoMapBean;
 
 @Mapper
 public interface KakaoMapMapper {
-    // 장소 정보 저장
-    @Insert("INSERT INTO KakaoMaps (identifier, member_id, address_name, id, place_name, x, y) " +
-            "VALUES (#{kakaoMapBean.identifier}, #{kakaoMapBean.member_id}, #{kakaoMapBean.address_name}, " +
-            "#{kakaoMapBean.id}, #{kakaoMapBean.place_name}, #{kakaoMapBean.x}, #{kakaoMapBean.y})")
-    @SelectKey(statement = "SELECT kakomaps_seq.NEXTVAL FROM DUAL", keyProperty = "kakaoMapBean.identifier", 
-               before = true, resultType = int.class)
-    void insertPlace(@Param("kakaoMapBean") KakaoMapBean kakaoMapBean);
+
+    /**
+     * 장소 정보 저장
+     */
+    @Insert("INSERT INTO saved_places (identifier, member_id, place_name, address_name, x, y, marker_type) " +
+            "VALUES (#{placeInfo.identifier}, #{placeInfo.member_id}, #{placeInfo.place_name}, " +
+            "#{placeInfo.address_name}, #{placeInfo.x}, #{placeInfo.y}, #{placeInfo.marker_type})")
+    @SelectKey(statement = "SELECT place_seq.NEXTVAL FROM DUAL", 
+              keyProperty = "placeInfo.identifier", before = true, resultType = int.class)
+    void savePlace(@Param("placeInfo") KakaoMapBean placeInfo);
     
-    // 멤버 ID로 저장된 장소 목록 조회
-    @Select("SELECT identifier, member_id, address_name, id, place_name, x, y " +
-            "FROM KakaoMaps WHERE member_id = #{member_id} ORDER BY identifier DESC")
-    List<KakaoMapBean> selectPlacesByMemberId(@Param("member_id") String memberId);
+    /**
+     * 저장된 장소 목록 조회
+     */
+    @Select("SELECT * FROM saved_places WHERE member_id = #{memberId} ORDER BY identifier DESC")
+    List<KakaoMapBean> getSavedPlaces(@Param("memberId") String memberId);
     
-    // 특정 장소 정보 조회
-    @Select("SELECT identifier, member_id, address_name, id, place_name, x, y " +
-            "FROM KakaoMaps WHERE identifier = #{identifier}")
-    KakaoMapBean selectPlaceByIdentifier(@Param("identifier") int identifier);
-    
-    // 장소 정보 삭제
-    @Delete("DELETE FROM KakaoMaps WHERE identifier = #{identifier}")
+    /**
+     * 장소 삭제
+     */
+    @Delete("DELETE FROM saved_places WHERE identifier = #{identifier}")
     void deletePlace(@Param("identifier") int identifier);
+    
+    /**
+     * 카테고리별 장소 목록 조회
+     */
+    @Select("SELECT * FROM saved_places WHERE member_id = #{memberId} AND marker_type = #{markerType} " +
+            "ORDER BY identifier DESC")
+    List<KakaoMapBean> getCategoryPlaces(@Param("memberId") String memberId, 
+                                   @Param("markerType") String markerType);
+    
+    /**
+     * 주변 장소 검색
+     */
+    @Select("SELECT * FROM saved_places " +
+            "WHERE y BETWEEN #{minLat} AND #{maxLat} " +
+            "AND x BETWEEN #{minLng} AND #{maxLng}")
+    List<KakaoMapBean> searchNearbyPlaces(@Param("minLat") double minLat, 
+                                   @Param("maxLat") double maxLat,
+                                   @Param("minLng") double minLng,
+                                   @Param("maxLng") double maxLng);
 }

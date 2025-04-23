@@ -93,4 +93,8 @@ public interface PaymentMapper {
 	@Update("UPDATE Order_detail SET refund_check = 'refund' WHERE order_detail_index = #{order_detail_index}")
 	void updaterefund(@Param("order_detail_index") int order_detail_index);
   	
+	//환불시 sales 판매자 매출 줄여줌
+ 	@Update("UPDATE Seller SET sales = sales - #{cancelAmount} WHERE seller_index = #{seller_index}")
+ 	void removeSales(@Param("seller_index") int seller_index, @Param("cancelAmount") int cancelAmount);
+
 }

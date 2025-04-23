@@ -47,6 +47,12 @@ public class ManagerController {
 		
 		return "manager/manager_order";
 	}
+	// sellerawaiter를 위한 새로운 fail 경로 추가
+    @GetMapping("/manager_order_fail")
+    public String manager_order_fail(Model model) {
+        model.addAttribute("loginUser", loginUser);
+        return "manager/manager_order_fail";
+    }
 	
 
 	@GetMapping("manager_product")
@@ -64,6 +70,11 @@ public class ManagerController {
 		
 		return "manager/manager_review";
 	}
+	@GetMapping("/manager_review_fail")
+    public String manager_review_fail(Model model) {
+        model.addAttribute("loginUser", loginUser);
+        return "manager/manager_review_fail";
+    }
 	
 	@GetMapping("/delete_product")
 	   public String delete_product(@RequestParam("id") int productId) {
@@ -72,6 +83,11 @@ public class ManagerController {
 	      
 	      return "manager/delete_success";
 	   }
+	@GetMapping("/manager_product_fail")
+    public String manager_product_fail(Model model) {
+        model.addAttribute("loginUser", loginUser);
+        return "manager/manager_product_fail";
+    }
 	
 	
 	//판매금액
@@ -83,6 +99,11 @@ public class ManagerController {
 		return "manager/manager_sales";
 		
 	}
+	@GetMapping("/manager_sales_fail")
+    public String manager_sales_fail(Model model) {
+        model.addAttribute("loginUser", loginUser);
+        return "manager/manager_sales_fail";
+    }
 	
 	///판매자 고객 문의
 	@GetMapping("/manager_ask")
@@ -97,6 +118,11 @@ public class ManagerController {
 		
 		return "manager/manager_ask";
 	}
+	@GetMapping("/manager_ask_fail")
+    public String manager_ask_fail(Model model) { 
+        model.addAttribute("loginUser", loginUser);
+        return "manager/manager_ask_fail";
+    }
 	
 	//고객문의 읽기
 	@GetMapping("/viewInquiry")

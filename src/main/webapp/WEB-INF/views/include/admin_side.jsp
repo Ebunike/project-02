@@ -20,13 +20,14 @@
         left: 0;
         top: 40px;
         width: 200px;
-        height: 550px;
+        height: 440px;
         background-color: #ffffff;
         box-shadow: 3px 0 15px rgba(0, 0, 0, 0.1);
         padding: 30px 0;
         transition: all 0.3s ease;
         border: 1px solid #e0e0e0;
         border-radius: 0 15px 15px 0;
+        z-index: 500;
     }
     .sidebar-header {
         text-align: center;
@@ -181,10 +182,10 @@
         </div>
         <ul>
         	<li><a href="${root}/admin/inquiry"><i class="fas fa-comments mr-2"></i><span>고객문의 관리</span></a></li>
-        	<li><a href="${root}/admin/management"><i class="fas fa-users mr-2"></i><span>멤버 관리</span></a></li>
-        	<li><a href="${root}/admin/system"><i class="fas fa-ticket-alt mr-2"></i><span>배너 관리</span></a></li>
-        	<li><a href="${root}/admin/salesapproval"><i class="fas fa-check-circle mr-2"></i><span>판매승인관리</span></a></li>
-        	<li><a href="${root}/member/logout"><i class="fas fa-sign-out-alt mr-2"></i><span>로그아웃</span></a></li>
+           <li><a href="${root}/admin/salesapproval"><i class="fas fa-check-circle mr-2"></i><span>판매승인관리</span></a></li>
+           <li><a href="${root}/admin/management"><i class="fas fa-users mr-2"></i><span>멤버 관리</span></a></li>
+           <li><a href="${root}/admin/system"><i class="fas fa-ticket-alt mr-2"></i><span>배너 관리</span></a></li>
+           <li><a href="${root}/member/logout"><i class="fas fa-sign-out-alt mr-2"></i><span>로그아웃</span></a></li>
         </ul>
         <div class="sidebar-footer">
             <a href="${root}/admin/adminmain"><i class="fas fa-home"></i><span>홈 화면</span></a>

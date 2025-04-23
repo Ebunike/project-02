@@ -9,42 +9,92 @@
     <meta charset="UTF-8">
     <title>주문 내역</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
     <style>
-        .order-container {
-            border: 1px solid #e0e0e0;
-            border-radius: 5px;
-            margin-bottom: 20px;
-            padding: 15px;
-            background-color: #fff;
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Noto Sans KR', sans-serif;
         }
-        .order-header {
+        .container {
+            max-width: 800px;
+            padding: 0 15px;
+        }
+        .main_title {
             display: flex;
             justify-content: space-between;
-            border-bottom: 1px solid #e0e0e0;
-            padding-bottom: 10px;
-            margin-bottom: 15px;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #333;
+        }
+        .main_title h2 {
+            margin: 0;
+            font-weight: 700;
+            color: #333;
+        }
+        .go_home .btn {
+            background-color: transparent;
+            border: 1px solid #333;
+            color: #333;
+            display: flex;
+            align-items: center;
+            padding: 8px 15px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        .go_home .btn:hover {
+            background-color: #333;
+            color: white;
+        }
+        .go_home .btn i {
+            margin-right: 8px;
+        }
+        .order-container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            overflow: hidden;
+            transition: box-shadow 0.3s ease;
+        }
+        .order-container:hover {
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        .order-header {
+            background-color: #f8f9fa;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
         .order-date {
-            font-weight: bold;
+            font-weight: 600;
+            color: #333;
         }
         .order-number {
-            color: #777;
+            color: #6c757d;
+            font-size: 0.9em;
+        }
+        .order-content {
+            padding: 15px;
         }
         .product-item {
             display: flex;
-            margin-bottom: 15px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #f0f0f0;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #e9ecef;
         }
         .product-image {
-            width: 80px;
-            height: 80px;
-            margin-right: 15px;
+            width: 100px;
+            height: 100px;
+            margin-right: 20px;
+            border-radius: 8px;
+            overflow: hidden;
         }
         .product-image img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
         .product-details {
             flex-grow: 1;
@@ -56,66 +106,55 @@
             flex-grow: 1;
         }
         .product-name {
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-        .product-price {
+            font-weight: 600;
+            margin-bottom: 8px;
             color: #333;
         }
+        .product-price {
+            color: #007bff;
+            font-weight: 500;
+        }
         .product-quantity {
-            color: #555;
+            color: #6c757d;
             font-size: 0.9em;
         }
-        .product-action {
-            min-width: 100px;
-            text-align: right;
-        }
         .refund-btn {
-            background-color: #33b5e5;
+            background-color: #007bff;
             color: white;
             border: none;
-            padding: 5px 10px;
+            padding: 8px 15px;
             border-radius: 4px;
-            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .refund-btn:hover:not(:disabled) {
+            background-color: #0056b3;
         }
         .refund-btn:disabled {
-            background-color: #ccc;
+            background-color: #6c757d;
             cursor: not-allowed;
         }
-        .period-tabs {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px;
-        }
-        .period-tab {
-            flex: 1;
-            text-align: center;
-            padding: 10px;
-            background-color: #f5f5f5;
-            cursor: pointer;
-            border-radius: 5px;
-            margin: 0 5px;
-        }
-        .period-tab.active {
-            background-color: #222;
-            color: white;
-        }
         .chevron-right {
-            float: right;
-            margin-top: 2px;
+            color: #6c757d;
+            margin-left: 5px;
+        }
+        .empty-order-message {
+            text-align: center;
+            padding: 50px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
     </style>
 </head>
 <body>
     <div class="container mt-5">
-        <h2>주문 내역</h2>
-        
-        <!-- 기간 선택 탭 -->
-        <div class="period-tabs">
-            <div class="period-tab" data-period="3m">3개월</div>
-            <div class="period-tab" data-period="6m">6개월</div>
-            <div class="period-tab" data-period="1y">1년</div>
-            <div class="period-tab active" data-period="all">3년</div>
+        <div class="main_title">
+            <h2>주문 내역</h2>
+            <div class="go_home">
+                <a href="<c:url value='/'/>" class="btn">
+                    <i class="fas fa-home"></i> 홈으로
+                </a>
+            </div>
         </div>
         
         <!-- 주문 목록 -->
@@ -123,7 +162,6 @@
             <div class="order-container">
                 <div class="order-header">
                     <div class="order-date">
-                        <!-- String으로 된 날짜 포맷팅 -->
                         <c:set var="formattedOrderDate" value="${fn:substring(order.orderDate, 0, 10)}" />
                         ${formattedOrderDate}
                         <div class="order-number">주문번호 ${order.orderId} <span class="chevron-right">›</span></div>
@@ -132,7 +170,6 @@
                 
                 <div class="order-content">
                     <div class="delivery-date">
-                        <!-- 주문 일시가 문자열일 경우 직접 포맷팅 처리 -->
                         <c:set var="formattedDeliveryDate" value="${fn:substring(order.orderDate, 5, 16)}" />
                         ${formattedDeliveryDate}
                     </div>
@@ -170,7 +207,7 @@
         
         <!-- 주문 내역이 없는 경우 -->
         <c:if test="${empty orderHistory}">
-            <div class="text-center py-5">
+            <div class="empty-order-message">
                 <p>주문 내역이 없습니다.</p>
             </div>
         </c:if>
@@ -179,16 +216,8 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script>
-        // 기간 탭 선택
-        $('.period-tab').on('click', function() {
-            $('.period-tab').removeClass('active');
-            $(this).addClass('active');
-            
-            const period = $(this).data('period');
-            // 여기에 선택된 기간에 따라 주문 내역을 필터링하는 로직 추가
-            // 예: location.href = '/orders/history?period=' + period;
-        });
-    </script>
+
+    <!-- 하단 정보 - include로 불러옴 -->
+    <c:import url="/WEB-INF/views/include/bottom_info.jsp" />
 </body>
 </html>
