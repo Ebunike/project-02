@@ -495,8 +495,9 @@
     <jsp:include page="/WEB-INF/views/include/footer.jsp"/>
     
     <!-- 카카오 맵 API 불러오기 - 주소 검색 기능을 위해 libraries=services 추가 -->
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fb9c39f52da6918d5d47283a1cf98395&libraries=services"></script>
-    <script>
+       <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=${kakaoMapApiKey}&libraries=services"></script>
+       
+       <script>
         // 멤버 정보 (서버에서 가져온 값)
         var memberInfo = {
             name: "${loginMember.name}", // JSP 표현식으로 멤버 이름 가져오기

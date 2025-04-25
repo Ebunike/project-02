@@ -3,6 +3,9 @@ package kr.co.soldesk.service;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -11,23 +14,28 @@ import org.springframework.web.client.RestTemplate;
 
 import kr.co.soldesk.dto.KakaoPayApproveDTO;
 import kr.co.soldesk.dto.KakaoPayReadyDTO;
+import lombok.val;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Service
 public class KakaoPayService {
     
+	//@Value("${kakao_pay_admin_key}")
+	private String kakaoPayAdminKey = "DEV1F1FFD8CAD2BDD0D068AEE560DEF8A6CB3531";
+	
     private static final Logger logger = LoggerFactory.getLogger(KakaoPayService.class);
     
     // 카카오페이 API 호스트
     private static final String HOST = "https://open-api.kakaopay.com";
     
     // 테스트용 cid - 단건결제용
-    private static final String CID = "";
+    private static final String CID = "TC0ONETIME";
     
     // 테스트 시크릿 키 - 개발자 사이트에서 발급받아야 함
-    private String adminKey = "";
-    
+    private String adminKey = kakaoPayAdminKey;
+
     public KakaoPayReadyDTO kakaoPayReady(String orderId, String itemName, int quantity, int totalAmount, int taxFreeAmount) {
         logger.info("카카오페이 결제 준비 - 주문ID: {}, 상품명: {}, 수량: {}, 금액: {}", orderId, itemName, quantity, totalAmount);
         

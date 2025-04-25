@@ -601,20 +601,18 @@ document.addEventListener("DOMContentLoaded", function () {
   integrity="" crossorigin=""></script>
 
 <script>
-  Kakao.init(''); // 사용하려는 앱의 JavaScript 키 입력
+  Kakao.init('${kakao_mesage_api_key}'); // 사용하려는 앱의 JavaScript 키 입력
 </script>
 
 <script>
 var titlemessage = `${readRecipeBean.openRecipe_title }`
 var intro = `${readRecipeBean.openRecipe_intro }`
-var finImage = `${root }/upload/${readRecipeBean.openRecipe_picture}`
 var urlLink = `${root}/recipe/recipe_read?openRecipe_index=${readRecipeBean.openRecipe_index}`
 
   function shareMessage() {
     Kakao.Share.sendCustom({
       templateId: 118871,
       templateArgs: {
-    	THUMB: finImage, // 썸네일 주소 ${THUMB}
     	TITLE: titlemessage, // 제목 텍스트 ${TITLE}
     	DESC: intro, // 설명 텍스트 ${DESC}
     	forpath: urlLink,

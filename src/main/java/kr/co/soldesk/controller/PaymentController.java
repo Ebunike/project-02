@@ -5,6 +5,8 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -29,11 +31,17 @@ import kr.co.soldesk.service.PaymentService;
 
 @Controller
 @RequestMapping("/payment")
+@PropertySource("/WEB-INF/properties/tossAPI.properties")
 public class PaymentController {
 
 	private String secretKey = "";
 	
+	  @Value("${toss_api_key}")
+	   private String tossApiKey; 
+	  @Value("${toss_customerKey}")
+	   private String tossCustomerKey; 
 	
+	  
 	@Autowired
 	private PaymentService paymentService;
 	@Autowired
@@ -68,9 +76,13 @@ public class PaymentController {
 		model.addAttribute("paymentRes", paymentRes);
 
 		if (paymentRes.getPay_Method().equals("VIRTUAL_ACCOUNT")) {
+			model.addAttribute("tossApiKey", tossApiKey);
+			model.addAttribute("tossCustomerKey", tossCustomerKey);
 		    return "payment/account_payments";
 		} else if (paymentRes.getPay_Method().equals("CARD")) {
-		    return "payment/payments";
+			model.addAttribute("tossApiKey", tossApiKey);
+			model.addAttribute("tossCustomerKey", tossCustomerKey);
+			return "payment/payments";
 		}
 		return "payment/payments"; 
 	}

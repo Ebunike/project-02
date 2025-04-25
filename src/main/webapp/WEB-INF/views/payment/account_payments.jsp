@@ -15,8 +15,8 @@
     <script>
       // ------  SDK 초기화 ------
       // @docs https://docs.tosspayments.com/sdk/v2/js#토스페이먼츠-초기화
-      const clientKey = "test_ck_KNbdOvk5rkDWoW5dWPMo8n07xlzm";
-      const customerKey = "r5OzRALKfL_LwZOGkfzoM";
+      const clientKey = `${tossApiKey}`;
+  	  const customerKey = `${tossCustomerKey}`;
       const tossPayments = TossPayments(clientKey);
       // 회원 결제
       // @docs https://docs.tosspayments.com/sdk/v2/js#tosspaymentspayment

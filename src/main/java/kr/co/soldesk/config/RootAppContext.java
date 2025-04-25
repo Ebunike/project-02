@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.web.context.annotation.SessionScope;
 
 import kr.co.soldesk.beans.MemberBean;
@@ -22,7 +23,9 @@ import kr.co.soldesk.beans.SellerBean;
 @ComponentScan(basePackages = { "kr.co.soldesk.repository",
 								"kr.co.soldesk.service",
 								"kr.co.soldesk.beans"})
-@PropertySource("/WEB-INF/properties/db.properties")
+@PropertySource({
+    "/WEB-INF/properties/db.properties"
+})
 @MapperScan("kr.co.soldesk.mapper")
 public class RootAppContext {
 
@@ -38,6 +41,9 @@ public class RootAppContext {
 	@Value("${db.password}")
 	public String db_password;
 	
+	@Value("${kakao_pay_admin_key}")
+	public String kakao_pay_admin_key;
+	
 	@Bean(name = "loginMemberBean")
 	@SessionScope
 	public MemberBean loginUser() {
@@ -49,6 +55,7 @@ public class RootAppContext {
 	public SellerBean sellerBean() {
 		return new SellerBean();
 	}
+	
 	
 
 	@Bean

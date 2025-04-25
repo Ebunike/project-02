@@ -15,6 +15,8 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -38,6 +40,7 @@ import kr.co.soldesk.service.OpenRecipeService;
 
 @Controller
 @RequestMapping("/recipe")
+@PropertySource("/WEB-INF/properties/kakaoAPI.properties")
 public class RecipeController {
 
 	
@@ -47,6 +50,8 @@ public class RecipeController {
 	@Resource(name="loginMemberBean")
 	private MemberBean loginMember;
 	
+	@Value("${kakao_mesage_api_key}")
+	private String kakao_mesage_api_key;
 
 
 	//메인
@@ -212,6 +217,7 @@ public class RecipeController {
 		System.out.println(openRecipe.getOpenRecipe_like());
 		model.addAttribute("readRecipeBean", openRecipe);
 		model.addAttribute("loginMember", loginMember);
+		model.addAttribute("kakao_mesage_api_key", kakao_mesage_api_key);
 		
 		
 		

@@ -13,6 +13,8 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -30,6 +32,7 @@ import kr.co.soldesk.service.MemberService;
 
 @Controller
 @RequestMapping("/login")
+@PropertySource("/WEB-INF/properties/kakaoAPI.properties")
 public class KakaoLoginController {
 	private static final Logger log = LoggerFactory.getLogger(KakaoLoginBean.class);
 	
@@ -39,8 +42,11 @@ public class KakaoLoginController {
 	@Autowired
 	private MemberService memberService;
 	
-	private final String kakaoApiKey = "";
-	private final String kakaoRedirectUri = "";
+	@Value("${kakaoApi_Key}")
+	private String kakaoApi_Key;
+	
+	private final String kakaoApiKey = kakaoApi_Key;
+	private final String kakaoRedirectUri = "http://localhost:9091/Project_hoon/login/kakao";
 	
 	@RequestMapping("/kakao")
 	public String kakaoLogin(@RequestParam("code") String code, Model model) {

@@ -5,6 +5,8 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -22,6 +24,7 @@ import kr.co.soldesk.service.KakaoMapService;
 
 @Controller
 @RequestMapping("/kakaomap")
+@PropertySource("/WEB-INF/properties/kakaoAPI.properties")
 public class KakaoMapController {
 
     @Autowired
@@ -30,6 +33,9 @@ public class KakaoMapController {
     @Resource(name="loginMemberBean")
     private MemberBean loginMemberBean;
     
+    @Value("${kakao_map_api_key}")
+    private String kakaoMapApiKey;
+    
     /**
      * 카카오맵 메인 페이지 이동
      */
@@ -37,6 +43,8 @@ public class KakaoMapController {
     public String kakaoMapMain(Model model) {
         model.addAttribute("loginMember", loginMemberBean);
         model.addAttribute("loginMemberBean", loginMemberBean);
+        model.addAttribute("kakaoMapApiKey", kakaoMapApiKey);
+        
         return "kakaomap/kakaomap_info";
     }
     
